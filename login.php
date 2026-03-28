@@ -32,7 +32,8 @@ class GPage extends DefaultPage{
                                  $this->err[1] = login_result_msg_nopwd;                      
                 }                       
  else{
-							$link = mysqli_connect($GLOBALS['AppConfig']['db']['host'], $GLOBALS['AppConfig']['db']['user'], $GLOBALS['AppConfig']['db']['password'], $GLOBALS['AppConfig']['db']['database']);
+							$db_port = isset($GLOBALS['AppConfig']['db']['port']) ? intval($GLOBALS['AppConfig']['db']['port']) : 3306;
+							$link = mysqli_connect($GLOBALS['AppConfig']['db']['host'], $GLOBALS['AppConfig']['db']['user'], $GLOBALS['AppConfig']['db']['password'], $GLOBALS['AppConfig']['db']['database'], $db_port);
 if (mysqli_connect_errno())
 {
     die(mysqli_connect_errno());
@@ -80,7 +81,8 @@ else if ($this->name == $this->appConfig['system']['adminName'] && $_POST['f'] !
 						  $nawqrme = $cookie->uname;
 						  
 						  include('core-f/config-f/s1.php');
-						  $db_connect = mysqli_connect($GLOBALS['AppConfig']['db']['host'], $GLOBALS['AppConfig']['db']['user'], $GLOBALS['AppConfig']['db']['password'], $GLOBALS['AppConfig']['db']['database']);
+						  $db_port2 = isset($GLOBALS['AppConfig']['db']['port']) ? intval($GLOBALS['AppConfig']['db']['port']) : 3306;
+						  $db_connect = mysqli_connect($GLOBALS['AppConfig']['db']['host'], $GLOBALS['AppConfig']['db']['user'], $GLOBALS['AppConfig']['db']['password'], $GLOBALS['AppConfig']['db']['database'], $db_port2);
 if (mysqli_connect_errno())
 {
     die(mysqli_connect_errno());

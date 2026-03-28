@@ -20,8 +20,8 @@ class GPage extends SecureGamePage
     {
         parent::load();
 		
-		$link = mysqli_connect($GLOBALS['AppConfig']['db']['host'],$GLOBALS['AppConfig']['db']['user'],$GLOBALS['AppConfig']['db']['password']) or die(mysqli_error($link));
-		mysqli_select_db($link, $GLOBALS['AppConfig']['db']['database']) or die(mysqli_error($link));
+		$db_port = isset($GLOBALS['AppConfig']['db']['port']) ? intval($GLOBALS['AppConfig']['db']['port']) : 3306;
+		$link = mysqli_connect($GLOBALS['AppConfig']['db']['host'],$GLOBALS['AppConfig']['db']['user'],$GLOBALS['AppConfig']['db']['password'],$GLOBALS['AppConfig']['db']['database'],$db_port) or die(mysqli_connect_error());
         
         if ( $this->dataGame['blocked_time'] > time() )
         {

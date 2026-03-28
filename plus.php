@@ -257,7 +257,8 @@ $tatarzx->provider->executeQuery("INSERT INTO `p_plus` (`pid`, `date`, `gold`, `
 
 				{
 						
-						$link =mysqli_connect("localhost",$GLOBALS['AppConfig']['db']['user'],$GLOBALS['AppConfig']['db']['password'],$GLOBALS['AppConfig']['db']['database']);
+						$db_port = isset($GLOBALS['AppConfig']['db']['port']) ? intval($GLOBALS['AppConfig']['db']['port']) : 3306;
+						$link =mysqli_connect($GLOBALS['AppConfig']['db']['host'],$GLOBALS['AppConfig']['db']['user'],$GLOBALS['AppConfig']['db']['password'],$GLOBALS['AppConfig']['db']['database'],$db_port);
 if (mysqli_connect_errno())
 {
     die(mysqli_connect_errno());
@@ -290,7 +291,8 @@ $ressArray = explode(',' , $this->data['resources']);
      $newRessArray .= $resources_fix.",";
     }
   }
-						$link =mysqli_connect("localhost",$GLOBALS['AppConfig']['db']['user'],$GLOBALS['AppConfig']['db']['password'],$GLOBALS['AppConfig']['db']['database']);
+						$db_port = isset($GLOBALS['AppConfig']['db']['port']) ? intval($GLOBALS['AppConfig']['db']['port']) : 3306;
+						$link =mysqli_connect($GLOBALS['AppConfig']['db']['host'],$GLOBALS['AppConfig']['db']['user'],$GLOBALS['AppConfig']['db']['password'],$GLOBALS['AppConfig']['db']['database'],$db_port);
 if (mysqli_connect_errno())
 {
     die(mysqli_connect_errno());
