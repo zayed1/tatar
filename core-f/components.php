@@ -223,6 +223,9 @@ define( "QS_PLUS2", 19 );//زياده الخشب
 define( "QS_PLUS3", 20 );//زياده الطين
 define( "QS_PLUS4", 21 );//زياده الحديد
 define( "QS_PLUS5", 22 );//زياده القمح
+define( "QS_PLUS6", 46 );
+define( "QS_PLUS7", 47 );
+define( "QS_PLUS8", 48 );
 define( "QS_PLUS9", 50 );
 define( "QS_PLUS10", 51 );
 define( "QS_PLUS11", 52 );

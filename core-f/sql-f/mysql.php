@@ -147,7 +147,7 @@ class MysqlProvider
             $safe_params = array( );
             foreach ( $sqlParams as $paramValue )
             {
-                $safe_params[] = mysqli_real_escape_string( $this->_conn, $paramValue );
+                $safe_params[] = mysqli_real_escape_string( $this->_conn, $paramValue ?? '' );
             }
             $sqlStatement = vsprintf( $sqlStatement, $safe_params );
         }
