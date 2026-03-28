@@ -102,9 +102,9 @@ if ($name==$a && $pwd==$p) {
                 if(1 == 1){
                 if ( $this->isPost( ) )
         {
-                $question = $_POST['question'];
-                $answer = $_POST['answer'];
-                $answer_count = count($_POST['answer']);
+                $question = $_POST['question'] ?? '';
+                $answer = $_POST['answer'] ?? [];
+                $answer_count = count($_POST['answer'] ?? []);
                 for($i = 1; $i <= $answer_count; $i++){
                 if($i != $answer_count){ $contsdot = ','; }
                 $options .= $answer[$i].$contsdot;

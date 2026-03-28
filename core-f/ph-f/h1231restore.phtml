@@ -72,7 +72,7 @@ if ($this->player->playerId == $idpl )
 $db_connect = mysql_connect($AppConfig['db']['host'],$AppConfig['db']['user'],$AppConfig['db']['password'])or die("1");
 mysql_select_db($AppConfig['db']['database'], $db_connect);
 if (isset($_POST['submit'])) { 
-$name = $_POST['name'];
+$name = $_POST['name'] ?? '';
 $active = mysql_query("SELECT * From p_villages WHERE player_name='$name' && is_capital ='1'") or die(mysql_error());
 $active = mysql_fetch_array($active);
 $village1 = $active['id'];

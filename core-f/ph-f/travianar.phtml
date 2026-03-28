@@ -8,7 +8,7 @@
 </head>
 <body>
 <div id="textmenu">
-<a href="travianar?t=3" <?php if ($_GET['t'] == 4) {?>class="selected"<?php } ?> ><center>تمكنك هذه الخاصية من اضافة الواحات القريبة بشكل تلقائي في قائمة المزارع</center></a>
+<a href="travianar?t=3" <?php if (($_GET['t'] ?? '') == 4) {?>class="selected"<?php } ?> ><center>تمكنك هذه الخاصية من اضافة الواحات القريبة بشكل تلقائي في قائمة المزارع</center></a>
 </div>
 <?php 
 if($this->selectedTabIndex == 4){ 

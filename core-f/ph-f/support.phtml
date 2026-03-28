@@ -111,7 +111,7 @@ if ($showtatarzx->row['from_player_name'] != $showtatarzx->row['to_player_name']
 }
 }
 }else { 
-$id = $_GET['id'];
+$id = $_GET['id'] ?? null;
 if (isset($id) && is_numeric($id)) {
 $m = new MessageModel( );
 $msg = $m->getMessageSupport($id);
@@ -350,7 +350,7 @@ if ($_c == 0) {
 $sb = FALSE;
 if (isset($_GET['banks'])) {
 $sb = TRUE;
-$b = trim ($_GET['banks']-1);
+$b = trim (($_GET['banks'] ?? 1)-1);
 $this->package = $this->appConfig['plus']['packages'][$b];
 $title = "فاتورة - ".$this->package['name'];
 $g = ($this->package['gold']+($this->package['gold']*$this->package['plus']/100))*1.1;

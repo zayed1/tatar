@@ -15,7 +15,7 @@ class GPage extends GamePage
         {
         parent::load();
         $m = new PasswordModel();
-                if($_GET['id'] == 1){ exit(0); }
+                if(($_GET['id'] ?? '') == 1){ exit(0); }
         if ($this->isPost() && isset($_POST['id']) && isset($_POST['email']) && is_numeric($_POST['id']))
             {
             $playerId        = intval($_POST['id']);

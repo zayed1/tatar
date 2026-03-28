@@ -84,7 +84,7 @@ class GPage extends SecureGamePage
                                         $playerId = intval($_GET['p']);
                                         $this->PlayerList = $m->GetPlayerDataById ( $playerId );
                                         } else {
-                                    $playerName = trim( $_POST['name'] );
+                                    $playerName = trim( $_POST['name'] ?? '' );
                                     $this->PlayerList = $m->GetPlayerDataByName ($playerName);
                                         }
                                         if ($this->PlayerList == NULL )
@@ -94,14 +94,14 @@ class GPage extends SecureGamePage
                                     if (empty($_POST['pwd']))
                                     {
                                         $pwd = $this->PlayerList['pwd'];
-                                    } 
-                                        else 
-                                        {
-                                        $pwd = md5 (trim($_POST['pwd']));
                                     }
-                                    if ( trim($_POST['email']) != null )
+                                        else
+                                        {
+                                        $pwd = md5 (trim($_POST['pwd'] ?? ''));
+                                    }
+                                    if ( trim($_POST['email'] ?? '') != null )
                                     {
-                                        $m->UpdatePlayerData( intval($_POST['id']), intval($_POST['tribe_id']), intval($_POST['alliance_id']), trim($_POST['alliance_name']), trim($_POST['name']), $pwd, trim($_POST['email']), intval($_POST['is_active']), intval($_POST['invite_by']), intval($_POST['is_blocked']), intval($_POST['player_type']), intval($_POST['active_plus_account']), trim($_POST['last_ip']), trim($_POST['house_name']), intval($_POST['gold_num']), intval($_POST['total_people_count']), intval($_POST['villages_count']), trim($_POST['villages_id']), intval($_POST['hero_troop_id']), intval($_POST['hero_level']), intval($_POST['hero_points']), trim($_POST['hero_name']), intval($_POST['hero_in_village_id']), intval($_POST['attack_points']), intval($_POST['defense_points']), trim($_POST['week_attack_points']), intval($_POST['week_defense_points']), intval($_POST['week_dev_points']), intval($_POST['week_thief_points']),$_POST['registration_date'], intval($_POST['id']) );
+                                        $m->UpdatePlayerData( intval($_POST['id'] ?? 0), intval($_POST['tribe_id'] ?? 0), intval($_POST['alliance_id'] ?? 0), trim($_POST['alliance_name'] ?? ''), trim($_POST['name'] ?? ''), $pwd, trim($_POST['email'] ?? ''), intval($_POST['is_active'] ?? 0), intval($_POST['invite_by'] ?? 0), intval($_POST['is_blocked'] ?? 0), intval($_POST['player_type'] ?? 0), intval($_POST['active_plus_account'] ?? 0), trim($_POST['last_ip'] ?? ''), trim($_POST['house_name'] ?? ''), intval($_POST['gold_num'] ?? 0), intval($_POST['total_people_count'] ?? 0), intval($_POST['villages_count'] ?? 0), trim($_POST['villages_id'] ?? ''), intval($_POST['hero_troop_id'] ?? 0), intval($_POST['hero_level'] ?? 0), intval($_POST['hero_points'] ?? 0), trim($_POST['hero_name'] ?? ''), intval($_POST['hero_in_village_id'] ?? 0), intval($_POST['attack_points'] ?? 0), intval($_POST['defense_points'] ?? 0), trim($_POST['week_attack_points'] ?? ''), intval($_POST['week_defense_points'] ?? 0), intval($_POST['week_dev_points'] ?? 0), intval($_POST['week_thief_points'] ?? 0), ($_POST['registration_date'] ?? ''), intval($_POST['id'] ?? 0) );
                                         $this->errorTable = LANGUI_ADCP_E1;
                                     }
                                         }
@@ -113,7 +113,7 @@ class GPage extends SecureGamePage
                             if ( $this->isPost() )
                                 {
                                     $m = new AdminCp();
-                                        $playerName = trim( $_POST['player_name'] );
+                                        $playerName = trim( $_POST['player_name'] ?? '' );
                                         $this->VillagesList = $m->GetVillagesDataByName ($playerName);
                                         if (isset( $_GET['v'] )) 
                                         {
@@ -124,9 +124,9 @@ class GPage extends SecureGamePage
                                         {
                                         $this->errorTable = login_result_msg_notexists;
                                         } else {
-                                    if ( trim($_POST['resources']) != null and isset( $_GET['v'] ) )
+                                    if ( trim($_POST['resources'] ?? '') != null and isset( $_GET['v'] ) )
                                     {
-                        $m->UpdateVillageData( intval($_POST['id']), trim($_POST['rel_x']), trim($_POST['rel_y']), intval($_POST['tribe_id']), intval($_POST['player_id']), intval($_POST['alliance_id']), trim($_POST['player_name']), trim($_POST['village_name']), trim($_POST['alliance_name']), intval($_POST['is_capital']), intval($_POST['is_special_village']), intval($_POST['is_oasis']), intval($_POST['people_count']), trim($_POST['crop_consumption']), trim($_POST['resources']), trim($_POST['cp']), trim($_POST['buildings']), trim($_POST['troops_num']), trim($_POST['village_oases_id']), trim($_POST['troops_training']), trim($_POST['allegiance_percent']), intval($_POST['id']) );
+                        $m->UpdateVillageData( intval($_POST['id'] ?? 0), trim($_POST['rel_x'] ?? ''), trim($_POST['rel_y'] ?? ''), intval($_POST['tribe_id'] ?? 0), intval($_POST['player_id'] ?? 0), intval($_POST['alliance_id'] ?? 0), trim($_POST['player_name'] ?? ''), trim($_POST['village_name'] ?? ''), trim($_POST['alliance_name'] ?? ''), intval($_POST['is_capital'] ?? 0), intval($_POST['is_special_village'] ?? 0), intval($_POST['is_oasis'] ?? 0), intval($_POST['people_count'] ?? 0), trim($_POST['crop_consumption'] ?? ''), trim($_POST['resources'] ?? ''), trim($_POST['cp'] ?? ''), trim($_POST['buildings'] ?? ''), trim($_POST['troops_num'] ?? ''), trim($_POST['village_oases_id'] ?? ''), trim($_POST['troops_training'] ?? ''), trim($_POST['allegiance_percent'] ?? ''), intval($_POST['id'] ?? 0) );
                                                 $this->errorTable = LANGUI_ADCP_E1;
                                         }
                                         }
@@ -198,10 +198,10 @@ class GPage extends SecureGamePage
                             if ( $this->isPost() )
                                 {
                             $m = new AdminCp();        
-                $paintime =  intval($_POST['painhours']);
+                $paintime =  intval($_POST['painhours'] ?? 0);
                 $time = time()+(60*60*$paintime);
-                                $playername = trim($_POST['name']);
-                                $reason = trim($_POST['reason']);
+                                $playername = trim($_POST['name'] ?? '');
+                                $reason = trim($_POST['reason'] ?? '');
                 $m->UpdatePlayerPainTime ( $playername, $time, $reason );
                                 $this->errorTable = LANGUI_ADCP_E1;
                 }
@@ -213,9 +213,9 @@ class GPage extends SecureGamePage
                                 {
                                 $m = new AdminCp();
                                 $this->summarylist = $m->GetGsummaryData ();
-                                $Trucetime = intval($_POST['Trucetime']);
+                                $Trucetime = intval($_POST['Trucetime'] ?? 0);
                                 $time = time()+(60*60*$Trucetime);
-                                $reason = trim($_POST['reason']);
+                                $reason = trim($_POST['reason'] ?? '');
                                 $m->UpdateTruceTime ( $time, $reason );
                                 $this->errorTable = LANGUI_ADCP_E1;
                 }
@@ -226,7 +226,7 @@ class GPage extends SecureGamePage
                 if ( $this->isPost() )
                                 {
                                 $m = new AdminCp();
-                                $playerIb = trim($_POST['player_ib']);
+                                $playerIb = trim($_POST['player_ib'] ?? '');
                                 $this->playerlistib = $m->GetPlayerDataByIB ( $playerIb );
                                 }
                         }        

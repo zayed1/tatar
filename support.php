@@ -12,13 +12,13 @@ class GPage extends SecureGamePage
                 {
            parent::load();
 $this->selectedTabIndex = ((((isset($_GET['t']) && is_numeric($_GET['t'])) && 0 <= intval($_GET['t'])) && intval($_GET['t']) <= 3) ? intval($_GET['t']) : 0);
-$c = $_GET['close'];
-$id = $_GET['id'];
+$c = $_GET['close'] ?? null;
+$id = $_GET['id'] ?? null;
 $m = new MessageModel( );
 if ($this->player->playerId == 1) {
 require(".".DIRECTORY_SEPARATOR."core-f".DIRECTORY_SEPARATOR."admin.php");
-$name = $_SESSION['nm_admin'];
-$pwd = $_SESSION['pwd_admin'];
+$name = $_SESSION['nm_admin'] ?? '';
+$pwd = $_SESSION['pwd_admin'] ?? '';
 if ($name == $a && $pwd == $p) {
 
 }else {

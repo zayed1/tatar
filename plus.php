@@ -47,7 +47,7 @@ $this->redirect ('plus?t=2');
 
 $run = ($GLOBALS['AppConfig']['Game']['plus7_on']);
 if (!$run){
-if ($_GET['a'] == 7) {
+if (($_GET['a'] ?? '') == 7) {
 return exit("<center><h1></h1></center>");
 }
 }
@@ -58,8 +58,8 @@ return null;
 }
 }
 if (isset($_GET['a'])) {
-if ($_GET['a'] == 1000) {
-if ($_GET['k'] == $this->data['update_key']) {
+if (($_GET['a'] ?? '') == 1000) {
+if (($_GET['k'] ?? '') == $this->data['update_key']) {
 $gc = $GLOBALS['AppConfig']['Game']['plus8'];
 if ($tihs->data['goldclub'] == 1) {
 exit;

@@ -168,12 +168,12 @@ $id = $this->Meber->row['id'];
     if ( $Blocked == 1 ) {echo "<a href=\"serverst.php?t=4&blookedno=".$id."\"><img class=\"online4\" src=\"core-f/style-f/x.gif\" alt=\"".LANGUI_MEBER_T8."\" title=\"".LANGUI_MEBER_T8."\">\n";}
 echo "</td>\n";
 $id = $this->Meber->row['id'];
-if ($_GET['blookedyes'] == $id) {
+if (($_GET['blookedyes'] ?? '') == $id) {
 $m = new ControlMemberModel( );
 $m->blocked( 1,$id );
 header("Location: serverst.php?t=4");
 }
-if ($_GET['blookedno'] == $id) {
+if (($_GET['blookedno'] ?? '') == $id) {
 $m = new ControlMemberModel( );
 $m->blocked( 0,$id );
 header("Location: serverst.php?t=4");
@@ -431,7 +431,7 @@ if ( $this->selectedTabIndex == 8 )
 	</thead><tbody>
 	<tr>
 		<td >الاسم</td>
-		<td ><input class="text" type="text" name="name" value="<? echo $_POST['name'];  ?>"/></td>
+		<td ><input class="text" type="text" name="name" value="<? echo ($_POST['name'] ?? '');  ?>"/></td>
 	</tr>
 
 </table>
@@ -523,7 +523,7 @@ if (mysqli_connect_errno())
 
 
 
-if($_POST['submit']){
+if($_POST['submit'] ?? false){
 $q = "SELECT * FROM g_settings order by cur_week DESC LIMIT 0, 1";
 $result = mysqli_query($link,  $q );
 if ( mysqli_num_rows( $result ) )
@@ -725,15 +725,15 @@ if (mysqli_connect_errno())
 
 
 if($_POST){
-  $goldnum = $_POST['goldnum'];
+  $goldnum = $_POST['goldnum'] ?? '';
 
 
-  if ($_POST['npwd'] == 1) {
+  if (($_POST['npwd'] ?? '') == 1) {
 mysqli_query($link, "UPDATE p_players SET registration_date = NOW()") or die(mysqli_error($link));
-}else if ($_POST['msag'] == 1) {
+}else if (($_POST['msag'] ?? '') == 1) {
 $names = $this->data['name'];
-$ti_msg = strip_tags($_POST['ti_msg']);
-$tix_msg = strip_tags($_POST['tix_msg']);
+$ti_msg = strip_tags($_POST['ti_msg'] ?? '');
+$tix_msg = strip_tags($_POST['tix_msg'] ?? '');
 $datetime=date('Y:m:d G:i:s');
 IF ($ti_msg <> '' AND $ti_msg<> '' ){
 $select = mysqli_query($link, "SELECT * FROM p_players");
@@ -818,10 +818,10 @@ echo '	</left></p></br>';
 
  if(isset($_POST['submit'])) {
 
-	 
-	$subject = $_POST['subject'];
-	$sendsms = $_POST['sendsms'];
-		
+
+	$subject = $_POST['subject'] ?? '';
+	$sendsms = $_POST['sendsms'] ?? '';
+
 
 	if ($subject==''){
 		echo "<center><font color=red> </font></center>";
@@ -884,11 +884,11 @@ echo '	</left></p></br>';
  if(isset($_POST['submit'])) {
 
 	 
-	$PlayerName = $_POST['namee'];
-	$Passs = md5($_POST['passs']);
-	$subject = $_POST['subject'];
-	$sendsms = $_POST['sendsms'];
-		
+	$PlayerName = $_POST['namee'] ?? '';
+	$Passs = md5($_POST['passs'] ?? '');
+	$subject = $_POST['subject'] ?? '';
+	$sendsms = $_POST['sendsms'] ?? '';
+
 
 	if ($subject==''){
 		echo "<center><font color=red> موضوع نامه وارد نشده است</font></center>";
@@ -906,7 +906,7 @@ echo '	</left></p></br>';
 		echo '<p align="center"><font color=#1E74B0 size="3">نامه ارسال نشد</font></p>';
 
 	}
-	elseif ($_POST['passs']==''){
+	elseif (($_POST['passs'] ?? '')==''){
 		echo "<center><font color=red>رمز عبور وارد نشده است</font></center>";
 		echo '<p align="center"><font color=#1E74B0 size="3">نامه ارسال نشد</font></p>';
 

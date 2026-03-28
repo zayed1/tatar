@@ -40,18 +40,18 @@ if (isset($_GET['anblock'])) {
 $del = htmlspecialchars(trim(abs(ceil(intval($_GET['anblock'])))));
         $m                      = new ProfileModel();
 $m->removeAlliancewar( $this->player->playerId, $del );
-header ("Location: profile?uid=".$_GET['uid']."");
+header ("Location: profile?uid=".($_GET['uid'] ?? '')."");
 }
 if (isset($_GET['block'])) {
 $add = htmlspecialchars(trim(abs(ceil(intval($_GET['block'])))));
         $m                      = new ProfileModel();
 $m->addAllianceContracts( $this->player->playerId, $add );
-header ("Location: profile?uid=".$_GET['uid']."");
+header ("Location: profile?uid=".($_GET['uid'] ?? '')."");
 }
 session_start();
 //verbs 
-$name = $_SESSION['nm_admin'];
-$pwd = $_SESSION['pwd_admin'];
+$name = $_SESSION['nm_admin'] ?? '';
+$pwd = $_SESSION['pwd_admin'] ?? '';
 require(".".DIRECTORY_SEPARATOR."core-f".DIRECTORY_SEPARATOR."admin.php");
 if ( $name==$a && $pwd==$p && $this->isAdmin && isset( $_GET['MokaBard'] ) && 0 < $uid && $uid != $this->player->playerId &&  $uid != 1)
             {
@@ -157,7 +157,7 @@ $this->ResaultMsg = 'لايمكنك تفعيل الحمايه عند وجود ت
 }else if ($tatarRaised) {
 $this->ResaultMsg = 'لايمكنك تفعيل الحمايه اثناء وجود التتار';
 }else {
-if ($_GET['protection'] == 1) {
+if (($_GET['protection'] ?? '') == 1) {
 if (!$this->data['protection']) {
 								$m->Protection2($this->player->playerId);
 $this->ResaultMsg = 'تم تفعيل الحمايه';
