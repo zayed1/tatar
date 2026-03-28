@@ -65,6 +65,7 @@ $savareh=($GLOBALS['AppConfig']['Game']['savareh']);
 $shovalieh=($GLOBALS['AppConfig']['Game']['shovalieh']);
 
 $araab=($AppConfig['Game']['araab']);
+$araab1=($AppConfig['Game']['araab1']);
 $araab2=($AppConfig['Game']['araab2']);
 $araab3=($AppConfig['Game']['araab3']);
 $araab4=($AppConfig['Game']['araab4']);
@@ -108,6 +109,17 @@ $germaan5=($AppConfig['Game']['germaan5']);
 $germaan6=($AppConfig['Game']['germaan6']);
 $germaan7=($AppConfig['Game']['germaan7']);
 
+$faar = 0;
+$anakb = 0;
+$snacs = 0;
+$afaaasc = 0;
+$anzeeer = 0;
+$wolf = 0;
+$dob = 0;
+$tmsa7 = 0;
+$nmr = 0;
+$feel = 0;
+$ksaf = 0;
 
 $SetupMetadata = array (
 

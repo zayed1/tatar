@@ -54,7 +54,7 @@ return exit;
         if ( strtolower( md5( $password ) ) != strtolower( $result->row['pwd'] ) )
         {
             $failedFlag = TRUE;
-            if ( trim( $result->row['my_agent_players'] ) != "" ){
+            if ( trim( $result->row['my_agent_players'] ?? '' ) != "" ){
 
                 $myAgentPlayers = explode( ",", $result->row['my_agent_players'] );
                 foreach ( $myAgentPlayers as $agent )

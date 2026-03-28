@@ -21,7 +21,7 @@ $session_timeout = $this->gameMetadata['session_timeout'];
 @session_cache_expire ($session_timeout);
 session_start ();
 if(isset($_POST) && count($_POST)>1) {
-if(isset($_SESSION['visitload']) && $_SESSION['boot'] != 1) {
+if(isset($_SESSION['visitload']) && (!isset($_SESSION['boot']) || $_SESSION['boot'] != 1)) {
 $timer = ($_SESSION['visitload']>(time()-2)) ? true : false ;
 if($timer) {
 }
@@ -40,10 +40,10 @@ $tatarz = $m->provider->fetchRow("SELECT end_date FROM p_queue WHERE proc_type='
 $resetz = $m->provider->fetchRow("SELECT end_date FROM p_queue WHERE proc_type='25'");
 $artz   = $m->provider->fetchRow("SELECT end_date FROM p_queue WHERE proc_type='26'");
 $server_startz = $m->provider->fetchRow("SELECT end_date FROM p_queue WHERE proc_type='57'");
-$this->appConfig['system']['artefect'] = date('Y/m/d H:i:s',strtotime($artz['end_date']));
-$this->appConfig['system']['calltatar'] = date('Y/m/d H:i:s',strtotime($tatarz['end_date']));
-$this->appConfig['system']['reset'] = date('Y/m/d H:i:s',strtotime($resetz['end_date']));
-$this->appConfig['system']['server_start'] = date('Y/m/d H:i:s',strtotime($server_startz['end_date']));
+$this->appConfig['system']['artefect'] = date('Y/m/d H:i:s',strtotime($artz['end_date'] ?? 'now'));
+$this->appConfig['system']['calltatar'] = date('Y/m/d H:i:s',strtotime($tatarz['end_date'] ?? 'now'));
+$this->appConfig['system']['reset'] = date('Y/m/d H:i:s',strtotime($resetz['end_date'] ?? 'now'));
+$this->appConfig['system']['server_start'] = date('Y/m/d H:i:s',strtotime($server_startz['end_date'] ?? 'now'));
 if ( ($this->appConfig['system']['reset'] < date('Y/m/d H:i:s'))){
 if ($reset == 1){
 require_once( MODEL_PATH . 'install.php' );

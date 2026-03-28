@@ -1809,9 +1809,6 @@ define( "LANGUI_ALLIANCE_T68", base64_decode("2KfZhNiq2KfYsdmK2K4gOg==") );
   define("LANGUI_GUIDE_T66", "إنتظر وصول جيش مدير المهمات");
   define("LANGUI_GUIDE_T67", "إحم،،، غريب جداً! هذا هو أرخص جيش متوفر. ربما كان يتوجب علي أن انتبه أكثر إلى ذلك <br><br>كيف يمكنني إصلاح ذلك الخطأ");
   define("LANGUI_GUIDE_T68", "يوم حساب<b> <font color=\"#71D000\">ب</font><font color=\"#FF6F0F\">لا</font><font color=\"#FF6F0F\">س</font></b>");
-  define("LANGUI_GUIDE_T69", "المهمة 11: التقارير");
-  define("LANGUI_GUIDE_T70", "في كل مرة يحدث فيها شئ مهم في قريتك يتم إرسال تقرير لك. يمكنك مشاهدة التقارير بالضغط على الجزء <i>الأيمن</i> من الأيقونة الخاصة بالرسائل والتقارير (الأيقونة الخامسة من اليمين إلى اليسار). أقرأ التقرير الجديد ثم إرجع إلى هنا");
-  define("LANGUI_GUIDE_T71", "أقرأ أحدث التقارير");
   define("LANGUI_GUIDE_T72", "نعم، تماماً. لقد فتحت التقرير الصحيح");
   define("LANGUI_GUIDE_T73", "المهمة 12: الكل للمستوى 1");
   define("LANGUI_GUIDE_T74", "الآن يجب عليك تطوير إنتاج مواردك قليلاً. قم بتطوير كل حقول الموارد للمستوى 1");
@@ -2610,7 +2607,6 @@ define( "MARKETPLACE_TEXT60", "التجار" );
 define( "MARKETPLACE_TEXT9", "التجار" );
 define( "MARKETPLACE_TEXT57", "اقصى زمن النقل" );
 define( "HOUR", "ساعة" );
-define( "MARKETPLACE_TEXT57", "اقصى زمن النقل" );
 define( "MARKETPLACE_TEXT58", "فقط لأعضاء تحالفي" );
 define( "MARKETPLACE_TEXT41", "العروض في السوق" );
 define( "MARKETPLACE_TEXT42", "معروض لي" );
@@ -2662,6 +2658,5 @@ define( "MARKETPLACE_TEXT74", "إتمام المبادلة الخطوة (2 من 
 define( "MARKETPLACE_TEXT73", "لقد قمت باستبدال :" );
 define( "MARKETPLACE_TEXT76", "مقابل" );
 define( "MARKETPLACE_TEXT75", "تاجر المبادلة سيكلفك " );
-define( "MARKETPLACE_TEXT78884", "إتمام المبادلة الخطوة (2 من 2)" );
 define( "MARKETPLACE_TEXT78884", "إتمام المبادلة الخطوة (2 من 2)" );
 ?>
