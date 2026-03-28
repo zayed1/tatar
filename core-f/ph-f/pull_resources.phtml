@@ -1,0 +1,144 @@
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+<h1>سحب الموارد</h1>
+<?php
+if($this->queueModel->provider->fetchScalar('SELECT COUNT(*) FROM money_log WHERE username ="'.$this->data['name'].'"') == 1)
+{
+    echo '<br><br><br><br><center><p class="error">هذه الميزة خاصة لمن قام بشراء الذهب</p></center>';
+}
+else
+{
+?>
+<br>
+يمكنك من خلال هذه الخاصية سحب جميع الموارد الموجودة في قراك <br>
+وارسالها الى ( <a href="village3?id=<?php echo $this->data['selected_village_id']; ?>"><?php echo $this->data['village_name']; ?></a> ) <br><br>
+
+<?php if($this->readyToPull == false) { ?>
+<form action="" method="post">
+	<input type="hidden" name="village_id" value="<?php echo $this->data['selected_village_id']; ?>">
+	<table id="plusFunctions" cellpadding="1" cellspacing="1"><thead>
+	<tr>
+		<th colspan="5">الموارد</th>
+	</tr>
+	<tr>
+	    <td style="width: 40%">القرية</td>    
+	    <td style="width: 20%"><img src="core-f/style-f/x.gif" class="unit r1"></td>
+	    <td style="width: 20%"><img src="core-f/style-f/x.gif" class="unit r2"></td>
+	    <td style="width: 20%"><img src="core-f/style-f/x.gif" class="unit r3"></td>
+	    <td style="width: 20%"><img src="core-f/style-f/x.gif" class="unit r4"></td>
+	</tr>
+	</thead>
+	<tbody>
+
+	<?php foreach ($this->Villages as $vid => $v) { ?>
+	<tr <?php echo $vid == $this->data['selected_village_id'] ? 'class="hl marked"' : ''; ?>>
+		<td><a href="village3?id=<?php echo $vid; ?>"><?php echo $this->VillagesName[$vid]; ?></a></td>
+
+		<td><center><?php echo $this->TroopsArray->getVillageResources($vid, 1); $numR1 += $this->TroopsArray->getVillageResources($vid, 1); ?></center></td>
+		<td><center><?php echo $this->TroopsArray->getVillageResources($vid, 2); $numR2 += $this->TroopsArray->getVillageResources($vid, 2); ?></center></td>
+		<td><center><?php echo $this->TroopsArray->getVillageResources($vid, 3); $numR3 += $this->TroopsArray->getVillageResources($vid, 3); ?></center></td>
+		<td><center><?php echo $this->TroopsArray->getVillageResources($vid, 4); $numR4 += $this->TroopsArray->getVillageResources($vid, 4); ?></center></td>
+	</tr>
+	<?php } ?>
+
+	<tr>
+		<td><b>المجموع</b></td>
+		<td><center><b><?php echo $numR1; ?></b></center></td>
+		<td><center><b><?php echo $numR2; ?></b></center></td>
+		<td><center><b><?php echo $numR3; ?></b></center></td>
+		<td><center><b><?php echo $numR4; ?></b></center></td>
+	</tr>
+
+	<tr>
+		<td>تحديد</td>
+		<td><center><input type="checkbox" name="res[1]" value="1"></center></td>
+		<td><center><input type="checkbox" name="res[2]" value="1"></center></td>
+		<td><center><input type="checkbox" name="res[3]" value="1"></center></td>
+		<td><center><input type="checkbox" name="res[4]" value="1"></center></td>
+	</tr>
+	</tbody>
+	</table>
+	<br><br>
+
+	<input class="text" type="submit" value=" الانتقال الى الخطوة التالية ">
+</form>
+<br><br>
+<span class="error"><?php echo $this->error_message; ?></span>
+<?php } else { ?>
+<br>
+
+<script src="core-f/style-f/js/jquery.js" type="text/javascript"></script>
+<script type="text/javascript" src="core-f/style-f/js/pull_resources.js"></script>
+<div id="farming"></div>
+<br>
+
+<form name='farm'>
+	<table id="plusFunctions" cellpadding="1" cellspacing="1"><thead>
+	<tr>
+		<th colspan="6">الموارد</th>
+	</tr>
+	<tr>
+		<td style="width: 5%"></td> 
+	    <td style="width: 40%">القرية</td>    
+	    <td style="width: 20%"><img src="core-f/style-f/x.gif" class="unit r1"></td>
+	    <td style="width: 20%"><img src="core-f/style-f/x.gif" class="unit r2"></td>
+	    <td style="width: 20%"><img src="core-f/style-f/x.gif" class="unit r3"></td>
+	    <td style="width: 20%"><img src="core-f/style-f/x.gif" class="unit r4"></td>
+	</tr>
+	</thead>
+	<tbody>
+
+		<?php
+		foreach ($this->Villages as $vid => $v)
+		{
+
+			$list    = '';
+			$list   .= $this->data['selected_village_id'] . '|';
+			$list   .= $vid . "|";
+			$list   .= ( isset($_POST['res'][1]) ? $this->TroopsArray->getVillageResources($vid, 1) : 0 ) . "|";
+			$list   .= ( isset($_POST['res'][2]) ? $this->TroopsArray->getVillageResources($vid, 2) : 0 ) . "|";
+			$list   .= ( isset($_POST['res'][3]) ? $this->TroopsArray->getVillageResources($vid, 3) : 0 ) . "|";
+			$list   .= ( isset($_POST['res'][4]) ? $this->TroopsArray->getVillageResources($vid, 4) : 0 );
+		?>
+		<tr <?php echo $vid == $this->data['selected_village_id'] ? 'class="hl marked"' : ''; ?>>
+			<td><center><input class='check' type='checkbox' name='list[]' id='list' value='<?php echo $list; ?>' 
+			<?php echo ($vid != $this->data['selected_village_id'] && $v['level'] != 0) ? 'checked' : ''; ?> <?php echo ($v['level']) == 0 ? 'disabled' : ''; ?>></center></td>
+			<td> <a href="village3?id=<?php echo $vid; ?>"><?php echo $this->VillagesName[$vid]; ?></a></td>
+			<td><center><?php echo $this->TroopsArray->getVillageResources($vid, 1); $numR1 += $this->TroopsArray->getVillageResources($vid, 1); ?></center></td>
+			<td><center><?php echo $this->TroopsArray->getVillageResources($vid, 2); $numR2 += $this->TroopsArray->getVillageResources($vid, 2); ?></center></td>
+			<td><center><?php echo $this->TroopsArray->getVillageResources($vid, 3); $numR3 += $this->TroopsArray->getVillageResources($vid, 3); ?></center></td>
+			<td><center><?php echo $this->TroopsArray->getVillageResources($vid, 4); $numR4 += $this->TroopsArray->getVillageResources($vid, 4); ?></center></td>
+		<?php } ?>
+
+		<tr>
+			<td colspan="2"><b>المجموع</b></td>
+			<td><center><b><?php echo $numR1; ?></b></center></td>
+			<td><center><b><?php echo $numR2; ?></b></center></td>
+			<td><center><b><?php echo $numR3; ?></b></center></td>
+			<td><center><b><?php echo $numR4; ?></b></center></td>
+		</tr>
+
+		<tr>
+			<td colspan="2">تم تحديدها</td>
+			<td><center><input type="checkbox" name="res[1]" <?php echo isset($_POST['res'][1]) ? 'checked' :''; ?> disabled></center></td>
+			<td><center><input type="checkbox" name="res[2]" <?php echo isset($_POST['res'][2]) ? 'checked' :''; ?> disabled></center></td>
+			<td><center><input type="checkbox" name="res[3]" <?php echo isset($_POST['res'][3]) ? 'checked' :''; ?> disabled></center></td>
+			<td><center><input type="checkbox" name="res[4]" <?php echo isset($_POST['res'][4]) ? 'checked' :''; ?> disabled></center></td>
+		</tr>
+
+	</tbody>
+</table>
+
+<br>
+<input class="text" id="linkToClick" name="attack" type="button" value=" بدء عملية السحب " onClick="javascript:farming();scrollTo(0,0);">
+</form>
+
+<?php }} ?>
+</body>
+</html>

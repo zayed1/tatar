@@ -1,0 +1,168 @@
+<style>
+.button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+
+.button1 {
+    background-color: white; 
+    color: black; 
+    border: 2px solid #f44336;
+}
+
+.button1:hover {
+    background-color: #f44336;
+    color: white;
+}
+</style>
+<?php
+
+if ( $this->player->playerId == 1) {
+?>
+<?php
+
+
+
+echo'<br><br>';
+echo'<h1>لوحة الاوسمة</h1>';
+echo'<br>';
+echo'<p><p><table cellpadding="1" cellspacing="1">';
+echo'<thead>';
+echo'<tr>';
+echo'<th colspan="4">اضافة وسام للاعب</th>';
+echo'</tr>';     
+echo'</thead>';
+echo'<br>';
+echo'<tr>';
+echo'<td style="width: 40%"><center>الايميل</td>';
+echo'<td style="width: 20%"><center>الوسام</td>';
+echo'<td style="width: 20%"><center>اضافة الوسام</td>';
+echo'<td style="width: 20%"><center>حذف الوسام</td>';
+echo'</tr>';
+  echo'<form id="add_url" action="wesam1.php" method="POST" >';
+echo'<tr>';
+echo'<input type="hidden" name="p_id" value="276">';
+echo'<td style="width: 40%"><center><input class="text" size="15" name="plus" /></td>';
+echo'<td style="width: 20%"><center>';
+echo'<select name="hmh">';
+echo'<option value="vip">vip</option>';
+
+ 
+
+echo'</select>';
+echo'</td>';
+  echo'<td style="width: 30%"><center>  <input type="submit" value=" اضافة " name="add">
+</td>';
+  
+ echo'<td style="width: 30%"><center>  <input type="submit" value=" حذف " name="add1">
+</td>';
+	   	  
+
+
+  echo'</tr>';
+
+  
+echo'</table>';
+echo'</form>';
+echo'<center>';
+
+
+
+	$p_email = $this->queueModel->provider->fetchScalar('SELECT LOWER(email) FROM p_players WHERE id ="'.$this->profileData['id'].'"');
+	$pm_email = $this->queueModel->provider->fetchScalar('SELECT email FROM p_medals WHERE email ="'.$p_email.'"'); // تاكيد وجود الايميل 
+// الاوسمة 
+	
+	
+	if ($_POST['add']) {
+      $plus = Trim(stripslashes(htmlspecialchars($_POST['plus'])));
+$hmh = htmlentities($_POST['hmh']);
+$q = new QueueModel();
+$p_emailn = $this->queueModel->provider->fetchScalar('SELECT name FROM p_players WHERE email ="'.$plus.'"');
+$p_email = $this->queueModel->provider->fetchScalar('SELECT LOWER(email) FROM p_players WHERE email ="'.$plus.'"');
+$pm_email = $this->queueModel->provider->fetchScalar('SELECT email FROM p_medals WHERE email ="'.$p_email.'"'); // تاكيد وجود الايميل 
+	if(!$pm_email and $_POST['plus'] !=null ){
+$q->provider->executeQuery2 ("INSERT INTO p_medals(email,".$hmh.") VALUES ('$plus','1');");
+	echo "<br><b>تم اضافة وسام ".$hmh." للاعب ".$p_emailn."</b><br>";
+echo '<meta http-equiv="refresh" content="2">';
+	}else{
+	
+	echo "<br><b>الاميل غير صحيح </b><br>";
+echo '<meta http-equiv="refresh" content="2">';
+
+	}
+
+}
+  
+  if ($_POST['add1']) {
+      $plus = Trim(stripslashes(htmlspecialchars($_POST['plus'])));
+$hmh = htmlentities($_POST['hmh']);
+$q = new QueueModel();
+$p_email = $this->queueModel->provider->fetchScalar('SELECT LOWER(email) FROM p_players WHERE email ="'.$plus.'"');
+$pm_email = $this->queueModel->provider->fetchScalar('SELECT email FROM p_medals WHERE email ="'.$p_email.'"'); // تاكيد وجود الايميل 
+	if( $pm_email  ){
+$q->provider->executeQuery2 ('DELETE FROM `p_medals` WHERE `email` = "'.$pm_email.'"  ' );
+	echo "<br><b>تم حذف وسام ".$hmh." للاعب ".$p_emailn."</b><br>";
+echo '<meta http-equiv="refresh" content="2">';
+	}
+
+}
+
+?>
+<br>
+<div style="max-width:980px; overflow-x: scroll; white-space: nowrap;" >
+<table id="show_artefacts" cellpadding="1" cellspacing="1">
+        <thead>
+            <tr>
+                <th colspan="12">اوسمة اللاعبين</th>
+            </tr>
+            <tr>
+                <td>الاسم </td>
+                <td>البريد الالكتروني</td>
+                <td> vip </td>
+
+
+
+            </tr>
+        </thead>
+	<?php
+	$q         = new QueueModel();
+	$pgmp   = $q->provider->fetchResultSet( "SELECT * FROM p_medals");
+$i = 1;
+        while ( $pgmp->next( ) )
+        {
+                     $get_playerdata = $q->provider->fetchRow('SELECT id, name FROM p_players WHERE email="'. $pgmp->row['email'] .'"');
+		if($pgmp->row['vip'] == 1){ $chek ='checked="checked"'; }else{ $chek =' '; }
+		
+
+        ?>
+<tr>
+		<td><?php echo $get_playerdata['name']; ?></td>
+		<td><?php echo $pgmp->row['email']; ?></td>
+		<td><?php echo '<input type="checkbox" value="'.$pgmp->row['w1'].'" name="e1" '.$chek.'>';
+ ?></td>
+
+ </td>
+
+</tr>
+
+<?
+		}
+echo "</table></div>";
+
+
+} else {
+            $this->redirect('admin.php');
+
+}
+
+?>
