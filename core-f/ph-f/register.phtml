@@ -36,20 +36,20 @@ if (!$this->success)
 ?>
   <p><?php echo LANGUI_REG_T3; ?> الدليل <?php echo LANGUI_REG_T5; ?></p>
 
-  <form method="post" action="<?php echo 'register?ref='.$_GET['ref']; ?>" />
+  <form method="post" action="<?php echo 'register?ref='.($_GET['ref'] ?? ''); ?>" />
        <table cellpadding="1" cellspacing="1" id="sign_input">
        <tbody>
             <tr class="top">
                  <th><?php echo LANGUI_REG_T6; ?>:</th>
-                 <td><input class="text" type="text" name="naame" value="<?php echo trim($_POST['naame']); ?>" maxlength="15" /><span class="error"> <?php echo $this->err[0]; ?></span></td>
+                 <td><input class="text" type="text" name="naame" value="<?php echo trim($_POST['naame'] ?? ''); ?>" maxlength="15" /><span class="error"> <?php echo $this->err[0]; ?></span></td>
             </tr>
             <tr>
                  <th><?php echo LANGUI_REG_T7; ?>:</th>
-                 <td><input class="text" type="email" name="email" value="<?php echo trim($_POST['email']); ?>" maxlength="40" /><span class="error"> <?php echo $this->err[1]; ?></span></td>
+                 <td><input class="text" type="email" name="email" value="<?php echo trim($_POST['email'] ?? ''); ?>" maxlength="40" /><span class="error"> <?php echo $this->err[1]; ?></span></td>
             </tr>
             <tr class="btm">
                  <th><?php echo LANGUI_REG_T8; ?>:</th>
-                 <td><input class="text" type="password" name="pwd" value="<?php echo trim($_POST['pwd']); ?>" maxlength="20" /><span class="error"> <?php echo $this->err[2]; ?></span></td>
+                 <td><input class="text" type="password" name="pwd" value="<?php echo trim($_POST['pwd'] ?? ''); ?>" maxlength="20" /><span class="error"> <?php echo $this->err[2]; ?></span></td>
             </tr>
        </tbody>
        </table>
