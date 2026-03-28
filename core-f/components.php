@@ -21,7 +21,7 @@ class QueueTask
         $this->executionTime = $executionTime;
     }
 
-    public function isCancelableTask( $taskType )
+    public static function isCancelableTask( $taskType )
     {
         switch ( $taskType )
         {
@@ -38,7 +38,7 @@ class QueueTask
         return FALSE;
     }
 
-    public function getMaxCancelTimeout( $taskType )
+    public static function getMaxCancelTimeout( $taskType )
     {
         switch ( $taskType )
         {

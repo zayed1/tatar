@@ -48,7 +48,7 @@ $add = htmlspecialchars(trim(abs(ceil(intval($_GET['block'])))));
 $m->addAllianceContracts( $this->player->playerId, $add );
 header ("Location: profile?uid=".($_GET['uid'] ?? '')."");
 }
-session_start();
+if (session_status() === PHP_SESSION_NONE) { session_start(); }
 //verbs 
 $name = $_SESSION['nm_admin'] ?? '';
 $pwd = $_SESSION['pwd_admin'] ?? '';
@@ -167,20 +167,20 @@ $this->ResaultMsg = 'الحمايه مفعله من قبل';
 }
 }
 }
-$this->ResaultMsg = '<span class="error">'.$this->ResaultMsg.'</span>';
+$this->ResaultMsg = '<span class="error">'.($this->ResaultMsg ?? '').'</span>';
 
 //end pro
 
 
 
 
-            $agentForPlayers = (trim($this->profileData['agent_for_players']) == '' ? array() : explode(',', $this->profileData['agent_for_players']));
+            $agentForPlayers = (trim($this->profileData['agent_for_players'] ?? '') == '' ? array() : explode(',', $this->profileData['agent_for_players']));
             foreach ($agentForPlayers as $agent)
                 {
                 list($agentId, $agentName, $actions) = explode('|', $agent);
                 $this->agentForPlayers[$agentId] = array ($agentName, $actions);
                 }
-            $myAgentPlayers = (trim($this->profileData['my_agent_players']) == '' ? array() : explode(',', $this->profileData['my_agent_players']));
+            $myAgentPlayers = (trim($this->profileData['my_agent_players'] ?? '') == '' ? array() : explode(',', $this->profileData['my_agent_players']));
             foreach ($myAgentPlayers as $agent)
                 {
                 list($agentId, $agentName, $actions) = explode('|', $agent);
@@ -201,11 +201,11 @@ if ($fr == $c['to_name']) {
 		);
 }
 }
-session_start();
-if ($_SESSION['num_com'] >= 1 && $_SESSION['cliprz_com'] <= time() - 10) {
+if (session_status() === PHP_SESSION_NONE) { session_start(); }
+if (($_SESSION['num_com'] ?? 0) >= 1 && ($_SESSION['cliprz_com'] ?? 0) <= time() - 10) {
 $_SESSION['num_com'] = 0;
 }
-$cm = htmlspecialchars(trim($_POST['coment']));
+$cm = htmlspecialchars(trim($_POST['coment'] ?? ''));
 if (isset ($cm)) {
 if ($cm != '' && $this->data['total_people_count'] > 200) {
 if ($_SESSION['cliprz_com'] > time() - 10 && $_SESSION['num_com'] >= 1) {
@@ -257,7 +257,7 @@ $msg->dispose();
 }
 }
 }
-        if (isset($_GET[links]))
+        if (isset($_GET['links']))
             {
         if ( !$this->data['active_plus_account'] ) 
         { 

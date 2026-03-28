@@ -156,7 +156,7 @@ $q                      = new QueueModel();
 
  $get_num_looting = $q->provider->fetchScalar('SELECT COUNT(*) FROM p_looting WHERE avid ="'.$vid.'" AND pid="'.$this->player->playerId.'"');
  if($get_num_looting > 0){
-     WebHelper::redirect('trevianos');
+     $this->redirect('trevianos');
  }
  
 

@@ -228,9 +228,9 @@ $islamLover = new QueueModel();
 $tatar = $islamLover->provider->fetchRow("SELECT end_date FROM p_queue WHERE proc_type='24'");
 $reset = $islamLover->provider->fetchRow("SELECT end_date FROM p_queue WHERE proc_type='25'");
 $art   = $islamLover->provider->fetchRow("SELECT end_date FROM p_queue WHERE proc_type='26'");
-$this->appConfig['system']['artefect'] = date('Y/m/d H:i:s',strtotime($art['end_date']));
-$this->appConfig['system']['calltatar'] = date('Y/m/d H:i:s',strtotime($tatar['end_date']));
-$this->appConfig['system']['reset'] = date('Y/m/d H:i:s',strtotime($reset['end_date']));
+$this->appConfig['system']['artefect'] = date('Y/m/d H:i:s',strtotime($art['end_date'] ?? 'now'));
+$this->appConfig['system']['calltatar'] = date('Y/m/d H:i:s',strtotime($tatar['end_date'] ?? 'now'));
+$this->appConfig['system']['reset'] = date('Y/m/d H:i:s',strtotime($reset['end_date'] ?? 'now'));
 echo "<p>";
 if (0 < $this->dataGame['protection_remain_sec'] && $this->player != NULL) {
 echo LIST_LANG_T5." <br>";
@@ -280,11 +280,11 @@ if ( $this->player != NULL )
 {
     if ( 1 <= sizeof( $this->playerVillages ) )
     {
-if ($_COOKIE['showVillages'] == '') {
+if (($_COOKIE['showVillages'] ?? '') == '') {
 $b = "opened";
 $s = '';
 }else
-if ($_COOKIE['showVillages'] == 1) {
+if (($_COOKIE['showVillages'] ?? '') == 1) {
 $b = "opened";
 $s = '';
 }else {
@@ -367,11 +367,11 @@ echo "</tbody></table>";
    }
     if ( sizeof( $this->playerLinks ) && $this->data['active_plus_account'] )
     {
-if ($_COOKIE['showLinks'] == '') {
+if (($_COOKIE['showLinks'] ?? '') == '') {
 $bl = "opened";
 $sl = '';
 }else
-if ($_COOKIE['showLinks'] == 1) {
+if (($_COOKIE['showLinks'] ?? '') == 1) {
 $bl = "opened";
 $sl = '';
 }else {
@@ -413,11 +413,11 @@ echo "<tbody ".$sl.">";
 }
 if ($this->data['alliance_name'] != '' && $this->data['active_plus_account']) {
 echo "<p>";
-if ($_COOKIE['showtatarzx'] == '') {
+if (($_COOKIE['showtatarzx'] ?? '') == '') {
 $blg = "closed";
 $slg = 'class="hide"';
 }else
-if ($_COOKIE['showtatarzx'] == 1) {
+if (($_COOKIE['showtatarzx'] ?? '') == 1) {
 $blg = "opened";
 $slg = '';
 }else {
@@ -519,7 +519,7 @@ $nwes = $nw[$mr];
 <p><div id="game">
 <?php
  
-       echo '<br><br><div class="news"><span style="color:#f'. rand(0,99) .'; font-size:11px;"><strong><b>'.$remembrance[rand(0,(count($remembrance)-1))].'</b></strong></span></div>';
+       if (!empty($remembrance)) { echo '<br><br><div class="news"><span style="color:#f'. rand(0,99) .'; font-size:11px;"><strong><b>'.$remembrance[rand(0,(count($remembrance)-1))].'</b></strong></span></div>'; }
 echo "<p>";
   
  echo '<a id="plusMenu">';

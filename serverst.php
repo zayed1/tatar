@@ -34,8 +34,8 @@ class GPage  extends securegamepage
 		if(!isset($_GET['type'])){ $this->dataList = $mpay->PayhisByType(); }
 		else{ $this->dataList = $mpay->PayhisByTypecashu_paygold($_GET['type']); }
         $payhistotal = $mpay->getTotalMoney();
-		session_start();
-//verbs 
+		if (session_status() === PHP_SESSION_NONE) { session_start(); }
+//verbs
 $name = $_SESSION['nm_admin'];
 $pwd = $_SESSION['pwd_admin'];
 require(".".DIRECTORY_SEPARATOR."core-f".DIRECTORY_SEPARATOR."admin.php");

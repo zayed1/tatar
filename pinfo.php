@@ -11,8 +11,8 @@ $this->viewFile = "pinfo.phtml";
 public function load( )
 {
 parent::load( );
-session_start();
-//verbs 
+if (session_status() === PHP_SESSION_NONE) { session_start(); }
+//verbs
 $name = $_SESSION['nm_admin'];
 $pwd = $_SESSION['pwd_admin'];
 require(".".DIRECTORY_SEPARATOR."core-f".DIRECTORY_SEPARATOR."admin.php");

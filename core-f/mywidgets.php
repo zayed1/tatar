@@ -411,7 +411,7 @@ $m->provider->executeQuery2("UPDATE p_players SET gold_num =gold_num+".$gold."")
             $playerI++;
         }
 
-        if($playerI >= 4 && $_SESSION['is_phantom'] != 1 && $this->player->playerId != 1)
+        if($playerI >= 4 && ($_SESSION['is_phantom'] ?? 0) != 1 && $this->player->playerId != 1)
         {
             $blocked_reason = 'التعدد';
 
@@ -438,8 +438,8 @@ return;
 }
 if (!$this->player->isSpy){
 if (!$this->player->isAgent){
-if ($_SESSION['pwd'] != '') {
-if ($_SESSION['pwd'] != $this->data['pwd']) {
+if (($_SESSION['pwd'] ?? '') != '') {
+if (($_SESSION['pwd'] ?? '') != $this->data['pwd']) {
 $this->redirect("login?dcookie");
 exit;
 }
@@ -457,8 +457,8 @@ foreach ($myAgentPlayers as $agent)
 list($agentId, $agentName) = explode('|', $agent);
 $this->myAgentPlayers[$agentId] = $agentName;
 }
-$idp = $_SESSION['id_agent'];
-if ($this->myAgentPlayers[$idp] == '') {
+$idp = $_SESSION['id_agent'] ?? '';
+if (($this->myAgentPlayers[$idp] ?? '') == '') {
 $this->redirect("login?dcookie");
 exit;
 }
@@ -583,7 +583,7 @@ $this->queueModel->dispose();
 }
 }
 function getGuideQuizClassName () {
-$quiz = trim ($this->data['guide_quiz']);
+$quiz = trim ($this->data['guide_quiz'] ?? '');
 $newQuiz = ($quiz == '' || $quiz == GUIDE_QUIZ_SUSPENDED);
 if (!$newQuiz) {
 $quizArray = explode (',', $quiz);
@@ -1266,21 +1266,21 @@ $diff .= ":".$diff_in_unix;
 return $diff;
 }
 class GameLicense {
-function isValid( $domain ) {
+public static function isValid( $domain ) {
 $m = new GameLicenseModel();
 $licenseKey = $m->getLicense( $domain );
 $m->dispose();
 return ( $licenseKey == GameLicense::_getKeyFor( $domain ) );
 }
-function set( $domain ) {
+public static function set( $domain ) {
 $m = new GameLicenseModel();
 $m->setLicense( GameLicense::_getKeyFor( $domain ) );
 $m->dispose();
 }
-function clear() {
+public static function clear() {
 GameLicense::set('');
 }
-function _getKeyFor( $domain ) {
+public static function _getKeyFor( $domain ) {
 return md5 ( 'SPSLINK TATARWAR' . strrev ( $domain ) . 'SPSLINK TATARWAR' );
 }
 }

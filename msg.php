@@ -63,7 +63,7 @@ header ("Location: msg.php?t=4");
         $this->showList         = !(isset($_GET['t']) && is_numeric($_GET['t']) && intval($_GET['t']) == 1);
         $this->selectedTabIndex = isset($_GET['t']) && is_numeric($_GET['t']) && 1 <= intval($_GET['t']) && intval($_GET['t']) <= 5 ? intval($_GET['t']) : 0;
         $this->friendList       = array();
-        $friends_player_ids     = trim($this->data['friend_players']);
+        $friends_player_ids     = trim($this->data['friend_players'] ?? '');
         if ($friends_player_ids != "")
             {
             $friends_player_ids = explode("\n", $friends_player_ids);
@@ -270,7 +270,7 @@ return null;
                             }
                                   $m->sendMessage($this->player->playerId, $this->data['name'], $receiverPlayerId, $this->receiver, $this->subject, $this->body);
 
-                                session_start();  
+                                if (session_status() === PHP_SESSION_NONE) { session_start(); }
                                 $_SESSION['last_msg_send'] = time();
 $_SESSION['clip_request'] = time();
 $_SESSION['num_req'] = ($_SESSION['num_req']+1);

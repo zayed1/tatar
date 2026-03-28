@@ -10,7 +10,7 @@ class paypal_class
     public $ipn_data = array( );
     public $fields = array( );
 
-    public function paypal_class( )
+    public function __construct( )
     {
         $this->paypal_url = "https://www.paypal.com/cgi-bin/webscr";
         $this->last_error = "";
