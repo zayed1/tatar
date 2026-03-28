@@ -941,7 +941,7 @@ $last_art = $result['playerId']."|التتار|".$createdVillage."|".$village_na
         {
         $q = new QueueModel();
         $delete = $q->provider->fetchRow( "select id from p_players where name='التتار' AND player_type='3'");
-        $this->deletePlayer ($delete["id"]);
+        if ($delete) { $this->deletePlayer ($delete["id"]); }
         require_once(MODEL_PATH . "register.php");
         $map_size = $GLOBALS['SetupMetadata']['map_size'];
         $m        = new RegisterModel();

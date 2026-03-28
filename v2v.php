@@ -539,7 +539,7 @@ if ($this->targetVillage['hasHero'])
 $troopsStr .= ',' . $this->data['hero_troop_id'] . ' -1';
 }
 
-    session_start();
+    if (session_status() === PHP_SESSION_NONE) { session_start(); }
 if ($_SESSION['ask20'] <= time() - 120) {
 $_SESSION['num20'] = 0;
 }
@@ -570,7 +570,7 @@ $newTask->villageId = $this->data['selected_village_id'];
 $newTask->toPlayerId = intval ($villageRow['player_id']);
 $newTask->toVillageId = $villageRow['id'];
 $newTask->procParams = $procParams;
-session_start();  
+if (session_status() === PHP_SESSION_NONE) { session_start(); }
 if ($_SESSION['boot'] != 1) {
 $_SESSION['ask10'] = time();
 $_SESSION['num10'] = ($_SESSION['num10']+1);
