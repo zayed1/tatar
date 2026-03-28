@@ -119,7 +119,7 @@ $namek = $m->getPlayerName($_GET['d']);
 
                          if (isset($_POST['po']))
                     {
-                                        switch ($_POST['o'])
+                                        switch ($_POST['o'] ?? '')
                     {
                                         case 1:
                                         $this->redirect('alliance?t=3&a=4');
@@ -339,18 +339,18 @@ $this->redirect ('alliance?t=3&a=2');
                             case 5:
                                                         if ($this->isPost() AND $this->hasAllianceEditRole( ))
                                                         {
-                                                        if(trim ($_POST['ally1']) == $this->allianceData['name'] AND trim ($_POST['ally2']) == $this->allianceData['name2']){
+                                                        if(trim ($_POST['ally1'] ?? '') == $this->allianceData['name'] AND trim ($_POST['ally2'] ?? '') == $this->allianceData['name2']){
                                                         return NULL;
                                                         }
                                                         $this->er = true;
-                                                        if (!$m->allianceExists(trim ($_POST['ally1'])))
+                                                        if (!$m->allianceExists(trim ($_POST['ally1'] ?? '')))
                                                         {
-                                                        $m->editalliancename('name',trim ($_POST['ally1']),$allianceId);
+                                                        $m->editalliancename('name',trim ($_POST['ally1'] ?? ''),$allianceId);
                                                         $this->hasErrors = 'تم حفظ التغييرات';
                                                         $this->er = false;
                                                         }
-                                                        if(trim ($_POST['ally2']) != '' AND trim ($_POST['ally2']) != $this->allianceData['name2']){
-                                                        $m->editalliancename('name2',trim ($_POST['ally2']),$allianceId);
+                                                        if(trim ($_POST['ally2'] ?? '') != '' AND trim ($_POST['ally2'] ?? '') != $this->allianceData['name2']){
+                                                        $m->editalliancename('name2',trim ($_POST['ally2'] ?? ''),$allianceId);
                                                         $this->hasErrors = 'تم حفظ التغييرات';
                                                         $this->er = false;
                                                         }
@@ -368,19 +368,19 @@ $this->redirect ('alliance?t=3&a=2');
                                                         if ($this->isPost()){
                                                         $this->remove = true;
                                                         $this->passok = false;
-                                                        if($this->isMemberOfAlliance(intval($_POST['a_user'])) == 1){
+                                                        if($this->isMemberOfAlliance(intval($_POST['a_user'] ?? 0)) == 1){
                                                         $this->passok = true;
                                                         }else{
                                                         $this->nameno = 'اللاعب ليس من ضمن تحالفك';
                                                         }
                                                         if(isset($_POST['pwd'])){
-                                                        if(md5($_POST['pwd']) != $this->data['pwd'] ){
+                                                        if(md5($_POST['pwd'] ?? '') != $this->data['pwd'] ){
                                                         $this->nopass = 'كلمة المرور غير صحيحة';
-                                                        }elseif($this->isMemberOfAlliance(intval($_POST['a_user'])) == 1){
-                                                        $idpn = $this->player->playerId.','.intval($_POST['a_user']);
+                                                        }elseif($this->isMemberOfAlliance(intval($_POST['a_user'] ?? 0)) == 1){
+                                                        $idpn = $this->player->playerId.','.intval($_POST['a_user'] ?? 0);
 
                                                         $this->nopass = 'تم ازالة اللاعب';
-                                                        $this->allianceData['players_ids'] = $m->removeFromAlliance(intval($_POST['a_user']), $allianceId, $this->allianceData['players_ids'], $this->allianceData['player_count']);
+                                                        $this->allianceData['players_ids'] = $m->removeFromAlliance(intval($_POST['a_user'] ?? 0), $allianceId, $this->allianceData['players_ids'], $this->allianceData['player_count']);
             --$this->allianceData['player_count'];
                                                         }
                                                         }

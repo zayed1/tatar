@@ -19,9 +19,9 @@ class GPage  extends securegamepage
     {
         parent::__construct();
         $this->viewFile = "adwp.phtml"; //forum
-if ($_GET['t'] == 5) {
+if (($_GET['t'] ?? '') == 5) {
         $this->contentCssClass = "plus";
-    } else if ($_GET['t'] == 7){$this->contentCssClass = "forum";} else{
+    } else if (($_GET['t'] ?? '') == 7){$this->contentCssClass = "forum";} else{
         $this->contentCssClass = "messages";
 
 } }

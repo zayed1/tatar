@@ -26,7 +26,7 @@ class GPage extends GamePage
         parent::load( );
 
         $m               = new RegisterModel();
-        $id              = trim($_GET['id']);
+        $id              = trim($_GET['id'] ?? '');
 
              $get_register_first = $m->get_register_first($id);
 
@@ -54,7 +54,7 @@ class GPage extends GamePage
                   $Ip = WebHelper::getclientip( );
                   if (session_status() === PHP_SESSION_NONE) { session_start(); }
                   $_SESSION['is_rig'] = $get_register_first['name'];
-                  $result = $m->createNewPlayer( $get_register_first['name'], $get_register_first['email'], md5($get_register_first['pwd']), $_POST['tid'], $_POST['kid'], $villageName, $this->setupMetadata['map_size'], PLAYERTYPE_NORMAL, 1, $this->SNdata, $Ip, $get_register_first['invite'] ,  $_POST['fid'] );
+                  $result = $m->createNewPlayer( $get_register_first['name'], $get_register_first['email'], md5($get_register_first['pwd']), ($_POST['tid'] ?? 0), ($_POST['kid'] ?? 0), $villageName, $this->setupMetadata['map_size'], PLAYERTYPE_NORMAL, 1, $this->SNdata, $Ip, $get_register_first['invite'] ,  ($_POST['fid'] ?? 0) );
                   $subject = "مرحبا بك ".$get_register_first['name']." في عودة التتار";
                   $time = date('Y-m-d G:i:s', strtotime("+1 seconds"));
                   $player = $m->provider->fetchRow("SELECT players_count FROM g_summary");
