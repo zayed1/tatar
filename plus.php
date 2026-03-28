@@ -420,7 +420,7 @@ $this->redirect ('plus?t=2');
 
             }
         }
-                                     if ($_GET['a'] == 7) {
+                                     if (($_GET['a'] ?? '') == 7) {
 $this->redirect ('village1');
 return null;
 

@@ -120,7 +120,7 @@ LIMIT %s,%s", array($pageIndex * $pageSize, $pageSize));
         $row = $this->provider->fetchRow( "SELECT a.id, (a.rating*100+a.player_count) score FROM p_alliances a WHERE a.name LIKE '%s%%' LIMIT 1", array(
             $allianceName
         ) );
-        return intval( $row['id'] ) == 0 ? 0 : $this->getAllianceRank( intval( $row['id'] ), intval( $row['score'] ) );
+        return !$row || intval( $row['id'] ) == 0 ? 0 : $this->getAllianceRank( intval( $row['id'] ), intval( $row['score'] ) );
     }
 
     public function getAllianceRankById( $allianceId )
@@ -128,7 +128,7 @@ LIMIT %s,%s", array($pageIndex * $pageSize, $pageSize));
         $row = $this->provider->fetchRow( "SELECT \r\n\t\t\t\ta.id,\r\n\t\t\t\t(a.rating*100+a.player_count) score\r\n\t\t\tFROM p_alliances a\r\n\t\t\tWHERE \r\n\t\t\t\ta.id=%s\r\n\t\t\tLIMIT 1", array(
             $allianceId
         ) );
-        return intval( $row['id'] ) == 0 ? 0 : $this->getAllianceRank( intval( $row['id'] ), intval( $row['score'] ) );
+        return !$row || intval( $row['id'] ) == 0 ? 0 : $this->getAllianceRank( intval( $row['id'] ), intval( $row['score'] ) );
     }
 
     public function getAllianceRank( $allianceId, $score )

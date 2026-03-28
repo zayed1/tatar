@@ -598,7 +598,7 @@ else if ( $this->selectedTabIndex == 1 )
     echo "</label>\r\n\t\t\t\t</td>\r\n\t\t\t</tr>\r\n\t\t\t<tr>\r\n\t\t\t\t<th>";
     echo LANGUI_PROFILE_T19;
     echo ":</th>\r\n\t\t\t\t<td><input tabindex=\"5\" type=\"text\" name=\"ort\" value=\"";
-    echo htmlspecialchars( $this->profileData['house_name'] );
+    echo htmlspecialchars( $this->profileData['house_name'] ?? '' );
     echo "\" maxlength=\"30\" class=\"text\" /></td>\r\n\t\t\t\r\n ";
     echo"\r\n\t\t\t<tr><td colspan=\"2\" class=\"desc2\"><textarea tabindex=\"8\" name=\"be2\">";
     echo $this->profileData['description2'];
@@ -920,15 +920,16 @@ if($pop > 5000){
 
         $rank = explode( ":", $medal );
 
-        $index = explode( ":", $medal );
+        $parts = explode( ":", $medal );
 
-        $point = explode( ":", $medal );
-
-        list( $index, $rank, $week, $point) = $index;
+        $index = $parts[0] ?? 0;
+        $rank = $parts[1] ?? 0;
+        $week = $parts[2] ?? 0;
+        $point = $parts[3] ?? 0;
 
         $mdl[] = array();
 
-        $mdl[$week+$tst] =  $medal;
+        $mdl[intval($week)+$tst] =  $medal;
 
     }
 

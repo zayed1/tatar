@@ -43,7 +43,7 @@ header ("Location: msg.php?t=4");
 }
 
 if (isset ($_GET['id'])) {
-if ($this->player->spywin) {
+if ($this->player->spywin ?? false) {
 $this->redirect ('village1.php');
 return null;
 }

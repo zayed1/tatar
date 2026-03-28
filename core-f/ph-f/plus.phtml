@@ -585,7 +585,7 @@ if ($this->page == 0) {
 
       $upes =  ($GLOBALS['AppConfig']['Game']['upes']) ;
      $JC_8_cost = $GLOBALS['AppConfig']['Game']['8_cost'] ;
-      $new_reg_date= $shadiiii + strtotime('-'. $protection .' hour') ;
+      $new_reg_date= strtotime($this->dataGame['registration_date'] ?? 'now') + strtotime('-'. $protection .' hour') ;
       $registration_date = date('Y-m-d H:i:s', $new_reg_date);
       
       $u1= $this->queueModel->provider->fetchScalar( "SELECT COUNT(*) FROM `p_queue` WHERE  proc_type=24  " ); 
@@ -715,7 +715,7 @@ echo "<tr>\r\n\t\t\t<td class=\"man\"><a href=\"#\" onclick=\"return showManual(
 <?php
 
     echo "\t\r\n\t</tbody>\r\n</table>\r\n";
-$gc = $GLOBALS['AppConfig']['Game']['plus8'];
+$gc = $GLOBALS['AppConfig']['Game']['plus8'] ?? 0;
 $c = $this->data['goldclub'];
 $key = $this->data['update_key'];
 ?>
