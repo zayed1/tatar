@@ -83,14 +83,14 @@ echo'<center>';
 // الاوسمة 
 	
 	
-	if ($_POST['add']) {
-      $plus = Trim(stripslashes(htmlspecialchars($_POST['plus'])));
-$hmh = htmlentities($_POST['hmh']);
+	if ($_POST['add'] ?? false) {
+      $plus = Trim(stripslashes(htmlspecialchars($_POST['plus'] ?? '')));
+$hmh = htmlentities($_POST['hmh'] ?? '');
 $q = new QueueModel();
 $p_emailn = $this->queueModel->provider->fetchScalar('SELECT name FROM p_players WHERE email ="'.$plus.'"');
 $p_email = $this->queueModel->provider->fetchScalar('SELECT LOWER(email) FROM p_players WHERE email ="'.$plus.'"');
-$pm_email = $this->queueModel->provider->fetchScalar('SELECT email FROM p_medals WHERE email ="'.$p_email.'"'); // تاكيد وجود الايميل 
-	if(!$pm_email and $_POST['plus'] !=null ){
+$pm_email = $this->queueModel->provider->fetchScalar('SELECT email FROM p_medals WHERE email ="'.$p_email.'"'); // تاكيد وجود الايميل
+	if(!$pm_email and ($_POST['plus'] ?? null) !=null ){
 $q->provider->executeQuery2 ("INSERT INTO p_medals(email,".$hmh.") VALUES ('$plus','1');");
 	echo "<br><b>تم اضافة وسام ".$hmh." للاعب ".$p_emailn."</b><br>";
 echo '<meta http-equiv="refresh" content="2">';
@@ -103,9 +103,9 @@ echo '<meta http-equiv="refresh" content="2">';
 
 }
   
-  if ($_POST['add1']) {
-      $plus = Trim(stripslashes(htmlspecialchars($_POST['plus'])));
-$hmh = htmlentities($_POST['hmh']);
+  if ($_POST['add1'] ?? false) {
+      $plus = Trim(stripslashes(htmlspecialchars($_POST['plus'] ?? '')));
+$hmh = htmlentities($_POST['hmh'] ?? '');
 $q = new QueueModel();
 $p_email = $this->queueModel->provider->fetchScalar('SELECT LOWER(email) FROM p_players WHERE email ="'.$plus.'"');
 $pm_email = $this->queueModel->provider->fetchScalar('SELECT email FROM p_medals WHERE email ="'.$p_email.'"'); // تاكيد وجود الايميل 

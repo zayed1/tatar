@@ -57,7 +57,7 @@ $(document).ready(function(){
 </style>
 <?php 
 
-if ( ! isset ( ($_GET['id'] ?? 0) ) and ! isset ( $_GET['ok'] ) )
+if ( ! isset ( $_GET['id'] ) and ! isset ( $_GET['ok'] ) )
 {
 	header( "location:village3" );
 }
@@ -178,7 +178,7 @@ if ( isset( $_GET['farmmmm'] ) )
 		
 		<?php
 		} 
-		if ( isset ( $_GET['go'] ) and isset ( ($_GET['id'] ?? 0) ) and is_numeric( ($_GET['id'] ?? 0) ) and ($_GET['id'] ?? 0) > 0 AND $server_startz <= 0 )	
+		if ( isset ( $_GET['go'] ) and isset ( $_GET['id'] ) and is_numeric( ($_GET['id'] ?? 0) ) and ($_GET['id'] ?? 0) > 0 AND $server_startz <= 0 )	
 		{
 
 $z3mah = new QueueModel();
@@ -377,7 +377,7 @@ $this->redirect ('village_type.php?farm&ok');
 		
 		<?php
 				}
-		if ( isset ( $_GET['go'] ) and isset ( ($_GET['id'] ?? 0) ) and is_numeric( ($_GET['id'] ?? 0) ) and ($_GET['id'] ?? 0) > 0 ) 
+		if ( isset ( $_GET['go'] ) and isset ( $_GET['id'] ) and is_numeric( ($_GET['id'] ?? 0) ) and ($_GET['id'] ?? 0) > 0 ) 
 		{
 			
 

@@ -14,8 +14,8 @@ if (isset($_GET['cropfinder']) && $this->data['active_plus_account']) {
 <div class="cropfinder_input">
                 <div class="row">
                         <span class="cropfinder_head">موقع البداية :</span>
-<span>X</span><input class="text" maxlength="4" value="<?php if (isset(($_POST['y'] ?? ''))) {echo ($_POST['y'] ?? ''); } else {echo $this->data['rel_y']; } ?>" name="y">
-<span>Y</span><input class="text" maxlength="4" value="<?php if (isset(($_POST['x'] ?? ''))) {echo ($_POST['x'] ?? ''); } else {echo $this->data['rel_x']; } ?>" name="x">
+<span>X</span><input class="text" maxlength="4" value="<?php if (isset($_POST['y'])) {echo ($_POST['y'] ?? ''); } else {echo $this->data['rel_y']; } ?>" name="y">
+<span>Y</span><input class="text" maxlength="4" value="<?php if (isset($_POST['x'])) {echo ($_POST['x'] ?? ''); } else {echo $this->data['rel_x']; } ?>" name="x">
                 </div>
             <div class="row">
                         <span class="cropfinder_head">النوع :</span>
