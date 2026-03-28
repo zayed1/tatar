@@ -712,7 +712,7 @@ class QueueModel extends ModelBase
     function fetchQueue($playerId)
         {
         $expr = '';
-        if (trim($this->page->data['village_oases_id']) != '')
+        if (trim($this->page->data['village_oases_id'] ?? '') != '')
             {
             $expr = sprintf(' OR q.to_village_id IN (%s)', $this->page->data['village_oases_id']);
             }
@@ -760,7 +760,7 @@ class QueueModel extends ModelBase
                 {
                 $oasisId  = $row['building_id'];
                 $ownOasis = FALSE;
-                if (trim($this->page->data['village_oases_id']) != '')
+                if (trim($this->page->data['village_oases_id'] ?? '') != '')
                     {
                     $oArr = explode(',', trim($this->page->data['village_oases_id']));
                     foreach ($oArr as $oid)

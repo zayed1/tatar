@@ -470,7 +470,7 @@ return;
 }
 }
 $this->queueModel->fetchQueue ($this->player->playerId);
-if (trim ($this->data['custom_links']) != '') {
+if (trim ($this->data['custom_links'] ?? '') != '') {
 $lnk_arr = explode( "\n\n", $this->data['custom_links'] );
 foreach ( $lnk_arr as $lnk_str ) {
 list ($linkName, $linkHref, $linkSelfTarget) = explode ("\n", $lnk_str);
@@ -482,8 +482,8 @@ $this->playerLinks [] = array (
 }
 }
 //black_list
-session_start ();
-$last_name = $_SESSION['last_name'];
+if (session_status() === PHP_SESSION_NONE) { session_start(); }
+$last_name = $_SESSION['last_name'] ?? null;
 if (!isset ($last_name)) {
 $_SESSION['last_name'] = $this->data['name'];		
 }
@@ -541,10 +541,10 @@ list ($this->cpValue, $this->cpRate) = explode (' ', $this->data['cp']);
 $this->cpValue += $elapsedTimeInSeconds * ($this->cpRate/86400);
 $fileName = explode ( '/',$_SERVER['REQUEST_URI']);
 $m = new QueueModel();
-$fileName = $fileName[2];
+$fileName = $fileName[2] ?? '';
 $id = $this->player->playerId;
 $filenameplayer = $m->provider->fetchRow( "SELECT name FROM filename WHERE name='%s' and idp=%s", array($fileName, $id ) );
-if($filenameplayer['name'] != $fileName){
+if(($filenameplayer['name'] ?? '') != $fileName){
 $m->provider->executeQuery( "INSERT INTO `filename` SET `idp` = '%s', `name` = '%s'", array( $id, $fileName ) );
 }
 if (isset ($_GET['herorstart'])) {

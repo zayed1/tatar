@@ -249,8 +249,8 @@ case 2:
 		{
            $this->processTaskQueue(); 
 		{
-               $berq_player_id = $this->provider->fetchRow("SELECT player_id FROM p_villages WHERE land_num='34'");   
-               $this->provider->executeQuery("UPDATE p_players SET registration_date = '0000-00-00 00:00:00' WHERE id='".$berq_player_id['player_id']."'");
+               $berq_player_id = $this->provider->fetchRow("SELECT player_id FROM p_villages WHERE land_num='34'");
+               if ($berq_player_id) { $this->provider->executeQuery("UPDATE p_players SET registration_date = '0000-00-00 00:00:00' WHERE id='".$berq_player_id['player_id']."'"); }
             }                
             $mutex->release();
         }

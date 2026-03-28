@@ -194,7 +194,8 @@ echo '<a href="h1231restore.php"><b><font style="color:Tomato">إرجاع الب
 <a href="plus?t=2"><strong><span style="color:#007700">حساب</span></strong> <span style="color:#eea113"><strong>بلاس</strong></span></a></p>
 <?php
 include('core-f/config-f/s1.php');
-$link = mysqli_connect($AppConfig['db']['host'], $AppConfig['db']['user'], $AppConfig['db']['password'], $AppConfig['db']['database']);
+$db_port_g = isset($AppConfig['db']['port']) ? intval($AppConfig['db']['port']) : 3306;
+$link = mysqli_connect($AppConfig['db']['host'], $AppConfig['db']['user'], $AppConfig['db']['password'], $AppConfig['db']['database'], $db_port_g);
 if (mysqli_connect_errno())
 {
     die(mysqli_connect_errno());

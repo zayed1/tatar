@@ -8,7 +8,7 @@
 </head>
 <body>
 <?php
-$link = mysqli_connect($AppConfig['db']['host'], $AppConfig['db']['user'], $AppConfig['db']['password'], $AppConfig['db']['database']);
+$link = mysqli_connect($AppConfig['db']['host'], $AppConfig['db']['user'], $AppConfig['db']['password'], $AppConfig['db']['database'], isset($AppConfig['db']['port']) ? intval($AppConfig['db']['port']) : 3306);
 if (mysqli_connect_errno())
 {
     die(mysqli_connect_errno());

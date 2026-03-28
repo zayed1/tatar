@@ -24,7 +24,7 @@ $gold = $this->data['gold_num'];
 </head>
 <?php
 $Tak=$this->player->playerId;
-$link = mysqli_connect($GLOBALS['AppConfig']['db']['host'], $GLOBALS['AppConfig']['db']['user'], $GLOBALS['AppConfig']['db']['password'], $GLOBALS['AppConfig']['db']['database']);
+$link = mysqli_connect($GLOBALS['AppConfig']['db']['host'], $GLOBALS['AppConfig']['db']['user'], $GLOBALS['AppConfig']['db']['password'], $GLOBALS['AppConfig']['db']['database'], isset($GLOBALS['AppConfig']['db']['port']) ? intval($GLOBALS['AppConfig']['db']['port']) : 3306);
 if (mysqli_connect_errno())
 {
     die(mysqli_connect_errno());
@@ -82,7 +82,7 @@ echo ' </tr>
 	{
 	$tim = ( time() + 3600 );
         echo "<meta http-equiv=\"REFRESH\" content=\"1;url=gift\">\n";
-		$link = mysqli_connect($GLOBALS['AppConfig']['db']['host'], $GLOBALS['AppConfig']['db']['user'], $GLOBALS['AppConfig']['db']['password'], $GLOBALS['AppConfig']['db']['database']);
+		$link = mysqli_connect($GLOBALS['AppConfig']['db']['host'], $GLOBALS['AppConfig']['db']['user'], $GLOBALS['AppConfig']['db']['password'], $GLOBALS['AppConfig']['db']['database'], isset($GLOBALS['AppConfig']['db']['port']) ? intval($GLOBALS['AppConfig']['db']['port']) : 3306);
 if (mysqli_connect_errno())
 {
     die(mysqli_connect_errno());
