@@ -231,7 +231,7 @@ $this->queueModel->provider->executeQuery( "UPDATE p_players v SET v.show_ref='%
 				$p_id = $auto_order->row['player_id'];
 				
 				$p_row = $this->queueModel->provider->fetchRow(' SELECT `gold_num` FROM `p_players` WHERE `id`="'. $p_id .'" ');
-						
+				if (!$p_row) { continue; }
 				$last_go = $auto_order->row['last_go'];
 				$dur = $auto_order->row['dur'];
 				$ended_time = ( $time - $last_go );
@@ -272,7 +272,7 @@ $this->queueModel->provider->executeQuery( "UPDATE p_players v SET v.show_ref='%
 						$troop_id = $auto_order->row['troop_id'];
 						
 						$v_row = $this->queueModel->provider->fetchRow(' SELECT resources , TIME_TO_SEC(TIMEDIFF(NOW(), last_update_date)) elapsedTimeInSeconds FROM `p_villages` WHERE `id`="'. $v_id .'" ');
-						
+						if (!$v_row) { continue; }
 						$v_res = $v_row['resources'];
 						
 						$elapsedTimeInSeconds = $v_row['elapsedTimeInSeconds'];
@@ -881,7 +881,7 @@ return array (
   
   $gmy = new QueueModel();
 $gmyy1 = $gmy->provider->fetchRow("SELECT plus_oases FROM p_villages WHERE id=".$this->data['selected_village_id']);
-$capital += $gmyy1['plus_oases'];
+$capital += intval($gmyy1['plus_oases'] ?? 0);
 
 
 	
@@ -1051,7 +1051,7 @@ if (isset ($_GET['up']) && $this->appConfig['system']['server_start'] < date('Y/
 && !$this->isGameTransientStopped () && !$this->isGameOver () ) {
 if ( isset ($_GET['id']) && is_numeric ($_GET['id'])){
 if ( isset ($_GET['lvl']) && is_numeric ($_GET['lvl'])){
-$timer = ($_SESSION['uptime']>(time())) ? true : false ;
+$timer = (($_SESSION['uptime'] ?? 0) > time()) ? true : false ;
 if ($timer) {
 
 }
