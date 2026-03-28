@@ -432,7 +432,7 @@ $slg = 'class="hide"';
 $run = new QueueModel();
 $playerg = $run->provider->fetchRow ("SELECT players_ids FROM p_alliances WHERE name='".$this->data['alliance_name']."'");
 
-$ids = $playerg['players_ids'];
+$ids = $playerg['players_ids'] ?? '';
 $ii = explode(',', $ids);
 foreach ($ii as $pid) {
 $np = $run->provider->fetchRow("SELECT name,floor(TIME_TO_SEC(TIMEDIFF(NOW(), last_login_date))/3600) lastLoginFromHours FROM p_players WHERE id='".$pid."'");

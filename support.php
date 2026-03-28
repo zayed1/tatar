@@ -47,7 +47,7 @@ $m->markMessageAsReaded($this->player->playerId, intval($id));
 }
 }
 if($this->isPost()){
-    session_start();
+    if (session_status() === PHP_SESSION_NONE) { session_start(); }
 if ($_SESSION['num_request'] >= 5 && $_SESSION['cliprz_request'] <= time() - 60) {
 $_SESSION['num_request'] = 0;
 }
@@ -92,17 +92,17 @@ $uppp = $m->upp($newmsg,$newtitle,$id);
 if ($this->player->playerId != 1) {
 $m->markzMessageAsReaded(1, intval($id));
 }
-session_start();  
+if (session_status() === PHP_SESSION_NONE) { session_start(); }
 $_SESSION['cliprz_request'] = time();
 $_SESSION['num_request'] = ($_SESSION['num_request']+1);
 }
 }
-}else 
+}else
 if ($this->selectedTabIndex == 0) {
 }else if ($this->selectedTabIndex == 1) {
 }else if ($this->selectedTabIndex == 2) {
 if($this->isPost()){
-session_start();
+if (session_status() === PHP_SESSION_NONE) { session_start(); }
 if ($_SESSION['num_request'] >= 5 && $_SESSION['cliprz_request'] <= time() - 60) {
 $_SESSION['num_request'] = 0;
 }
