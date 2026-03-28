@@ -9,11 +9,11 @@
 <body>
 <div id="content" align="right"><h1>دليل اللعبه</h1>
     <div id="textmenu">
-        <a href="manual.php" <?php if ($_GET['t'] == 0) { ?>class="selected"<?php }else{} ?>>دليل اللعبه</a> |
-        <a href="manual.php?t=1" <?php if ($_GET['t'] == 1) { ?>class="selected"<?php }else{} ?>>دليل التحف</a>
+        <a href="manual.php" <?php if (($_GET['t'] ?? 0) == 0) { ?>class="selected"<?php }else{} ?>>دليل اللعبه</a> |
+        <a href="manual.php?t=1" <?php if (($_GET['t'] ?? 0) == 1) { ?>class="selected"<?php }else{} ?>>دليل التحف</a>
     </div>
 
-<?php if ($_GET['t'] == 1) { ?>
+<?php if (($_GET['t'] ?? 0) == 1) { ?>
 <h3>انواع التحف وتأثيرها</h3>
 1-<b>تحفة المهاجم الشرس</b> : تزيد قوة الجيوش الهجوميه <br />
 2-<b>تحفة المهاجم الاسطوري</b> : متطلبات موارد جيوش صاحب التحفه تكون اقل بالنصف او بالربع <br />
