@@ -280,7 +280,7 @@ else
         {
             if ( $this->data['is_special_village'] )
             {
-                    if ( $_GET['id'] == 25 || $_GET['id'] == 26 || $_GET['id'] == 29 || $_GET['id'] == 30 || $_GET['id'] == 33 )
+                    if ( ($_GET['id'] ?? 0) == 25 || ($_GET['id'] ?? 0) == 26 || ($_GET['id'] ?? 0) == 29 || ($_GET['id'] ?? 0) == 30 || ($_GET['id'] ?? 0) == 33 )
                     {
                         if ($item_id != 40)
                         {
@@ -295,7 +295,7 @@ else
 }
                 do
                 {
-                    if ( $_GET['id'] == 25 || $_GET['id'] == 26 || $_GET['id'] == 29 || $_GET['id'] == 30 || $_GET['id'] == 33 )
+                    if ( ($_GET['id'] ?? 0) == 25 || ($_GET['id'] ?? 0) == 26 || ($_GET['id'] ?? 0) == 29 || ($_GET['id'] ?? 0) == 30 || ($_GET['id'] ?? 0) == 33 )
                     {
                         if ( !( $item_id != 40 ) )
                         {
@@ -313,15 +313,15 @@ else
                     continue;
                 } while ( 0 );
             }
-            if ( $_GET['id'] == 39 && $item_id != 16 )
+            if ( ($_GET['id'] ?? 0) == 39 && $item_id != 16 )
             {
                 continue;
             }
-            if ( $_GET['id'] == 40 && $item_id != 31 && $item_id != 32 && $item_id != 33 )
+            if ( ($_GET['id'] ?? 0) == 40 && $item_id != 31 && $item_id != 32 && $item_id != 33 )
             {
                 continue;
             }
-            if ( $_GET['id'] != 39 && $_GET['id'] != 40 && ( $item_id == 16 || $item_id == 31 || $item_id == 32 || $item_id == 33 ) )
+            if ( ($_GET['id'] ?? 0) != 39 && ($_GET['id'] ?? 0) != 40 && ( $item_id == 16 || $item_id == 31 || $item_id == 32 || $item_id == 33 ) )
             {
                 continue;
             }
@@ -390,7 +390,7 @@ $gid= 10;
         }
     }
     echo "\r\n";
-    if ( $_GET['id'] != 39 && $_GET['id'] != 40 && !( $this->data['is_special_village'] && ( $_GET['id'] == 25 || $_GET['id'] == 26 || $_GET['id'] == 29 || $_GET['id'] == 30 || $_GET['id'] == 33 ) ) )
+    if ( ($_GET['id'] ?? 0) != 39 && ($_GET['id'] ?? 0) != 40 && !( $this->data['is_special_village'] && ( ($_GET['id'] ?? 0) == 25 || ($_GET['id'] ?? 0) == 26 || ($_GET['id'] ?? 0) == 29 || ($_GET['id'] ?? 0) == 30 || ($_GET['id'] ?? 0) == 33 ) ) )
     {
 
         echo "<p class=\"switch\"><a id=\"soon_link\" href=\"javascript:showPane('soon');\">";
