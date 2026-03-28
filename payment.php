@@ -425,7 +425,7 @@ class GPage extends PopupPage
 
 
 
-    public function GPage()
+    public function __construct()
 
     {
 

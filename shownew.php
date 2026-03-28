@@ -4,7 +4,7 @@ require_once( MODEL_PATH."adminweb.php" );
 class GPage extends ProcessVillagePage{
         public $saved = NULL;
         public $siteNews = NULL;
-        public function GPage(){
+        public function __construct(){
         parent::processvillagepage( );
         $this->viewFile = "shownew.phtml";
         $this->contentCssClass = "messages";

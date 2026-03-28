@@ -3,9 +3,9 @@ require(".".DIRECTORY_SEPARATOR."core-f".DIRECTORY_SEPARATOR."boot.php");
 require_once( LIB_PATH."bot.php" );
 class GPage extends DefaultPage
 {
-        public function GPage()
+        public function __construct()
         {
-                parent::defaultpage();
+                parent::__construct();
         }
         public function load()
         {

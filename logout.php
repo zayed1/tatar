@@ -2,9 +2,9 @@
 require( ".".DIRECTORY_SEPARATOR."core-f".DIRECTORY_SEPARATOR."boot.php" );
 class GPage extends securegamepage
 {
-    public function GPage( )
+    public function __construct()
     {
-        parent::securegamepage( );
+        parent::__construct();
         $this->viewFile = "logout.phtml";
         $this->contentCssClass = "logout";
     }

@@ -15,9 +15,9 @@ class GPage  extends securegamepage
     public $pageSize = 1000;
     public $pageIndex = NULL;
     public $pageCount = NULL;
-    public function GPage( )
+    public function __construct()
     {
-        parent::securegamepage( );
+        parent::__construct();
         $this->viewFile = "adwp.phtml"; //forum
 if ($_GET['t'] == 5) {
         $this->contentCssClass = "plus";

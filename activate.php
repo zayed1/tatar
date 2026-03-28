@@ -15,9 +15,9 @@ class GPage extends GamePage
     public $SNdata = NULL;
     public $UserID = 0;
 
-    public function GPage( )
+    public function __construct()
     {
-        parent::gamepage( );
+        parent::__construct();
         $this->viewFile        = "activate.phtml";
         $this->contentCssClass = "signup";
     }

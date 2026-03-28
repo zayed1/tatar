@@ -4,8 +4,8 @@ require_once(MODEL_PATH . 'village4.php');
 require_once(MODEL_PATH . 'resources.php'); 
 class GPage extends SecureGamePage {
         var $selectedTabIndex;
-        function GPage() {
-                parent::SecureGamePage();
+        function __construct() {
+                parent::__construct();
                 $this->viewFile                                 = 'village4.phtml';
                 $this->contentCssClass = 'village3';
         }

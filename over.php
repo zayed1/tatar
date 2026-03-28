@@ -5,7 +5,7 @@ require_once( MODEL_PATH."index.php" );
 class GPage extends ProcessVillagePage{
 
     public $playerData = NULL;
-        public function GPage(){
+        public function __construct(){
         parent::processvillagepage( );
         $this->viewFile = "over.phtml";
         $this->contentCssClass = "messages";

@@ -15,9 +15,9 @@ class GPage extends SecureGamePage
     var $adminActionMessage = '';
     var $_tb = null;
     var $tatarRaised = null;
-    function GPage()
+    function __construct()
         {
-        parent::securegamepage();
+        parent::__construct();
         $this->viewFile        = 'statistics.phtml';
         $this->contentCssClass = 'statistics';
         }

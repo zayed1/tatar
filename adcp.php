@@ -7,8 +7,8 @@ class GPage extends SecureGamePage
         var $VillagesList;
         var $VillageList;
 
-        function GPage(){
-                parent::securegamepage();
+        function __construct(){
+                parent::__construct();
                 $this->viewFile = "adcp.phtml";
                 $this->contentCssClass = "plus";
         }

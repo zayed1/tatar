@@ -2,9 +2,9 @@
 require(".".DIRECTORY_SEPARATOR."core-f".DIRECTORY_SEPARATOR."boot.php");
 class GPage extends DefaultPage
 {
-        public function GPage()
+        public function __construct()
         {
-                parent::defaultpage();
+                parent::__construct();
         }
         public function load()
         {

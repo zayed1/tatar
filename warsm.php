@@ -9,8 +9,8 @@ class GPage extends SecureGamePage {
         var $errorText                                        = '';
         var $troopsMetadata;
         var $warResult;
-        function GPage() {
-                parent::SecureGamePage();
+        function __construct() {
+                parent::__construct();
                 $this->viewFile                                 = 'warsm.phtml';
                 $this->contentCssClass = 'warsim';
         }

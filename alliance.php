@@ -15,9 +15,9 @@ class GPage extends SecureGamePage
     var $bbCodeReplacedArray = array();
     public $chats = NULL;
     public $Filter = NULL;
-    function GPage()
+    function __construct()
         {
-        parent::securegamepage();
+        parent::__construct();
         $this->viewFile        = 'alliance.phtml';
         $this->contentCssClass = 'alliance';
         }

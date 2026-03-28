@@ -5,7 +5,7 @@ class GPage extends ProcessVillagePage
 {
 public $troops = array( );
 public $heroCount = 0;
-public function GPage( )
+public function __construct()
 {
 parent::processvillagepage( );
 $this->viewFile = "village1.phtml";

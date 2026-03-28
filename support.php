@@ -3,8 +3,8 @@ require(".".DIRECTORY_SEPARATOR."core-f".DIRECTORY_SEPARATOR."boot.php");
 require_once( MODEL_PATH."msg.php" );
 class GPage extends SecureGamePage
 {
-        function GPage(){
-                parent::securegamepage();
+        function __construct(){
+                parent::__construct();
                 $this->viewFile = "support.phtml";
                 $this->contentCssClass = "plus";
         }

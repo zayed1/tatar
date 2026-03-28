@@ -10,7 +10,7 @@ class GPage extends villagepage{
     public $hasMarketplace = NULL;
     public $hasRallyPoint = NULL;
 
-    public function GPage( )
+    public function __construct()
     {
         parent::villagepage( );
         $this->viewFile = "village3.phtml";

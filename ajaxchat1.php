@@ -8,10 +8,10 @@ class GPage extends SecureGamePage
     public $chats = NULL;
     public $Filter = NULL;
 
-    public function GPage( )
+    public function __construct()
     {
         $this->customLogoutAction = TRUE;
-        parent::securegamepage( );
+        parent::__construct();
         if ( $this->player == NULL )
         {
             exit( 0 );

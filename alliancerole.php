@@ -6,10 +6,10 @@ class GPage extends SecureGamePage
     var $allianceData = null;
     var $playerName = null;
     var $playerRoles = null;
-    function GPage()
+    function __construct()
         {
         $this->customLogoutAction = TRUE;
-        parent::securegamepage();
+        parent::__construct();
         if ($this->player == NULL)
             {
             exit(0);

@@ -8,9 +8,9 @@ class GPage extends SecureGamePage
     public $packageIndex = -1;
     public $plusTable = NULL;
 
-    public function GPage()
+    public function __construct()
     {
-        parent::securegamepage();
+        parent::__construct();
         $this->viewFile = "plus.phtml";
         $this->contentCssClass = "plus";
         $this->plusTable = $this->gameMetadata['plusTable'];

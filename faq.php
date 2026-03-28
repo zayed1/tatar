@@ -2,7 +2,7 @@
 require( ".".DIRECTORY_SEPARATOR."core-f".DIRECTORY_SEPARATOR."boot.php" );
 class GPage extends ProcessVillagePage
 {
-public function GPage( )
+public function __construct()
 {
 parent::processvillagepage( );
 $this->viewFile = "faq.phtml";

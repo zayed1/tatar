@@ -4,7 +4,7 @@ require_once MODEL_PATH . 'v2v.php';
 class GPage extends ProcessVillagePage
 {
 
-        public function GPage()
+        public function __construct()
         {
                 parent::processvillagepage( );
                 $this->viewFile = "looting.phtml";
