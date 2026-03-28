@@ -779,6 +779,7 @@ return FALSE;
 return TRUE;
 }
 function needMoreUpgrades ($neededResources, $itemId=0) {
+$result = 0;
 foreach ( $neededResources as $k=>$v ) {
 if ( $v > $this->resources[$k]['store_max_limit'] ) {
 if ( $result == 0 && ($k == 1 || $k == 2 || $k == 3)) {

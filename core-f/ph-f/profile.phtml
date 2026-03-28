@@ -161,7 +161,9 @@ echo ' <script type="text/javascript">
         layer.className = "hide";
         document.body.appendChild(layer);
     </script>';
-        if ( $this->profileData['color_name'] != '' )
+        $c = '';
+        $ec = '';
+        if ( ($this->profileData['color_name'] ?? '') != '' )
         {
         $c = "<span style=\"color:".$this->profileData['color_name'].";\" >";
         $ec = "</span>";
@@ -183,7 +185,7 @@ echo '
 
                 <tr>
                         <td class="details">';
-$is->total = $this->queueModel->provider->fetchRow ( "SELECT SUM(people_count) as t FROM p_villages WHERE is_oasis=0 AND player_id='".$this->profileData['id']."'");
+$is_total = $this->queueModel->provider->fetchRow ( "SELECT SUM(people_count) as t FROM p_villages WHERE is_oasis=0 AND player_id='".$this->profileData['id']."'");
 echo '                                <table cellpadding="0" cellspacing="0">
                                 <tbody>
                                         <tr>
@@ -204,7 +206,7 @@ echo '                                <table cellpadding="0" cellspacing="0">
                             </tr>
                             <tr>
                                 <th>'.LANGUI_PROFILE_T14.' :</th>
-                                <td>'.number_format($is->total['t']).'</td>
+                                <td>'.number_format($is_total['t'] ?? 0).'</td>
                              </tr>';     
                             if(0 < $this->profileData['age']){echo '
                             <tr>

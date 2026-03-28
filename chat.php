@@ -42,5 +42,4 @@ class GPage extends securegamepage{
 }
 $p = new GPage();
 $p->run();
-mysql_close();
 ?>
