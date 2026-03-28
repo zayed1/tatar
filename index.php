@@ -16,18 +16,18 @@
   }
 $x = 0;
 require_once( "core-f/config-f/s1.php" );
-$link = mysql_connect($AppConfig['db']['host'], $AppConfig['db']['user'], $AppConfig['db']['password']) or die(mysql_error());
-mysql_select_db($AppConfig['db']['database'], $link) or die(mysql_error());
+$db_port = isset($AppConfig['db']['port']) ? intval($AppConfig['db']['port']) : 3306;
+$link = mysqli_connect($AppConfig['db']['host'], $AppConfig['db']['user'], $AppConfig['db']['password'], $AppConfig['db']['database'], $db_port) or die(mysqli_connect_error());
 
-$result = mysql_query("SELECT * FROM p_queue WHERE id = 1 and proc_type= 24", $link) or die(mysql_error());
+$result = mysqli_query($link, "SELECT * FROM p_queue WHERE id = 1 and proc_type= 24");
 // Fetch row as associative array
-$row = mysql_fetch_assoc($result);
+$row = $result ? mysqli_fetch_assoc($result) : null;
 // Access data in row
-$end_date = $row["end_date"];
+$end_date = $row ? $row["end_date"] : '';
 
-$fetch = mysql_query("SELECT * FROM p_queue WHERE id = 3 and proc_type= 57", $link) or die(mysql_error());
+$fetch = mysqli_query($link, "SELECT * FROM p_queue WHERE id = 3 and proc_type= 57");
 // Fetch row as associative array
-$fetchs = mysql_fetch_assoc($fetch);
+$fetchs = $fetch ? mysqli_fetch_assoc($fetch) : null;
 
 $redseahost = $AppConfig['system']['server_days'];
 // Subtract 10 days from the end date
@@ -48,11 +48,11 @@ $remaining_hours = floor(($diff_in_seconds % 86400) / 3600);
 // format the remaining time as a string
 $remaining_time = sprintf('%02d:%02d', $remaining_days, $remaining_hours);
 
-$q = mysql_query ("SELECT * FROM g_summary");
+$q = mysqli_query ($link, "SELECT * FROM g_summary");
 $sessionTimeoutInSeconds = 9000 * 60;
-$g = mysql_query ("SELECT COUNT(*) FROM p_players WHERE TIME_TO_SEC(TIMEDIFF(NOW(), last_login_date)) <= ".$sessionTimeoutInSeconds."");
-$g = mysql_fetch_row ($g);
-$r = mysql_fetch_assoc ($q);
+$g = mysqli_query ($link, "SELECT COUNT(*) FROM p_players WHERE TIME_TO_SEC(TIMEDIFF(NOW(), last_login_date)) <= ".$sessionTimeoutInSeconds."");
+$g = $g ? mysqli_fetch_row ($g) : array(0);
+$r = $q ? mysqli_fetch_assoc ($q) : array('players_count' => 0, 'active_players_count' => 0);
 $online1 = floor((TimeAgo(time() - strtotime(date($AppConfig['system']['server_start'] )))/24));
 $online_before1 = floor((TimeAgo(strtotime($AppConfig['system']['server_start']) - time())/24));
 $players_count1 = $r["players_count"];
@@ -120,18 +120,18 @@ $x +=1;
                                 <div class="grid">
                                    <span> اللاعبون : <b><?php echo $players_count1; ?> لاعب</b></span>
                                    <span> منذ : <b><?php
-if (mysql_num_rows($result) > 0 && mysql_num_rows($fetch) == 0) {
+if (($result ? mysqli_num_rows($result) : 0) > 0 && ($fetch ? mysqli_num_rows($fetch) : 0) == 0) {
   echo "<b>$remaining_days</b> أيام و <b>$remaining_hours</b> ساعة";
 }
-else if (mysql_num_rows($result) > 0  && mysql_num_rows($fetch) > 0)
+else if (($result ? mysqli_num_rows($result) : 0) > 0  && ($fetch ? mysqli_num_rows($fetch) : 0) > 0)
 {
   echo "<font color='blue'>لم تبدأ بعد</font>";
 }
-else if (mysql_num_rows($result) == 0  && mysql_num_rows($fetch) > 0)
+else if (($result ? mysqli_num_rows($result) : 0) == 0  && ($fetch ? mysqli_num_rows($fetch) : 0) > 0)
 {
   echo "<font color='red'>انتهت الجولة</font>";
 }
-else if (mysql_num_rows($result) == 0 && mysql_num_rows($fetch) == 0)
+else if (($result ? mysqli_num_rows($result) : 0) == 0 && ($fetch ? mysqli_num_rows($fetch) : 0) == 0)
 {
   echo "<font color='red'>بانتظار الإعادة</font>";
 }
@@ -166,18 +166,18 @@ else
                                 <div class="grid">
                                    <span> اللاعبون : <b><?php echo $players_count1; ?> لاعب</b></span>
                                    <span> منذ : <b><?php
-if (mysql_num_rows($result) > 0 && mysql_num_rows($fetch) == 0) {
+if (($result ? mysqli_num_rows($result) : 0) > 0 && ($fetch ? mysqli_num_rows($fetch) : 0) == 0) {
   echo "<b>$remaining_days</b> أيام و <b>$remaining_hours</b> ساعة";
 }
-else if (mysql_num_rows($result) > 0  && mysql_num_rows($fetch) > 0)
+else if (($result ? mysqli_num_rows($result) : 0) > 0  && ($fetch ? mysqli_num_rows($fetch) : 0) > 0)
 {
   echo "<font color='blue'>لم تبدأ بعد</font>";
 }
-else if (mysql_num_rows($result) == 0  && mysql_num_rows($fetch) > 0)
+else if (($result ? mysqli_num_rows($result) : 0) == 0  && ($fetch ? mysqli_num_rows($fetch) : 0) > 0)
 {
   echo "<font color='red'>انتهت الجولة</font>";
 }
-else if (mysql_num_rows($result) == 0 && mysql_num_rows($fetch) == 0)
+else if (($result ? mysqli_num_rows($result) : 0) == 0 && ($fetch ? mysqli_num_rows($fetch) : 0) == 0)
 {
   echo "<font color='red'>بانتظار الإعادة</font>";
 }
@@ -213,18 +213,18 @@ else
             <a href="register.php">
             <span class="world-title">العالم 1</span>
             <span class="world-reg">بدأ منذ <?php
-if (mysql_num_rows($result) > 0 && mysql_num_rows($fetch) == 0) {
+if (($result ? mysqli_num_rows($result) : 0) > 0 && ($fetch ? mysqli_num_rows($fetch) : 0) == 0) {
   echo "<b>$remaining_days</b> أيام و <b>$remaining_hours</b> ساعة";
 }
-else if (mysql_num_rows($result) > 0  && mysql_num_rows($fetch) > 0)
+else if (($result ? mysqli_num_rows($result) : 0) > 0  && ($fetch ? mysqli_num_rows($fetch) : 0) > 0)
 {
   echo "<font color='blue'>لم تبدأ بعد</font>";
 }
-else if (mysql_num_rows($result) == 0  && mysql_num_rows($fetch) > 0)
+else if (($result ? mysqli_num_rows($result) : 0) == 0  && ($fetch ? mysqli_num_rows($fetch) : 0) > 0)
 {
   echo "<font color='red'>انتهت الجولة</font>";
 }
-else if (mysql_num_rows($result) == 0 && mysql_num_rows($fetch) == 0)
+else if (($result ? mysqli_num_rows($result) : 0) == 0 && ($fetch ? mysqli_num_rows($fetch) : 0) == 0)
 {
   echo "<font color='red'>بانتظار الإعادة</font>";
 }

@@ -62,7 +62,8 @@ class MysqlProvider
         {
             return TRUE;
         }
-        $c[$connKey] = $this->_conn = mysqli_connect( $this->properties['host'], $this->properties['user'], $this->properties['password'], $this->properties['database'] );
+        $port = isset($this->properties['port']) ? intval($this->properties['port']) : 3306;
+        $c[$connKey] = $this->_conn = mysqli_connect( $this->properties['host'], $this->properties['user'], $this->properties['password'], $this->properties['database'], $port );
         if ( $this->_conn == NULL or !$this->_conn)
         {
             return FALSE;

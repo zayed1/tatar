@@ -10,11 +10,12 @@ define( "APP_PATH", ROOT_PATH."core-f".DIRECTORY_SEPARATOR );
 define( "LIB_PATH", ROOT_PATH."core-f/sql-f".DIRECTORY_SEPARATOR );
 define( "MODEL_PATH", APP_PATH."mod-f".DIRECTORY_SEPARATOR );
 define( "VIEW_PATH", APP_PATH."ph-f".DIRECTORY_SEPARATOR );
-ini_set('session.save_path',APP_PATH . 'cache-f');
+$sessionPath = APP_PATH . 'cache-f';
+if (!is_dir($sessionPath)) { mkdir($sessionPath, 0777, true); }
+ini_set('session.save_path', $sessionPath);
 date_default_timezone_set('Asia/Kuwait');
 ignore_user_abort( TRUE );
 set_time_limit( 0 );
-ini_set('magic_quotes_runtime', 0);
 
 if ( isset( $_SERVER['HTTP_ACCEPT_ENCODING'] ) && substr_count( $_SERVER['HTTP_ACCEPT_ENCODING'], "gzip" ) )
 {

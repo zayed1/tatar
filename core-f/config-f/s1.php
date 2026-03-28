@@ -1,10 +1,11 @@
 ﻿<?php
 $AppConfig = array (
         'db'                                   => array (
-                'host'                         => 'localhost',
-                'user'                         => '',
-                'password'                     => '',
-                'database'                     => '',
+                'host'                         => 'gondola.proxy.rlwy.net',
+                'port'                         => 28295,
+                'user'                         => 'root',
+                'password'                     => 'AXFOnRCygdQiDloCXxQNnvQxnPqsySvu',
+                'database'                     => 'railway',
                    ),
 		            'paylink' => array (
                   	'apiId' => 'pay-link-id-here',
