@@ -237,5 +237,5 @@ define( "QS_TATAR_RAISE", 24 );//ضهور التتار
 define( "QS_SITE_RESET", 25 );//اعاده السيرفر
 define( "QS_TATAR_ART", 26 );// ضهور التحف
 define( "QS_A_P", 27 );// قوة الجيوش الهجوميه
-define( "QS_D_p", 28 );// قوة الجيوش الدفاعيه
-define( "QS_S_p", 29 );// قوة الجيوش الدفاعيه
+define( "QS_D_P", 28 );// قوة الجيوش الدفاعيه
+define( "QS_S_P", 29 );// قوة الجيوش الدفاعيه
