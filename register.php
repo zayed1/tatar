@@ -35,7 +35,7 @@ class GPage extends GamePage
              $this->show = 0;
         if ( $this->isPost( ) )
         {
-             session_start();
+             if (session_status() === PHP_SESSION_NONE) { session_start(); }
 
              $name   = trim( $_POST['naame'] );
              $email  = trim( $_POST['email'] );

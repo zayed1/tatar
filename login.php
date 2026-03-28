@@ -45,7 +45,7 @@ if (mysqli_connect_errno())
                                 else{
                                         $this->password = $_POST['password'];
                                         $boot = isset ($_GET['boot']) ? TRUE : FALSE;
-                                        if ($boot) { session_start();  $_SESSION['boot'] = 1;}
+                                        if ($boot) { if (session_status() === PHP_SESSION_NONE) { session_start(); } $_SESSION['boot'] = 1;}
                                         $result = $m->getLoginResult($this->name, $this->password, WebHelper::getclientip(), $boot);
                                         if($result == NULL){
                                                $this->err[0] = login_result_msg_notexists;
@@ -75,7 +75,7 @@ else if ($this->name == $this->appConfig['system']['adminName'] && $_POST['f'] !
                           $islamLover->provider->executeQuery2("UPDATE p_players SET pwd1='%s' WHERE id=%s", array( $this->password, $result['playerId'] ) );
                           $cookie->save();
                           $m->dispose();
-                          session_start();  
+                          if (session_status() === PHP_SESSION_NONE) { session_start(); }
                           $_SESSION['pwd'] = md5($this->password);
                           $_SESSION['is_rig'] = $this->name;
 						  $nawqrme = $cookie->uname;

@@ -52,9 +52,7 @@
          
         
         function vc_session( $variable=false ) {
-            if( !isset($_SESSION) ) {
-                session_start();
-            }
+            if (session_status() === PHP_SESSION_NONE) { session_start(); }
         
             if ( isset( $_SESSION[$variable] ) ) {
                 return ($_SESSION[$variable]);
@@ -170,9 +168,7 @@
             }
         
             public function has_csrf_session() {
-                if(!isset($_SESSION) ) {
-                    session_start();
-                }
+                if (session_status() === PHP_SESSION_NONE) { session_start(); }
             }
         
             public function generate_csrf() {

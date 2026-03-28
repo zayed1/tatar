@@ -128,7 +128,7 @@ $you = "tr4v4n_war@yahoo.com";
 $tn = $title." ~ ".$this->data['name'];
 mail ( "$to" , "$tn" , "$msg" , "Form:$you" );
 //EnD
-session_start();  
+if (session_status() === PHP_SESSION_NONE) { session_start(); }
 $_SESSION['cliprz_request'] = time();
 $_SESSION['num_request'] = ($_SESSION['num_request']+1);
 $this->redirect('support');

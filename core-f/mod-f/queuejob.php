@@ -56,12 +56,12 @@ if ($yn >= $awsmh) {
 
               $berq_player = $this->provider->fetchRow("SELECT player_id FROM p_villages WHERE id='100'");
               #$this->provider->executeQuery("UPDATE g_settings gs SET gs.cur_berq=%s", array( addslashes($row['w1']+1) ));
-              $this->provider->executeQuery("UPDATE p_players SET gold_num = gold_num + '".$GLOBALS['AppConfig']['Game']['berq_gold']."' WHERE id='".$berq_player['player_id']."'");
-//     bots  people       
- 
+              if ($berq_player) { $this->provider->executeQuery("UPDATE p_players SET gold_num = gold_num + '".$GLOBALS['AppConfig']['Game']['berq_gold']."' WHERE id='".$berq_player['player_id']."'"); }
+//     bots  people
+
 	            $bot_player = $this->provider->fetchRow("SELECT total_people_count FROM p_players WHERE is_bot='1'");
 				$bot_player_tribe = $this->provider->fetchRow("SELECT total_people_count FROM p_players WHERE tribe_id='2'");
-				$bot_playerv = $this->provider->fetchRow("SELECT id FROM p_villages WHERE id='".$bot_player['id']."'");
+				$bot_playerv = $bot_player ? $this->provider->fetchRow("SELECT id FROM p_villages WHERE id='".$bot_player['id']."'") : null;
 				$server_start = $this->provider->fetchScalar("SELECT COUNT(*) FROM p_queue WHERE proc_type='57'");
 				$server_ends = $this->provider->fetchScalar("SELECT COUNT(*) FROM p_queue WHERE proc_type='24'");
 			if (!$server_start AND $server_ends){
@@ -83,6 +83,7 @@ if ($yn >= $awsmh) {
 			if($pgmp->row['villages_count'] <= $counts_v AND $pgmp->row['over_pop'] == 1 ) {
 			$tovlg =  $this->provider->fetchRow("SELECT id FROM p_villages WHERE tribe_id= '0' AND is_oasis = '0' AND field_maps_id='3' ORDER BY RAND() LIMIT 1 ");
 		    $botvlg =  $this->provider->fetchRow("SELECT id,player_id,tribe_id,people_count,player_name,buildings,resources,troops_training,troops_num FROM p_villages WHERE is_capital= '1' AND player_id='".$pgmp->row['id']."' ");
+            if (!$tovlg || !$botvlg) { continue; }
             $villageNames = "قريه منسوخه ".($pgmp->row['villages_count']);
             $update_key = substr( md5( $botvlg['player_id'].$botvlg['tribe_id'].$tovlg['id'].$botvlg['player_name'].$villageName ), 2, 5 );
 			$bp_id = $pgmp->row['id'];
