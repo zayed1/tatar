@@ -11,7 +11,7 @@ var $gameMetadata;
 var $appConfig;
 var $player= NULL;
 var $gameSpeed;
-function MyWidget() {
+function __construct() {
 $this->setupMetadata = $GLOBALS['SetupMetadata'];
 $this->gameMetadata = $GLOBALS['GameMetadata'];
 $this->appConfig = $GLOBALS['AppConfig'];
@@ -101,14 +101,14 @@ return '?' . $this->appConfig['page']['asset_version'];
 }
 }
 class PopupPage extends MyWidget {
-function PopupPage() {
-parent::MyWidget();
+function __construct() {
+parent::__construct();
 $this->layoutViewFile = 'layout' . DIRECTORY_SEPARATOR . 'popup.phtml';
 }
 }
 class DefaultPage extends MyWidget {
-function DefaultPage() {
-parent::MyWidget();
+function __construct() {
+parent::__construct();
 $this->layoutViewFile = 'layout' . DIRECTORY_SEPARATOR . 'default.phtml';
 }
 }
@@ -117,8 +117,8 @@ var $globalModel;
 var $Datagame;
 var $contentCssClass = '';
 var $newsText;
-function GamePage() {
-parent::MyWidget();
+function __construct() {
+parent::__construct();
 $this->layoutViewFile = 'layout' . DIRECTORY_SEPARATOR . 'form.phtml';
 $this->globalModel = new GlobalModel();
 $this->Datagame = new ProfileModel();
@@ -148,8 +148,8 @@ var $checkForGlobalMessage = TRUE;
 var $checkForNewVillage = TRUE;
 var $customLogoutAction = FALSE;
 var $banner = array();
-function SecureGamePage() {
-parent::GamePage();
+function __construct() {
+parent::__construct();
 $this->layoutViewFile = 'layout' . DIRECTORY_SEPARATOR . 'game.phtml';
 if ($this->player == NULL) {
 if (!$this->customLogoutAction) {
