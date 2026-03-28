@@ -1,6 +1,6 @@
 <?php
 
-require( LIB_PATH."mysql.php" );
+require_once( LIB_PATH."mysql.php" );
 class ModelBase extends MysqlModel
 {
 
