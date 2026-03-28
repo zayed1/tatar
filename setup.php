@@ -13,9 +13,9 @@ define("VIEW_PATH", APP_PATH . "ph-f" . DIRECTORY_SEPARATOR);
 date_default_timezone_set('Asia/Kuwait');
 
 require(APP_PATH . "config-f/s1.php");
-require(LIB_PATH . "mysql.php");
-require(APP_PATH . "components.php");
-require(MODEL_PATH . "base.php");
+require_once(LIB_PATH . "mysql.php");
+require_once(APP_PATH . "components.php");
+require_once(MODEL_PATH . "base.php");
 
 // Security check - must provide install key
 $key = isset($_GET['key']) ? $_GET['key'] : '';
