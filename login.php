@@ -1,5 +1,9 @@
 <?php
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 require(".".DIRECTORY_SEPARATOR."core-f".DIRECTORY_SEPARATOR."boot.php");
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 require_once(MODEL_PATH."index.php");
 class GPage extends DefaultPage{
 
