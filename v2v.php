@@ -29,7 +29,7 @@ var $catapultCanAttack = array (
 9 => 3, 10 => 5, 11 => 1, 12 => 22, 13 => 13, 14 => 19, 15 => 12, 16 => 35, 17 => 18, 18 => 29, 19 => 30, 20 => 37, 21 => 41, 22 => 15, 23 => 17, 24 => 26, 25 => 16, 26 => 25, 27 => 20, 28 => 14, 29 => 24, 30 => 28, 31 => 40, 32 => 27, 33=> 38, 34 => 39);
 var $onlyOneSpyAction = FALSE;
 var $backTroopsProperty = array ();
-function GPage ()
+function __construct()
 {
 parent::villagepage ();
 $this->viewFile = 'v2v.phtml';

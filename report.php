@@ -13,9 +13,9 @@ class GPage extends SecureGamePage
     public $pageCount;
     public $pageIndex;
 
-    public function GPage( )
+    public function __construct()
     {
-        parent::securegamepage( );
+        parent::__construct();
         $this->viewFile = "report.phtml";
         $this->contentCssClass = "reports";
     }

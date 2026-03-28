@@ -5,9 +5,9 @@ class GPage extends GamePage
     {
     public $pageState = -1;
     public $playerId;
-    function GPage()
+    function __construct()
         {
-        parent::gamepage();
+        parent::__construct();
         $this->viewFile        = "password.phtml";
         $this->contentCssClass = "activate";
         }

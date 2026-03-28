@@ -24,9 +24,9 @@ class GPage extends SecureGamePage
     var $pageSize = 50;
     var $pageCount;
     var $pageIndex;
-    function GPage()
+    function __construct()
         {
-        parent::securegamepage();
+        parent::__construct();
         $this->viewFile        = "msg.phtml";
         $this->contentCssClass = "messages";
         }

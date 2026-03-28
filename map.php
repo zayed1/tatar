@@ -13,9 +13,9 @@ class GPage extends SecureGamePage
     var $warsAllianceId = array();
     var $json = null;
     var $largeMap = FALSE;
-    function GPage()
+    function __construct()
         {
-        parent::securegamepage();
+        parent::__construct();
 if (isset($_GET['cropfinder'])) {
         $this->contentCssClass = 'cropfinder';
 }else {

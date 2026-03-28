@@ -13,7 +13,7 @@ public $next = NULL;
 public $plusIndex = NULL;
 public $nextLink = NULL;
 public $previousLink = NULL;
-public function GPage( )
+public function __construct()
 {
 parent::popuppage( );
 $this->viewFile = "help.phtml";

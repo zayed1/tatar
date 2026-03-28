@@ -25,9 +25,9 @@ class GPage extends SecureGamePage
     var $errorText = null;
     var $bbCodeReplacedArray = array();
     var $isAdmin = null;
-    function GPage()
+    function __construct()
         {
-        parent::securegamepage();
+        parent::__construct();
         $this->viewFile        = 'profile.phtml';
         $this->contentCssClass = 'player';
 }

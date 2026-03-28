@@ -5,7 +5,7 @@ require_once( LIB_PATH . "bot.php" );
 require_once(MODEL_PATH . 'village4.php'); 
 class GPage extends ProcessVillagePage
 {
-	public function GPage( )
+	public function __construct()
 	{
 		parent::processvillagepage( );
 		$this->viewFile 	= "pull_resources.phtml";

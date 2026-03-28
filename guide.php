@@ -8,7 +8,7 @@ var $taskState = 0;
 var $quiz = null;
 var $clientAction = null;
 var $guideData = array ();
-function GPage ()
+function __construct()
 {
 $this->customLogoutAction = TRUE;
 parent::villagepage ();

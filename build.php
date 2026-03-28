@@ -32,7 +32,7 @@ class GPage extends VillagePage
     var $pageSize = 20;
     var $pageCount = null;
     var $pageIndex = null;
-    function GPage()
+    function __construct()
     {
         parent::villagepage();
         $this->viewFile        = 'build.phtml';

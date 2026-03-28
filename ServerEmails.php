@@ -7,9 +7,9 @@ class GPage extends SecureGamePage
 
 
 
-        function GPage(){
+        function __construct(){
 
-                parent::securegamepage();
+                parent::__construct();
 
                 $this->viewFile = "ServerEmails.phtml";
 

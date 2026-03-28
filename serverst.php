@@ -15,9 +15,9 @@ class GPage  extends securegamepage
     public $pageSize = 20;
     public $pageIndex = NULL;
     public $pageCount = NULL;
-    public function GPage( )
+    public function __construct()
     {
-        parent::securegamepage( );
+        parent::__construct();
         $this->viewFile = "serverst.phtml";
         if ($_GET['t'] == 4 or $_GET['t'] == 2) { $this->contentCssClass = "plus";}
         else if ($_GET['t'] == 7) { $this->contentCssClass = "forum";}

@@ -15,7 +15,7 @@ class GPage extends ProcessVillagePage
 
 
 
-        public function GPage()
+        public function __construct()
 
 
         {

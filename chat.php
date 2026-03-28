@@ -14,8 +14,8 @@ class GPage extends securegamepage{
         public $chats = NULL;
         public $Filter = NULL;
 
-        public function GPage(){
-                parent::securegamepage();
+        public function __construct(){
+                parent::__construct();
                 $this->viewFile = "chat.phtml";
                 $this->contentCssClass = "player";
         }

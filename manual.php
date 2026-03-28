@@ -9,8 +9,8 @@ class GPage extends DefaultPage{
         public $name = NULL;
         public $password = NULL;
 
-        public function GPage(){
-                parent::defaultpage();
+        public function __construct(){
+                parent::__construct();
                 $this->viewFile = "manual.phtml";
                 $this->layoutViewFile = "layout".DIRECTORY_SEPARATOR."form.phtml";
                 $this->contentCssClass = "login";

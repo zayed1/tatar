@@ -14,9 +14,9 @@ class GPage  extends securegamepage{
         public $chats = NULL;
         public $Filter = NULL;
 
-        public function GPage(){
+        public function __construct(){
                 $this->customLogoutAction = TRUE;
-                parent::securegamepage();
+                parent::__construct();
                 if($this->player == NULL ) exit(0);
                 $this->layoutViewFile = $this->viewFile = NULL;
                 $GLOBALS['_GET']['_a1_'] = "";
