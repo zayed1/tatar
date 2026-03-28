@@ -3,15 +3,7 @@ FROM php:8.1-apache
 # Install mysqli extension
 RUN docker-php-ext-install mysqli && docker-php-ext-enable mysqli
 
-# Fix MPM conflict - force only prefork
-RUN rm -f /etc/apache2/mods-enabled/mpm_event.load \
-    && rm -f /etc/apache2/mods-enabled/mpm_event.conf \
-    && rm -f /etc/apache2/mods-enabled/mpm_worker.load \
-    && rm -f /etc/apache2/mods-enabled/mpm_worker.conf \
-    && ln -sf /etc/apache2/mods-available/mpm_prefork.load /etc/apache2/mods-enabled/mpm_prefork.load \
-    && ln -sf /etc/apache2/mods-available/mpm_prefork.conf /etc/apache2/mods-enabled/mpm_prefork.conf
-
-# Enable Apache modules
+# Enable Apache modules (NOT touching MPM here - handled in entrypoint)
 RUN a2enmod rewrite headers deflate expires
 
 # Copy custom php.ini
@@ -29,12 +21,15 @@ RUN chown -R www-data:www-data /var/www/html \
 # Allow .htaccess overrides
 RUN sed -i 's/AllowOverride None/AllowOverride All/g' /etc/apache2/apache2.conf
 
-# Remove cPanel-specific PHP directives from .htaccess (not compatible with Docker)
+# Remove cPanel-specific PHP directives from .htaccess
 RUN sed -i '/<IfModule php5_module>/,/<\/IfModule>/d' /var/www/html/.htaccess \
     && sed -i '/<IfModule lsapi_module>/,/<\/IfModule>/d' /var/www/html/.htaccess \
     && sed -i '/# BEGIN cPanel/,/# END cPanel/d' /var/www/html/.htaccess
 
-# Railway PORT - entrypoint script
+# Debug: show what MPMs exist at build time
+RUN echo "=== BUILD: MPM modules ===" && ls -la /etc/apache2/mods-enabled/mpm_* 2>/dev/null && echo "=========================="
+
+# Entrypoint script
 COPY docker-entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
