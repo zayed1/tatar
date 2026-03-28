@@ -927,6 +927,15 @@ CREATE TABLE `p_players` (
                 KEY `NewIndex3` (`rpt_cat`)) 
                 ENGINE=InnoDB DEFAULT CHARSET=utf8;
                 
+                CREATE TABLE IF NOT EXISTS `money_total` (
+                `id` int(11) NOT NULL AUTO_INCREMENT,
+                `total_gold` bigint(20) DEFAULT '0',
+                `total_sms` bigint(20) DEFAULT '0',
+                `total_cashu` bigint(20) DEFAULT '0',
+                `total_onecard` bigint(20) DEFAULT '0',
+                PRIMARY KEY (`id`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
                 INSERT INTO `money_total`(`total_gold`,`total_sms`,`total_cashu`,`total_onecard`) VALUES ( '0','0','0','0');
 
                 INSERT INTO `g_settings`(`start_date`,`license_key`,last_madel) VALUES (NOW(),NULL,'$starttime2');

@@ -64,6 +64,7 @@ class MysqlProvider
             return TRUE;
         }
         $port = isset($this->properties['port']) ? intval($this->properties['port']) : 3306;
+        mysqli_report(MYSQLI_REPORT_OFF);
         $c[$connKey] = $this->_conn = mysqli_connect( $this->properties['host'], $this->properties['user'], $this->properties['password'], $this->properties['database'], $port );
         if ( $this->_conn == NULL or !$this->_conn)
         {
