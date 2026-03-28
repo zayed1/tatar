@@ -1159,8 +1159,8 @@ text-align:right;line-height:normal;direction:rtl;unicode-bidi:embed">
 } else if ($this->selectedTabIndex == 5) { 
 $bid = new QueueModel();
 $mo = $this->data['name'];
-$is->golder = $bid->provider->fetchScalar('SELECT COUNT(*) FROM money_log WHERE usernam="'.$mo.'"');
-if (!$is->golder) {
+$golder_count = $bid->provider->fetchScalar('SELECT COUNT(*) FROM money_log WHERE usernam="'.$mo.'"');
+if (!$golder_count) {
 echo '<br><p class="error" style="text-align: center;">يحب عليك الحصول على علامة التميز <img src="'.$GLOBALS['AppConfig']['system']['linksite'].'default/splayer.webp" title="علامة التميز" alt="علامة التميز"> لتحويل الذهب</p>';
 }else {
 

@@ -402,7 +402,7 @@ $topic = str_replace("\\","",$topic);
 	echo '</div>';
 	echo '</div>';
 	echo '<div class="line bbLine"></div>';
-	echo "<textarea class=\"textarea write\" name=\"message\" id=\"message\" onkeyup=\"copyElement('body')\" tabindex=\"3;\">" ; echo htmlspecialchars( $this->body ); if ($sb) { echo $text; } echo "</textarea>\r\t\t";
+	echo "<textarea class=\"textarea write\" name=\"message\" id=\"message\" onkeyup=\"copyElement('body')\" tabindex=\"3;\">" ; echo htmlspecialchars( $this->body ?? '' ); if ($sb) { echo $text; } echo "</textarea>\r\t\t";
     echo '</div>';
 	echo '<div id="message_preview" name="message_preview" class="message" style="display: none;"></div>';
    echo '<script> var bbEditor = new BBEditor("message"); </script>';
@@ -444,7 +444,7 @@ $topic = str_replace("\\","",$topic);
         echo "\">\r\t\t<input type=\"hidden\" id=\"copy_subject\" name=\"be\" value=\"";
         echo htmlspecialchars( $this->subject ?? '' );
         echo "\">\r\t\t<input type=\"hidden\" id=\"copy_igm\" name=\"message\" value=\"";
-        echo htmlspecialchars( $this->body );
+        echo htmlspecialchars( $this->body ?? '' );
         echo "\">\r\t\t\r\t\t<table cellpadding=\"1\" cellspacing=\"1\" id=\"friendlist\">\r\t\t\t<tbody>\r\t\t\t\t<tr>\r\t\t\t\t";
         $_c = 1;
         foreach ( $this->friendList as $friendId => $friendName )
