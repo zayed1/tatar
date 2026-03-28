@@ -73,8 +73,8 @@ if (isset($_GET['chat'])) {
                 $newData = array(
                     'name' => ((isset($_POST['aname1']) && trim(stripslashes($_POST['aname1'])) != '' && strlen($_POST['aname1']) < 10 ) ? strip_tags($_POST['aname1']) : $this->allianceData['name']),
                     'name2' => ((isset($_POST['aname2']) && trim(stripslashes($_POST['aname2'])) != '' && strlen($_POST['aname2']) < 25 ) ? strip_tags($_POST['aname2']) : $this->allianceData['name2']),
-                    'description1' => strip_tags($_POST['be1']),
-                    'description2' => strip_tags($_POST['be2'])
+                    'description1' => strip_tags($_POST['be1'] ?? ''),
+                    'description2' => strip_tags($_POST['be2'] ?? '')
                 );
                 $m->editAllianceData(intval($this->data['alliance_id']), $newData, $this->allianceData['players_ids']);
                 $m->dispose();

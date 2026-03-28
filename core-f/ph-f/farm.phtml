@@ -346,7 +346,7 @@ session_start();
 if ($get_num_loooting <= 0) {
 echo "يجب ان تملك اكثر من مزرعه على الاقل ";
 }else { 
-if((time()-$_SESSION['every_auto_loooting']) >= $time)
+if((time()-($_SESSION['every_auto_loooting'] ?? 0)) >= $time)
 {
 ?>
 <script>

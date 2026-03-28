@@ -1728,7 +1728,7 @@ $this->warriorMessage = "القرية محجوزة من قبل لاعب اخر �
         if ($this->selectedTabIndex == 0) {
             if ((((isset($_GET['mc']) AND !$this->data['is_capital']) AND !$this->data['is_special_village']) AND $this->buildings[$this->buildingIndex]['item_id'] == 26)) {
                 if ($this->isPost()) {
-                    if (md5($_POST['pwd']) != $this->data['pwd']) {
+                    if (md5($_POST['pwd'] ?? '') != $this->data['pwd']) {
                         $this->datapass = 1;
                     }
                     if ($this->datapass != 1) {

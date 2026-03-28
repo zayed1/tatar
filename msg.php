@@ -141,14 +141,14 @@ if ($this->selectedTabIndex == 4)
         else if (isset($_POST['sm']))
             {
             $filter = new FilterWordsModel();
-            $this->receiver = (strip_tags(trim($_POST['an'])));
-            $this->subject  = ($filter->FilterWords(strip_tags(trim($_POST['be']))));
-            $this->body     = (strip_tags(trim($_POST['message'])));
+            $this->receiver = (strip_tags(trim($_POST['an'] ?? '')));
+            $this->subject  = ($filter->FilterWords(strip_tags(trim($_POST['be'] ?? ''))));
+            $this->body     = (strip_tags(trim($_POST['message'] ?? '')));
             $timeout =  date('Y/n/d  - h:i:s',$time);
             $hi = $this->data['blocked_time'];
             $p = $this->data['total_people_count'];
             $time =  $this->data['blocked_time'];
-            $cont = trim($m->getwarAllianceId($_POST['an']));
+            $cont = trim($m->getwarAllianceId($_POST['an'] ?? ''));
             if ($cont != '')
                 {
                 $_arr = explode(',', $cont);
@@ -273,7 +273,7 @@ return null;
                                 if (session_status() === PHP_SESSION_NONE) { session_start(); }
                                 $_SESSION['last_msg_send'] = time();
 $_SESSION['clip_request'] = time();
-$_SESSION['num_req'] = ($_SESSION['num_req']+1);
+$_SESSION['num_req'] = (($_SESSION['num_req'] ?? 0)+1);
 
 $admin = new QueueModel();
 $love = $admin->provider->fetchScalar("select COUNT(*) from p_msgs where from_player_id='".$this->player->playerId."' AND msg_body= '".$this->body."'");
@@ -298,13 +298,13 @@ $admin->provider->executeQuery2 ("DELETE FROM p_msgs WHERE from_player_id='".$th
             }
         else if (isset($_POST['fm']))
             {
-            $this->receiver         = (strip_tags(trim($_POST['an'])));
-            $this->subject          = (strip_tags(trim($_POST['be'])));
-            $this->body             = (strip_tags(trim($_POST['message'])));
+            $this->receiver         = (strip_tags(trim($_POST['an'] ?? '')));
+            $this->subject          = (strip_tags(trim($_POST['be'] ?? '')));
+            $this->body             = (strip_tags(trim($_POST['message'] ?? '')));
             $this->showList         = FALSE;
             $this->selectedTabIndex = 1;
             $this->showFriendPane   = TRUE;
-            if ($_POST['fm'] != "" && is_numeric($_POST['fm']))
+            if (($_POST['fm'] ?? '') != "" && is_numeric($_POST['fm']))
                 {
                 $playerId = intval($_POST['fm']);
                 if (0 < $playerId && isset($this->friendList[$playerId]))
@@ -342,9 +342,9 @@ $admin->provider->executeQuery2 ("DELETE FROM p_msgs WHERE from_player_id='".$th
         else if (isset($_POST['rm']))
             {
             $filter = new FilterWordsModel();
-            $this->receiver = (strip_tags(trim($_POST['an'])));
-            $this->subject  = ($filter->FilterWords(strip_tags(trim($_POST['be']))));
-            $this->body     = PHP_EOL . PHP_EOL . "_________________________________" . PHP_EOL . MSG_PHP12 . " " . $this->receiver . ":" . PHP_EOL . PHP_EOL . (strip_tags(trim($_POST['message'])));
+            $this->receiver = (strip_tags(trim($_POST['an'] ?? '')));
+            $this->subject  = ($filter->FilterWords(strip_tags(trim($_POST['be'] ?? ''))));
+            $this->body     = PHP_EOL . PHP_EOL . "_________________________________" . PHP_EOL . MSG_PHP12 . " " . $this->receiver . ":" . PHP_EOL . PHP_EOL . (strip_tags(trim($_POST['message'] ?? '')));
             preg_match("/^(".MSG_PHP11.")\\^?([0-9]*):([\\w\\W]*)\$/", $this->subject, $matches);
             if (sizeof($matches) == 4)
                 {

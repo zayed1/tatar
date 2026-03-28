@@ -38,7 +38,7 @@ if (mysqli_connect_errno())
 {
     die(mysqli_connect_errno());
 }
-                                $this->name = mysqli_real_escape_string($link, trim($_POST['name']));
+                                $this->name = mysqli_real_escape_string($link, trim($_POST['name'] ?? ''));
                                 if(!isset($_POST['password'] ) || $_POST['password'] == ""){
                                  $this->err[1] = login_result_msg_nopwd;
                                 }

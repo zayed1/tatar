@@ -126,9 +126,9 @@ if ($name==$a && $pwd==$p) {
 		if(isset($_GET['add'])){
 		if ( $this->isPost( ) )
         {
-		$question = $_POST['question'];
-		$answer = $_POST['answer'];
-		$answer_count = count($_POST['answer']);
+		$question = $_POST['question'] ?? '';
+		$answer = isset($_POST['answer']) && is_array($_POST['answer']) ? $_POST['answer'] : [];
+		$answer_count = count($answer);
 		for($i = 1; $i <= $answer_count; $i++){
 		if($i != $answer_count){ $contsdot = ','; }
 		$options .= $answer[$i].$contsdot;

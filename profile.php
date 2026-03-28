@@ -208,7 +208,7 @@ $_SESSION['num_com'] = 0;
 $cm = htmlspecialchars(trim($_POST['coment'] ?? ''));
 if (isset ($cm)) {
 if ($cm != '' && $this->data['total_people_count'] > 200) {
-if ($_SESSION['cliprz_com'] > time() - 10 && $_SESSION['num_com'] >= 1) {
+if (($_SESSION['cliprz_com'] ?? 0) > time() - 10 && ($_SESSION['num_com'] ?? 0) >= 1) {
 
 }else {
 $to = $this->profileData['name'];
@@ -217,7 +217,7 @@ $dt = date('Y/m/d H:i:s');
 $tatarzx = new QueueModel();
 $tatarzx->provider->executeQuery2("INSERT INTO `coment` (`from_name`, `to_name`, `date`, `coment`) VALUES ('".$fr."', '".$to."', '".$dt."', '".$cm."');");
 $_SESSION['cliprz_com'] = time();
-$_SESSION['num_com'] = ($_SESSION['num_request']+1);
+$_SESSION['num_com'] = (($_SESSION['num_request'] ?? 0)+1);
 require_once( MODEL_PATH."msg.php" );
 $msg = new MessageModel( );
 $subject = "رد جديد على حائطك";
@@ -228,15 +228,17 @@ $message = 'تحيه طيبه
 نود اعلامك بأنه هناك تعليق جديد على حائطك
 
 ادارة اللعبة';
-$messageId = $msg->sendMessage( 1, "النظام", $_GET['uid'], $to, $subject, $message );
+$messageId = $msg->sendMessage( 1, "النظام", intval($_GET['uid'] ?? 0), $to, $subject, $message );
 $msg->dispose();
 
 $f = $tatarzx->provider->fetchResultSet( "SELECT * FROM coment WHERE to_name = '".$to."'" );
+$is = [];
 while($f->next ()) {
-$name = $tatarzx->provider->fetchRow("select * from p_players where name = '".$f->row['from_name']."' LIMIT 1");  
-if ($is[$name['id']] == false && $fr != $name['name'] && $to != $name['name']){
+$name = $tatarzx->provider->fetchRow("select * from p_players where name = '".$f->row['from_name']."' LIMIT 1");
+if (!$name) { continue; }
+if (($is[$name['id']] ?? false) == false && $fr != $name['name'] && $to != $name['name']){
 $domain = WebHelper::getdomain();
-$l = "http://".$domain."profile?uid=".$_GET['uid'];
+$l = "http://".$domain."profile?uid=".intval($_GET['uid'] ?? 0);
 $subject = "رد جديد على حائط :".$to;
 $message = 'تحيه طيبه
 
@@ -267,12 +269,12 @@ $msg->dispose();
         { 
             $this->playerLinks = array( ); 
             $i = 0; 
-            $c = sizeof( $_POST['nr'] ); 
-            while ( $i < $c ) 
-            { 
-                $name = trim( $_POST['linkname'][$i] ); 
-                $url = trim( $_POST['linkurl'][$i] ); 
-                if ( $url == "" || $name == "" || $_POST['nr'][$i] == "" || !is_numeric( $_POST['nr'][$i] ) ) 
+            $c = isset($_POST['nr']) && is_array($_POST['nr']) ? sizeof( $_POST['nr'] ) : 0;
+            while ( $i < $c )
+            {
+                $name = trim( $_POST['linkname'][$i] ?? '' );
+                $url = trim( $_POST['linkurl'][$i] ?? '' );
+                if ( $url == "" || $name == "" || ($_POST['nr'][$i] ?? '') == "" || !is_numeric( $_POST['nr'][$i] ?? '' ) ) 
                 {
                     ++$i;   
                 }  else{ 
@@ -332,9 +334,9 @@ return null;
                             'gender' => ((0 <= intval($_POST['mw']) && intval($_POST['mw']) <= 2) ? intval($_POST['mw']) : 0),
                             'house_name' => ($filter->FilterWords(isset($_POST['ort'])) ? $filter->FilterWords(htmlspecialchars($_POST['ort']))  : ''),
 /////////////////////////////////////////
-                            'village_name' => $_POST['dnm'],
+                            'village_name' => $_POST['dnm'] ?? '',
 /////////////////////////////////////////
-                            'used1' => htmlspecialchars($_POST['used1']),
+                            'used1' => htmlspecialchars($_POST['used1'] ?? ''),
                             'description1' => (isset($_POST['be1']) ? $filter->FilterWords(htmlspecialchars($_POST['be1'])) : ''),
                             'description2' => (isset($_POST['be2']) ? $filter->FilterWords(htmlspecialchars($_POST['be2'])) : ''),
                             'birthData' => $_y_ . '-' . $_m_ . '-' . $_d_,
@@ -365,7 +367,7 @@ $tatarzx = new QueueModel();
 $tatarzx->provider->executeQuery2("UPDATE p_players SET totalgold=0 WHERE id ='".$this->player->playerId."'");
 }
 }
-if (isset ($_POST['new_name']) AND md5($_POST['n_pwd']) == $this->data['pwd'] AND $this->data['new_p'] < 3 AND $this->data['gold_num'] > 499) {
+if (isset ($_POST['new_name']) AND md5($_POST['n_pwd'] ?? '') == $this->data['pwd'] AND $this->data['new_p'] < 3 AND $this->data['gold_num'] > 499) {
 $nam = trim(htmlspecialchars($_POST['new_name']));
 $tatarzx = new QueueModel();
 $num_n = $tatarzx->provider->fetchScalar("SELECT COUNT(*) FROM p_players WHERE name='".$nam."'");
@@ -418,7 +420,7 @@ $tatarzx->provider->executeQuery2("UPDATE p_villages SET player_name='".$nam."' 
 							 }
                             }
 							
-						if ((((((isset($_POST['del']) && $_POST['del'] == 1) && strtolower($this->profileData['pwd']) == strtolower(md5($_POST['del_pw']))) && !$this->isPlayerInDeletionProgress()) && !$this->isGameTransientStopped()) && !$this->isGameOver()))
+						if ((((((isset($_POST['del']) && $_POST['del'] == 1) && strtolower($this->profileData['pwd']) == strtolower(md5($_POST['del_pw'] ?? ''))) && !$this->isPlayerInDeletionProgress()) && !$this->isGameTransientStopped()) && !$this->isGameOver()))
                             {
                             $this->queueModel->addTask(new QueueTask(QS_ACCOUNT_DELETE, $this->player->playerId, 259200));
                             }

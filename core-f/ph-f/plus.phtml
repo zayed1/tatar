@@ -169,8 +169,8 @@ $tatarzx = new QueueModel();
 
 if ($this->player->playerId == 1) {
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $num_copons = $_POST['num_copons'];
-        $golden = $_POST['golden'];
+        $num_copons = intval($_POST['num_copons'] ?? 0);
+        $golden = intval($_POST['golden'] ?? 0);
 
         $copons = array();
 

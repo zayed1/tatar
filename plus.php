@@ -130,9 +130,9 @@ if ( $this->selectedTabIndex == 5 )
                                 $total_people_count = $this->data['total_people_count'];
                                 $ip_player = $this->data['last_ip'];
 
-                                $playernamesendgold = trim( $_POST['name'] );
-                                                                $goldsendplayername = intval($_POST['gold']);
-                                                                $pwdsend = trim(md5($_POST['pass']));
+                                $playernamesendgold = trim( $_POST['name'] ?? '' );
+                                                                $goldsendplayername = intval($_POST['gold'] ?? 0);
+                                                                $pwdsend = trim(md5($_POST['pass'] ?? ''));
 
                                                                 $getplayerid = $m->getPlayerDataByName($playernamesendgold);
                                                                 $id_getplayerid = $getplayerid['id'];

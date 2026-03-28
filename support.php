@@ -28,7 +28,8 @@ if ($name == $a && $pwd == $p) {
 }
 if (isset($c) && is_numeric($c)) {
 $s = $m->getMessageSupport($c);
-list($title, $type, $isnew) = explode('|', $s['msg_title']);
+if (!$s) { $title = $type = $isnew = ''; } else
+list($title, $type, $isnew) = explode('|', $s['msg_title'] ?? '||');
 if ($isnew != 1) {
 $tit = "".$title."|".$type."|1";
 $aa = $m->up($tit,$c);
@@ -48,15 +49,16 @@ $m->markMessageAsReaded($this->player->playerId, intval($id));
 }
 if($this->isPost()){
     if (session_status() === PHP_SESSION_NONE) { session_start(); }
-if ($_SESSION['num_request'] >= 5 && $_SESSION['cliprz_request'] <= time() - 60) {
+if (($_SESSION['num_request'] ?? 0) >= 5 && ($_SESSION['cliprz_request'] ?? 0) <= time() - 60) {
 $_SESSION['num_request'] = 0;
 }
-    if($_SESSION['cliprz_request'] > time() - 60 && $_SESSION['num_request'] >= 5 && $this->player->playerId != 1) {
+    if(($_SESSION['cliprz_request'] ?? 0) > time() - 60 && ($_SESSION['num_request'] ?? 0) >= 5 && $this->player->playerId != 1) {
 exit ("<center><h1>Error !!!</h1></center>");
         }
-if (htmlspecialchars($_POST['reply']) != '') {
+if (htmlspecialchars($_POST['reply'] ?? '') != '') {
 $msg = $m->getMessageSupport($id);
-list($titileold, $typeold, $isnew) = explode('|', $msg['msg_title']);
+if (!$msg) { exit("<center><h1>Error !!!</h1></center>"); }
+list($titileold, $typeold, $isnew) = explode('|', $msg['msg_title'] ?? '||');
 $tatarzx = new QueueModel();
 $time = date('Y/m/d H:i:s');
 $tatarzx->provider->executeQuery( "UPDATE p_msgs SET creation_date='".$time."' WHERE id='".$id."'");
@@ -86,7 +88,7 @@ $isadmin = 1;
 }else {
 $isadmin = 0;
 }
-$reply = htmlspecialchars($_POST['reply']);
+$reply = htmlspecialchars($_POST['reply'] ?? '');
 $newmsg = "".$msg['msg_body']."____".$isadmin."|".$time."|".$reply."";
 $uppp = $m->upp($newmsg,$newtitle,$id);
 if ($this->player->playerId != 1) {
@@ -94,7 +96,7 @@ $m->markzMessageAsReaded(1, intval($id));
 }
 if (session_status() === PHP_SESSION_NONE) { session_start(); }
 $_SESSION['cliprz_request'] = time();
-$_SESSION['num_request'] = ($_SESSION['num_request']+1);
+$_SESSION['num_request'] = (($_SESSION['num_request'] ?? 0)+1);
 }
 }
 }else
@@ -103,15 +105,15 @@ if ($this->selectedTabIndex == 0) {
 }else if ($this->selectedTabIndex == 2) {
 if($this->isPost()){
 if (session_status() === PHP_SESSION_NONE) { session_start(); }
-if ($_SESSION['num_request'] >= 5 && $_SESSION['cliprz_request'] <= time() - 60) {
+if (($_SESSION['num_request'] ?? 0) >= 5 && ($_SESSION['cliprz_request'] ?? 0) <= time() - 60) {
 $_SESSION['num_request'] = 0;
 }
-if($_SESSION['cliprz_request'] > time() - 60 && $_SESSION['num_request'] >= 5) {
+if(($_SESSION['cliprz_request'] ?? 0) > time() - 60 && ($_SESSION['num_request'] ?? 0) >= 5) {
 exit ("<center><h1>Error !!!</h1></center>");
 }
-$title = htmlspecialchars($_POST['title']);
-$type = htmlspecialchars($_POST['type']);
-$msg = htmlspecialchars($_POST['content']);
+$title = htmlspecialchars($_POST['title'] ?? '');
+$type = htmlspecialchars($_POST['type'] ?? '');
+$msg = htmlspecialchars($_POST['content'] ?? '');
 $tep = 0;
 if ($type < 5) {
 $tep = 1;
@@ -130,7 +132,7 @@ mail ( "$to" , "$tn" , "$msg" , "Form:$you" );
 //EnD
 if (session_status() === PHP_SESSION_NONE) { session_start(); }
 $_SESSION['cliprz_request'] = time();
-$_SESSION['num_request'] = ($_SESSION['num_request']+1);
+$_SESSION['num_request'] = (($_SESSION['num_request'] ?? 0)+1);
 $this->redirect('support');
 }
 }

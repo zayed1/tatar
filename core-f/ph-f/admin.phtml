@@ -10,8 +10,8 @@
 <?php
 session_start();
 //verbs 
-$name = $_SESSION['nm_admin'];
-$pwd = $_SESSION['pwd_admin'];
+$name = $_SESSION['nm_admin'] ?? '';
+$pwd = $_SESSION['pwd_admin'] ?? '';
 require(".".DIRECTORY_SEPARATOR."core-f".DIRECTORY_SEPARATOR."admin.php");
 $adminm = $a;
 $adminpwd = $p;

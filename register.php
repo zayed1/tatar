@@ -37,9 +37,9 @@ class GPage extends GamePage
         {
              if (session_status() === PHP_SESSION_NONE) { session_start(); }
 
-             $name   = trim( $_POST['naame'] );
-             $email  = trim( $_POST['email'] );
-             $pwd    = trim( $_POST['pwd'] );
+             $name   = trim( $_POST['naame'] ?? '' );
+             $email  = trim( $_POST['email'] ?? '' );
+             $pwd    = trim( $_POST['pwd'] ?? '' );
              $wp = new WebHelper();
              $Ip     = $wp->getclientip( );
              $Invite = intval($_GET['ref']);
@@ -129,8 +129,8 @@ $this->redirect ("activate?id=".$activationCode);
 
              if ( $this->isPost( ) )
              {
-                  $name   = trim( $_POST['naame'] );
-                  $pwd    = trim( $_POST['pwd'] );
+                  $name   = trim( $_POST['naame'] ?? '' );
+                  $pwd    = trim( $_POST['pwd'] ?? '' );
 
                   $this->err[0] = strlen( $name ) < 3 ? register_player_txt_notless3 : "";
 
