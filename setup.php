@@ -2,6 +2,7 @@
 // Standalone installer for first-time setup on Railway
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
+ini_set('opcache.enable', 0);
 set_time_limit(300);
 
 define("ROOT_PATH", realpath(dirname(__FILE__)) . DIRECTORY_SEPARATOR);
@@ -13,7 +14,6 @@ define("VIEW_PATH", APP_PATH . "ph-f" . DIRECTORY_SEPARATOR);
 date_default_timezone_set('Asia/Kuwait');
 
 require(APP_PATH . "config-f/s1.php");
-require_once(LIB_PATH . "mysql.php");
 require_once(APP_PATH . "components.php");
 require_once(MODEL_PATH . "base.php");
 

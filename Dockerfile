@@ -26,8 +26,8 @@ RUN sed -i '/<IfModule php5_module>/,/<\/IfModule>/d' /var/www/html/.htaccess \
     && sed -i '/<IfModule lsapi_module>/,/<\/IfModule>/d' /var/www/html/.htaccess \
     && sed -i '/# BEGIN cPanel/,/# END cPanel/d' /var/www/html/.htaccess
 
-# Debug: show what MPMs exist at build time
-RUN echo "=== BUILD: MPM modules ===" && ls -la /etc/apache2/mods-enabled/mpm_* 2>/dev/null && echo "=========================="
+# Force fresh build - no Docker cache
+# Build timestamp: 2026-03-28-v2
 
 # Entrypoint script
 COPY docker-entrypoint.sh /usr/local/bin/
