@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+<?php
+if ( !$this->buildProperties['emptyPlace'] )
+{
+    echo "<div id=\"build\" class=\"gid";
+    echo $this->buildProperties['building']['item_id'];
+    echo "\">\r\n\t<a href=\"\" onclick=\"return showManual(4, ";
+    echo $this->buildProperties['building']['item_id'];
+    echo ");\" class=\"build_logo\"><img class=\"building g";
+if ($this->buildProperties['building']['item_id'] == '10') {
+if ($this->buildProperties['building']['level']>20){
+        $this->buildProperties['building']['item_id'] = '38';
+}
+}
+if ($this->buildProperties['building']['item_id'] == '11') {
+if ($this->buildProperties['building']['level']>20){
+        $this->buildProperties['building']['item_id'] = '39';
+}
+}
+    echo $this->buildProperties['building']['item_id'];
+    echo "\" src=\"".$GLOBALS['AppConfig']['system']['linksite']."x.gif\" alt=\"";
+    echo htmlspecialchars( constant( "item_".$this->buildProperties['building']['item_id'] ) );
+    echo "\" title=\"";
+    echo htmlspecialchars( constant( "item_".$this->buildProperties['building']['item_id'] ) );
+    echo "\"></a>\r\n\t<h1>";
+    echo constant( "item_".$this->buildProperties['building']['item_id'] );
+    echo " ";
+    echo "<s";
+    echo "pan class=\"level\">";
+    echo level_lang;
+    echo " ";
+    echo $this->buildProperties['building']['level'];
+    echo "</span></h1>\r\n\t<p class=\"build_desc\"></p>\r\n\t<p>";
+    echo constant( "item_desc_".$this->buildProperties['building']['item_id'] );
+    echo "</p>\r\n\t<p></p>\r\n\r\n\t";
+    if ( 4 < $this->buildProperties['building']['item_id'] && 0 < $this->buildProperties['building']['update_state'] && $this->buildProperties['building']['level'] == 0 )
+    {
+        echo "\t<p></p><br/><p></p><p class=\"none\">";
+        echo LANGUI_BUILD_T1;
+        echo ".</p><p></p><br/><p></p>\r\n\t";
+    }
+    else
+    {
+        if ( $this->productionPane )
+        {
+if ($this->buildProperties['building']['item_id'] != 40) {
+            echo "\t<table cellpadding=\"1\" cellspacing=\"1\" id=\"build_value\">\r\n\t\t<tbody>\r\n\t\t\t<tr>\r\n\t\t\t\t<th>";
+            echo constant( "item_curprod_".$this->buildProperties['building']['item_id'] );
+            echo ":</th>\r\n\t\t\t\t<td><b>";
+            echo $this->buildProperties['level']['current_value'];
+            echo "</b> ";
+            echo constant( "item_unit_".$this->buildProperties['building']['item_id'] );
+            echo "</td>\r\n\t\t\t</tr>\r\n\t\t\t";
+            if ( $this->buildProperties['building']['level'] < $this->buildProperties['maxLevel'] )
+            {
+                echo "\t\t\t<tr>\r\n\t\t\t\t<th>";
+                echo constant( "item_nextprod_".$this->buildProperties['building']['item_id'] );
+                echo " ";
+                echo $this->buildProperties['nextLevel'];
+                echo ":</th>\r\n\t\t\t\t<td><b>";
+                echo $this->buildProperties['level']['value'];
+                echo "</b> ";
+                echo constant( "item_unit_".$this->buildProperties['building']['item_id'] );
+                echo "</td>\r\n\t\t\t</tr>\r\n\t\t\t";
+            }
+
+
+            if ( $this->buildProperties['building']['level']+1 < $this->buildProperties['maxLevel'] )
+            {
+                echo "\t\t\t<tr>\r\n\t\t\t\t<th>";
+                echo constant( "item_nextprod_".$this->buildProperties['building']['item_id'] );
+                echo " ";
+                echo $this->buildProperties['nexttLevel'];
+                echo ":</th>\r\n\t\t\t\t<td><b>";
+                echo $this->buildProperties['level']['value2'];
+                echo "</b> ";
+                echo constant( "item_unit_".$this->buildProperties['building']['item_id'] );
+                echo "</td>\r\n\t\t\t</tr>\r\n\t\t\t";
+            }
+
+            echo "\t\t</tbody>\r\n\t</table>\r\n\t";
+}
+if ($this->buildProperties['building']['item_id'] == 40){
+echo "<h1>".$this->data['village_name']."</h1>";
+}
+if ($this->buildProperties['building']['item_id'] == 10 OR $this->buildProperties['building']['item_id'] == 11OR $this->buildProperties['building']['item_id'] == 39 OR $this->buildProperties['building']['item_id'] == 38){
+
+$neededTime1 = $this->getNeededTime2 (1,$this->resources[1]['store_max_limit']);
+$a1 = '' . (0 < $neededTime1 ? 'سيمتلئ المخزن بعد <span id="timer1">' . WebHelper::secondstostring ($neededTime1) . '</span> ' . time_hour_lang : "المخزن ممتلئ") . '';
+$neededTime2 = $this->getNeededTime2 (2,$this->resources[2]['store_max_limit']);
+$a2 = '' . (0 < $neededTime2 ? 'سيمتلئ المخزن بعد <span id="timer1">' . WebHelper::secondstostring ($neededTime2) . '</span> ' . time_hour_lang : "المخزن ممتلئ") . '';
+$neededTime3 = $this->getNeededTime2 (3,$this->resources[3]['store_max_limit']);
+$a3 = '' . (0 < $neededTime3 ? 'سيمتلئ المخزن بعد <span id="timer1">' . WebHelper::secondstostring ($neededTime3) . '</span> ' . time_hour_lang : "المخزن ممتلئ") . '';
+if ($this->resources[4]['calc_prod_rate'] < 0) {
+$ll = $this->resources[4]['calc_prod_rate']*-1;
+$ss = ceil($this->resources[4]['current_value']/$ll)-1;
+if ($ss > 0) {
+$a4 = 'سيمضي القمح معك '.$ss.' ساعات';
+}else {
+$a4 = 'القمح أنتهى .. القوات تموت من الجوع';
+}
+}else {
+$neededTime4 = $this->getNeededTime2 (4,$this->resources[4]['store_max_limit']);
+$a4 = '' . (0 < $neededTime4 ? 'سيمتلئ المخزن بعد <span id="timer1">' . WebHelper::secondstostring ($neededTime4) . '</span> ' . time_hour_lang : "المخزن ممتلئ") . '';
+}
+$r1 = ceil($this->resources[1]['current_value']*100/$this->resources[1]['store_max_limit']);
+$r2 = ceil($this->resources[2]['current_value']*100/$this->resources[2]['store_max_limit']);
+$r3 = ceil($this->resources[3]['current_value']*100/$this->resources[3]['store_max_limit']);
+$r4 = ceil($this->resources[4]['current_value']*100/$this->resources[4]['store_max_limit']);
+?>
+<p></p><table cellpadding="1" cellspacing="1" id="ressources" class="build_details">
+<thead>
+<tr>
+<th colspan="4"><?php echo $this->data['village_name']; ?></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><center><img alt="الخشب" src="<?php echo $GLOBALS['AppConfig']['system']['linksite'];?>x.gif" class="r1"></center></td>
+<td><center><?php echo $this->txt($r1); ?></center></td>
+<td><?php echo $a1; ?></td>
+</tr>
+<tr>
+<td><center><img alt="الخشب" src="<?php echo $GLOBALS['AppConfig']['system']['linksite'];?>x.gif" class="r2"></center></td>
+<td><center><?php echo $this->txt($r2); ?></center></td>
+<td><?php echo $a2; ?></td>
+</tr>
+<tr>
+<td><center><img alt="الخشب" src="<?php echo $GLOBALS['AppConfig']['system']['linksite'];?>x.gif" class="r3"></center></td>
+<td><center><?php echo $this->txt($r3); ?></center></td>
+<td><?php echo $a3; ?></td>
+</tr>
+<tr>
+<td><center><img alt="الخشب" src="<?php echo $GLOBALS['AppConfig']['system']['linksite'];?>x.gif" class="r4"></center></td>
+<td><center><?php echo $this->txt($r4); ?></center></td>
+<td><?php echo $a4; ?></td>
+</tr>
+</tbody>
+</table>
+<?php
+}
+        }
+        if ( $this->buildingView != "" && $this->buildProperties['building']['item_id'] != 40)
+        {
+            require( VIEW_PATH."buildings/".$this->buildingView.".phtml" );
+        }
+    }
+    echo "\t";
+    if ( $this->buildProperties['maxLevel'] <= $this->buildProperties['building']['level'] )
+    {
+        echo "\t<p class=\"none\">";
+        echo LANGUI_BUILD_T2;
+        echo " ";
+        echo constant( "item_".$this->buildProperties['building']['item_id'] );
+        echo " ";
+        echo LANGUI_BUILD_T3;
+        echo "</p>\r\n\t";
+    }
+    else if ( $this->buildProperties['maxLevel'] <= $this->buildProperties['upgradeToLevel'] && 0 < $this->buildProperties['building']['update_state'] )
+    {
+        echo "\t<p class=\"none\">";
+        echo LANGUI_BUILD_T4;
+        echo " ";
+        echo constant( "item_".$this->buildProperties['building']['item_id'] );
+        echo " ";
+        echo LANGUI_BUILD_T3;
+        echo "</p>\r\n\t";
+    }
+    else
+    {
+        echo "\t<p id=\"contract\">\r\n\t\t<b>";
+        echo LANGUI_BUILD_T5;
+        echo " </b> ";
+        echo LANGUI_BUILD_T6;
+        echo " ";
+        echo $this->buildProperties['nextLevel'];
+        echo ":<br>\r\n\t\t<img class=\"r1\" src=\"".$GLOBALS['AppConfig']['system']['linksite']."x.gif\" alt=\"";
+        echo item_title_1;
+        echo "\" title=\"";
+        echo item_title_1;
+        echo "\">";
+        echo $this->buildProperties['level']['resources'][1];
+        echo " | \r\n\t\t<img class=\"r2\" src=\"".$GLOBALS['AppConfig']['system']['linksite']."x.gif\" alt=\"";
+        echo item_title_2;
+        echo "\" title=\"";
+        echo item_title_2;
+        echo "\">";
+        echo $this->buildProperties['level']['resources'][2];
+        echo " | \r\n\t\t<img class=\"r3\" src=\"".$GLOBALS['AppConfig']['system']['linksite']."x.gif\" alt=\"";
+        echo item_title_3;
+        echo "\" title=\"";
+        echo item_title_3;
+        echo "\">";
+        echo $this->buildProperties['level']['resources'][3];
+        echo " | \r\n\t\t<img class=\"r4\" src=\"".$GLOBALS['AppConfig']['system']['linksite']."x.gif\" alt=\"";
+        echo item_title_4;
+        echo "\" title=\"";
+        echo item_title_4;
+        echo "\">";
+        echo $this->buildProperties['level']['resources'][4];
+        echo " | \r\n\t\t<img class=\"r5\" src=\"".$GLOBALS['AppConfig']['system']['linksite']."x.gif\" alt=\"";
+        echo LANGUI_BUILD_T7;
+        echo "\" title=\"";
+        echo LANGUI_BUILD_T7;
+        echo "\">";
+        echo $this->buildProperties['level']['people_inc'];
+        echo " | \r\n\t\t<img class=\"clock\" src=\"".$GLOBALS['AppConfig']['system']['linksite']."x.gif\" alt=\"";
+        echo text_period_lang;
+        echo "\" title=\"";
+        echo text_period_lang;
+        echo "\">";
+        echo WebHelper::secondstostring( $this->buildProperties['level']['calc_consume'] );
+        echo "\t\t";
+        echo $this->getResourceGoldExchange( $this->buildProperties['level']['resources'], $this->buildProperties['building']['item_id'], $this->buildingIndex );
+        echo "\t\t<br>";
+        echo $this->getActionText( $this->buildProperties['level']['resources'], $this->buildProperties['building']['item_id'] <= 4, TRUE, $this->buildProperties['building']['item_id'] );
+?> | <a><b>الارتقاء فورا </b> : </a>
+<style>
+.form-control{height:34px;padding:6px 12px;font-size:14px;line-height:1.428571429;color:#555;background-color:#fff;background-image:none;border:1px solid #ccc;border-radius:4px;-webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,.075);box-shadow:inset 0 1px 1px rgba(0,0,0,.075);-webkit-transition:border-color ease-in-out .15s,box-shadow ease-in-out .15s;transition:border-color ease-in-out .15s,box-shadow ease-in-out .15s}.form-control:focus{border-color:#66afe9;outline:0;-webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);box-shadow:inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6)}.form-control:-moz-placeholder{color:#999}.form-control::-moz-placeholder{color:#999;opacity:1}.form-control:-ms-input-placeholder{color:#999}.form-control::-webkit-input-placeholder{color:#999}.form-control[disabled],.form-control[readonly],fieldset[disabled] .form-control{cursor:not-allowed;background-color:#eee;opacity:1}
+</style>
+<select name="lvl" class="form-control" onclick="return confirmDel();" class="dropdown" onchange="window.location.href=('village1?id=<?php echo $this->buildingIndex; ?>&up&lvl='+this.value)">-->
+<?php
+$x_o = $this->buildProperties['building']['level']+1;
+echo '<option value="0">المستوى الحالي '.$this->buildProperties['building']['level'].'</option>';
+for ($x=$x_o; $x<=$this->buildProperties['maxLevel']; $x++) {
+$gold += floor($x/21)+1;
+echo '
+<option value="'.$x.'">الى مستوى : '.$x.' مقابل : '.$gold.' ذهب</option>';
+}
+echo "
+</select>";
+        echo "\t</p>\r\n\t";
+if ($this->buildProperties['maxLevel'] > $this->buildProperties['building']['level']) {
+if ($this->buildProperties['building']['item_id'] >= 1 AND $this->buildProperties['building']['item_id'] <= 4) { 
+$b_arr = explode( ',', $this->data['buildings'] );
+$indx = 0;
+$n = 0;
+foreach( $b_arr as $b_str ) {
+$indx++;
+$b2 = explode (' ', $b_str);
+$itm = $b2[0];
+if ($this->buildProperties['building']['item_id'] == $itm){
+$n++;
+$ilvl = $b2[1];
+$dropLevels = 20 - $ilvl;
+$gold=0;
+while ( 0 < $dropLevels-- )
+{
+$gold += 30;
+}
+}
+}
+$tst_gold = $gold*$n;?>يمكنك الارتقاء فورا لجميع حقول <u><?php echo constant( "item_".$this->buildProperties['building']['item_id'] ); ?></u> الى المستوى 20 مقابل <img src="core-f/style-f/x.gif" class="gold 1.41323997699E+13" alt="ذهب" title="ذهب"> <?php echo $tst_gold; ?><br><br><?php if ($tst_gold <= $this->data['gold_num']) {?><a class="build 1.41323997699E+13" href="village1?max&bid=<?php echo $this->buildProperties['building']['item_id']; ?>"><?php } else { ?><a class="none"><?php } ?>» الارتقاء فورا لجميع الحقول</a><?php
+}
+}
+    }
+    echo "</div>\r\n";
+}
+else
+{
+    echo "<s";
+    echo "cript language=\"JavaScript\" type=\"text/javascript\">\r\nfunction showPane(list) {\r\n\tvar build_list = _('build_list_'+list);\r\n\tvar link = _(list+'_link');\r\n\r\n\tif (build_list.className == 'hide') {\r\n\t\tbuild_list.className = '';\t\t\r\n\t\tlink.innerHTML = '";
+    echo LANGUI_BUILD_T8;
+    echo "';\r\n\t} else {\r\n\t\tbuild_list.className = 'hide';\r\n\t\tlink.innerHTML = '";
+    echo LANGUI_BUILD_T9;
+    echo "';\r\n\t}\r\n}\r\n</script>\r\n<div id=\"build\" class=\"gid0\"><h1>";
+    echo LANGUI_BUILD_T10;
+    echo "</h1>\r\n\r\n";
+    foreach ( $this->newBuilds['available'] as $buildArray )
+    {
+        foreach ( $buildArray as $item_id => $build )
+        {
+            if ( $this->data['is_special_village'] )
+            {
+                    if ( $_GET['id'] == 25 || $_GET['id'] == 26 || $_GET['id'] == 29 || $_GET['id'] == 30 || $_GET['id'] == 33 )
+                    {
+                        if ($item_id != 40)
+                        {
+                            continue;
+                        }
+}else {
+                        if ($item_id == 40)
+                        {
+                            continue;
+                        }
+
+}
+                do
+                {
+                    if ( $_GET['id'] == 25 || $_GET['id'] == 26 || $_GET['id'] == 29 || $_GET['id'] == 30 || $_GET['id'] == 33 )
+                    {
+                        if ( !( $item_id != 40 ) )
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            continue;
+                        }
+                    }
+                    if ( !( $item_id == 40 ) )
+                    {
+                        break;
+                    }
+                    continue;
+                } while ( 0 );
+            }
+            if ( $_GET['id'] == 39 && $item_id != 16 )
+            {
+                continue;
+            }
+            if ( $_GET['id'] == 40 && $item_id != 31 && $item_id != 32 && $item_id != 33 )
+            {
+                continue;
+            }
+            if ( $_GET['id'] != 39 && $_GET['id'] != 40 && ( $item_id == 16 || $item_id == 31 || $item_id == 32 || $item_id == 33 ) )
+            {
+                continue;
+            }
+            $neededResources = $build['levels'][0]['resources'];
+            echo "<h2>";
+$gid = $item_id;
+if ($gid == 38) {
+$gid= 11;
+}
+if ($gid== 39) {
+$gid= 10;
+}
+
+            echo constant( "item_".$gid);
+            echo "</h2>\r\n<table class=\"new_building\" cellpadding=\"1\" cellspacing=\"1\">\r\n\t<tbody>\r\n\t\t<tr>\r\n\t\t\t<td class=\"desc\"><p>";
+            echo constant( "item_desc_".$gid);
+            echo "</p></td>\r\n\t\t\t<td rowspan=\"3\" class=\"bimg\">\r\n\t\t\t\t<a href=\"#\" onclick=\"return showManual(4, ";
+            echo $item_id;
+            echo ");\"><img class=\"building g";
+            echo $gid;
+            echo "\" src=\"".$GLOBALS['AppConfig']['system']['linksite']."x.gif\" alt=\"";
+            echo htmlspecialchars( constant( "item_".$item_id ) );
+            echo "\" title=\"";
+            echo htmlspecialchars( constant( "item_".$item_id ) );
+            echo "\"></a>\r\n\t\t\t</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td class=\"res\">\r\n\t\t\t\t<img class=\"r1\" src=\"".$GLOBALS['AppConfig']['system']['linksite']."x.gif\" alt=\"";
+            echo item_title_1;
+            echo "\" title=\"";
+            echo item_title_1;
+            echo "\">";
+            echo $neededResources[1];
+            echo " | \r\n\t\t\t\t<img class=\"r2\" src=\"".$GLOBALS['AppConfig']['system']['linksite']."x.gif\" alt=\"";
+            echo item_title_2;
+            echo "\" title=\"";
+            echo item_title_2;
+            echo "\">";
+            echo $neededResources[2];
+            echo " | \r\n\t\t\t\t<img class=\"r3\" src=\"".$GLOBALS['AppConfig']['system']['linksite']."x.gif\" alt=\"";
+            echo item_title_3;
+            echo "\" title=\"";
+            echo item_title_3;
+            echo "\">";
+            echo $neededResources[3];
+            echo " | \r\n\t\t\t\t<img class=\"r4\" src=\"".$GLOBALS['AppConfig']['system']['linksite']."x.gif\" alt=\"";
+            echo item_title_4;
+            echo "\" title=\"";
+            echo item_title_4;
+            echo "\">";
+            echo $neededResources[4];
+            echo " | \r\n\t\t\t\t<img class=\"r5\" src=\"".$GLOBALS['AppConfig']['system']['linksite']."x.gif\" alt=\"";
+            echo LANGUI_BUILD_T7;
+            echo "\" title=\"";
+            echo LANGUI_BUILD_T7;
+            echo "\">";
+            echo $build['levels'][0]['people_inc'];
+            echo " | \r\n\t\t\t\t<img class=\"clock\" src=\"".$GLOBALS['AppConfig']['system']['linksite']."x.gif\" alt=\"";
+            echo text_period_lang;
+            echo "\" title=\"";
+            echo text_period_lang;
+            echo "\">";
+            echo WebHelper::secondstostring( $build['levels'][0]['time_consume'] / $GLOBALS['AppConfig']['Game']['speed_b'] * ( $this->data['time_consume_percent'] / 100 ) );
+            echo "\t\t\t\t";
+            echo $this->getResourceGoldExchange( $neededResources, $item_id, $this->buildingIndex );
+            echo "\t\t\t</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td class=\"link\">";
+            echo $this->getActionText( $neededResources, FALSE, FALSE, $item_id );
+            echo "</td>\r\n\t\t</tr>\r\n\t</tbody>\r\n</table>\r\n";
+        }
+    }
+    echo "\r\n";
+    if ( $_GET['id'] != 39 && $_GET['id'] != 40 && !( $this->data['is_special_village'] && ( $_GET['id'] == 25 || $_GET['id'] == 26 || $_GET['id'] == 29 || $_GET['id'] == 30 || $_GET['id'] == 33 ) ) )
+    {
+
+        echo "<p class=\"switch\"><a id=\"soon_link\" href=\"javascript:showPane('soon');\">";
+        echo LANGUI_BUILD_T9;
+        echo "</a></p>\r\n<div id=\"build_list_soon\" class=\"hide\">\r\n\r\n";
+        foreach ( $this->newBuilds['soon'] as $buildArray )
+        {
+            foreach ( $buildArray as $item_id => $build )
+            {
+                echo "<h2>";
+                echo constant( "item_".$item_id );
+                echo "</h2>\r\n<table class=\"new_building\" cellpadding=\"1\" cellspacing=\"1\">\r\n\t<tbody>\r\n\t\t<tr>\r\n\t\t\t<td class=\"desc\"><p>";
+                echo constant( "item_desc_".$item_id );
+                echo "</p></td>\r\n\t\t\t<td rowspan=\"3\" class=\"bimg\">\r\n\t\t\t\t<a href=\"#\" onclick=\"return showManual(4, ";
+                echo $item_id;
+                echo ");\"><img class=\"building g";
+                echo $item_id;
+                echo "\" src=\"".$GLOBALS['AppConfig']['system']['linksite']."x.gif\" alt=\"";
+                echo htmlspecialchars( constant( "item_".$item_id ) );
+                echo "\" title=\"";
+                echo htmlspecialchars( constant( "item_".$item_id ) );
+                echo "\"></a>\r\n\t\t\t</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td class=\"requ\">";
+                echo LANGUI_BUILD_T11;
+                echo ":</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td>\r\n\t\t\t";
+                $flag = FALSE;
+                foreach ( $build['pre_requests'] as $reqId => $reqValue )
+                {
+                    echo "\t\t\t";
+                    if ( $flag )
+                    {
+                        echo ", ";
+                    }
+                    echo "<a href=\"#\" onclick=\"return showManual(4,";
+                    echo $reqId;
+                    echo ");\">";
+                    if ( $reqValue == NULL )
+                    {
+                        echo "<strike>";
+                    }
+                    echo constant( "item_".$reqId );
+                    if ( $reqValue == NULL )
+                    {
+                        echo "</strike>";
+                    }
+                    echo "</a>";
+                    if ( $reqValue != NULL )
+                    {
+                        echo "<s";
+                        echo "pan title=\"";
+                        echo $build['pre_requests_dependencyCount'][$reqId] < 0 ? ">" : "+".$build['pre_requests_dependencyCount'][$reqId];
+                        echo "\"> ";
+                        echo level_lang;
+                        echo " ";
+                        echo $reqValue;
+                    }
+                    echo "</span>\r\n\t\t\t";
+                    $flag = TRUE;
+                }
+                echo "\t\t\t</td>\r\n\t\t</tr>\r\n\t</tbody>\r\n</table>\r\n";
+            }
+        }
+        echo "</div>\r\n";
+    }
+    echo "</div>\r\n";
+}
+if (($this->appConfig['system']['server_start'] > date('Y/m/d H:i:s'))){
+?>
+<center><p style="font-size:20px;">بقي على انطلاق اللعب :</p><br>
+<span id="timer1" style="font-size: 22px; color: orange; font-weight: bold; text-shadow: 1px 1px #000;"><?php echo TimeAgo(strtotime($this->appConfig['system']['server_start']) - time()); ?></span>
+<?php
+}
+?>
+  <script>
+if ( window.history.replaceState ) {
+        window.history.replaceState( null, null, window.location.href );
+    }
+</script>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W54B6DZ"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+</body>
+</html>

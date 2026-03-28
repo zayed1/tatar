@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body>
+<?php
+                
+                     
+       $allianceId = floatval($this->data['alliance_id']);
+
+                
+$melok_challenge = $this->queueModel->provider->fetchScalar('SELECT melok_challenge FROM p_players WHERE id ="'.$this->player->playerId.'"'); //
+    $invtby1 = $this->queueModel->provider->fetchScalar("SELECT player_point FROM p_players WHERE id='".$this->player->playerId."'");
+$alliance_ids2 = $this->queueModel->provider->fetchScalar("SELECT COUNT(*) FROM p_players WHERE alliance_id ='".$this->data['alliance_id']."'");
+
+      $countsv = explode(',', $this->data['medals']);
+    
+            
+                
+
+if ($melok_challenge == 0){
+  
+	$des = ' تطوير القرية  ';
+	$gold_num	 = 1000 ;
+	
+	if ($melok_challenge == 0 AND $this->data['total_people_count'] >= 1000  ){
+	$m = new QueueModel();
+$m->provider->executeQuery2("UPDATE p_players SET gold_num	=gold_num	+1000 WHERE id='".$this->player->playerId."'");
+
+$m->provider->executeQuery2("UPDATE p_players SET melok_challenge=  1 WHERE id='".$this->player->playerId."'");
+
+}
+	
+}	elseif ($melok_challenge == 1){	
+	$chal1 = 'is-complete';
+	$chal2 = 'is-active';
+   
+	$des = 'بناء قرية فرعية    ';
+	$gold_num	 = 1000 ;
+	
+	if ($melok_challenge == 1 AND $this->data['villages_count'] >= 2 ){
+	$m = new QueueModel();
+$m->provider->executeQuery2("UPDATE p_players SET gold_num	=gold_num	+1000 WHERE id='".$this->player->playerId."'");
+
+$m->provider->executeQuery2("UPDATE p_players SET melok_challenge= 2 WHERE id='".$this->player->playerId."'");
+
+}
+	
+}	elseif ($melok_challenge == 2 ){	
+	$chal1 = 'is-complete';
+	$chal2 = 'is-complete';
+	$chal3 = 'is-active';
+   
+	$des = 'انشاء تحالف       ';
+	$gold_num	 = 1000 ;
+	
+	if ($melok_challenge == 2 AND  $allianceId >= 1 ){
+	$m = new QueueModel();
+$m->provider->executeQuery2("UPDATE p_players SET gold_num	=gold_num	+1000 WHERE id='".$this->player->playerId."'");
+
+$m->provider->executeQuery2("UPDATE p_players SET melok_challenge=  3 WHERE id='".$this->player->playerId."'");
+
+}
+}elseif ($melok_challenge == 3 ){	
+	$chal1 = 'is-complete';
+	$chal2 = 'is-complete';
+	$chal3 = 'is-complete';
+   $chal4 = 'is-active';
+	$des = ' اوسمة افضل 10        ';
+	$gold_num	 = 1000 ;
+	
+	if ($melok_challenge == 3 AND   sizeof($countsv) >= 10 ){
+	$m = new QueueModel();
+$m->provider->executeQuery2("UPDATE p_players SET gold_num	=gold_num	+1000 WHERE id='".$this->player->playerId."'");
+
+$m->provider->executeQuery2("UPDATE p_players SET melok_challenge=  4 WHERE id='".$this->player->playerId."'");
+
+}
+}elseif ($melok_challenge == 4 ){	
+	$chal1 = 'is-complete';
+	$chal2 = 'is-complete';
+	$chal3 = 'is-complete';
+   $chal4 = 'is-complete';
+   $chal5 = 'is-active';
+	$des = ' دعوة صديق الى الموقع من خلال رابط الخاص بك ';
+	$gold_num	 = 1000 ;
+	
+	if ($melok_challenge == 4 AND  $invtby >= 1 ){
+	$m = new QueueModel();
+$m->provider->executeQuery2("UPDATE p_players SET gold_num	=gold_num	+1000 WHERE id='".$this->player->playerId."'");
+
+$m->provider->executeQuery2("UPDATE p_players SET melok_challenge=  5 WHERE id='".$this->player->playerId."'");
+
+}
+}elseif ($melok_challenge == 5 ){	
+	$chal1 = 'is-complete';
+	$chal2 = 'is-complete';
+	$chal3 = 'is-complete';
+   $chal4 = 'is-complete';
+   $chal5 = 'is-complete';
+    $chal6 = 'is-active';
+	$des = 'عدد لاعبين التحالف اكتر من 4 ';
+	$gold_num	 = 1000 ;
+	
+	if ($melok_challenge == 5 AND  $alliance_ids2 >= 4 ){
+	$m = new QueueModel();
+$m->provider->executeQuery2("UPDATE p_players SET gold_num	=gold_num	+1000 WHERE id='".$this->player->playerId."'");
+
+$m->provider->executeQuery2("UPDATE p_players SET melok_challenge=  6 WHERE id='".$this->player->playerId."'");
+
+}
+}else if ($melok_challenge == 6){	
+    $chal1 = 'is-complete';	
+	$chal2 = 'is-complete';
+	$chal3 = 'is-complete';	
+	$chal4 = 'is-complete';
+	$chal5 = 'is-complete';	
+	$chal6 = 'is-complete';
+
+		$des = 'لا يوجد';
+			
+	
+}
+
+
+                
+               
+
+
+
+
+
+
+
+?>
+<br></center><br>
+<style>
+:root {
+  --color-white: #fff;
+  --color-black: #333;
+  --color-gray: #75787b;
+  --color-gray-light: #bbb;
+  --color-gray-disabled: #e8e8e8;
+  --color-green: #53a318;
+  --color-green-dark: #383;
+  --font-size-small: .75rem;
+  --font-size-default: .875rem;
+}
+h2 {
+  color: var(--color-gray);
+  font-size: var(--font-size-small);
+  line-height: 1.5;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0px;
+}
+section {
+  margin-bottom: 2rem;
+}
+
+.progress-bar {
+  display: flex;
+  justify-content: space-between;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1rem 0;
+}
+.progress-bar li {
+  flex: 2;
+  position: relative;
+  padding: 0 0 14px 0;
+  font-size: var(--font-size-default);
+  line-height: 1.5;
+  color: var(--color-green);
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: visible;
+  min-width: 0;
+  text-align: center;
+  border-bottom: 2px solid var(--color-gray-disabled);
+}
+.progress-bar li:first-child,
+.progress-bar li:last-child {
+  flex: 1;
+}
+.progress-bar li:last-child {
+  text-align: left;
+}
+.progress-bar li:before {
+  content: "";
+  display: block;
+  width: 8px;
+  height: 8px;
+  background-color: var(--color-gray-disabled);
+  border-radius: 50%;
+  border: 2px solid var(--color-white);
+  position: absolute;
+  left: calc(50% - 6px);
+  bottom: -7px;
+  z-index: 3;
+  transition: all .2s ease-in-out;
+}
+.progress-bar li:first-child:before {
+  right: 0;
+}
+.progress-bar li:last-child:before {
+  right: auto;
+  left: 0;
+}
+.progress-bar span {
+  transition: opacity .3s ease-in-out;
+}
+.progress-bar li:not(.is-active) span {
+  opacity: 0;
+}
+.progress-bar .is-complete:not(:first-child):after,
+.progress-bar .is-active:not(:first-child):after {
+  content: "";
+  display: block;
+  width: 100%;
+  position: absolute;
+  bottom: -2px;
+  left: -50%;
+  z-index: 2;
+  border-bottom: 2px solid var(--color-green);
+}
+.progress-bar li:last-child span {
+  width: 200%;
+  display: inline-block;
+  position: absolute;
+  left: -100%;
+}
+
+.progress-bar .is-complete:last-child:after,
+.progress-bar .is-active:last-child:after {
+  width: 200%;
+  left: -100%;
+}
+
+.progress-bar .is-complete:before {
+  background-color: var(--color-green);
+}
+
+.progress-bar .is-active:before,
+.progress-bar li:hover:before,
+.progress-bar .is-hovered:before {
+  background-color: var(--color-white);
+  border-color: var(--color-green);
+}
+.progress-bar li:hover:before,
+.progress-bar .is-hovered:before {
+  transform: scale(1.33);
+}
+
+.progress-bar li:hover span,
+.progress-bar li.is-hovered span {
+  opacity: 1;
+}
+
+.progress-bar:hover li:not(:hover) span {
+  opacity: 0;
+}
+
+.x-ray .progress-bar,
+.x-ray .progress-bar li {
+  border: 1px dashed red;
+}
+
+.progress-bar .has-changes {
+  opacity: 1 !important;
+}
+.progress-bar .has-changes:before {
+  content: "";
+  display: block;
+  width: 8px;
+  height: 8px;
+  position: absolute;
+  left: calc(50% - 4px);
+  bottom: -20px;
+  background-image: url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%208%208%22%3E%3Cpath%20fill%3D%22%23ed1c24%22%20d%3D%22M4%200l4%208H0z%22%2F%3E%3C%2Fsvg%3E');
+}
+</style>
+<section>
+  <h2> التحديات </h2>
+
+
+<?php
+$melok_challenge = $this->queueModel->provider->fetchScalar('SELECT melok_challenge FROM p_players WHERE id ="'.$this->player->playerId.'"'); // وسام شحن 100 دولار
+if ($melok_challenge == 0 || $melok_challenge == 2 || $melok_challenge == 4 || $melok_challenge == 6 || $melok_challenge == 8  ){	
+
+?>
+<h2>  التحدي الحالي هو : <? echo $des; ?> | بجائزة <b><? echo $gold_num	; ?> ذهب  </b></h2>
+<?php
+}
+
+
+if ($melok_challenge == 1 || $melok_challenge == 3 || $melok_challenge == 5 || $melok_challenge == 7|| $melok_challenge == 9|| $melok_challenge == 10 ){	
+
+?>
+<h2>  التحدي الحالي هو : <? echo $des; ?> | بجائزة <b><? echo $gold_num; ?> ذهب  </b></h2>
+<?php
+}
+?>
+
+
+  <ol class="progress-bar">
+    <li class="is-complete"><span>اكملت <? echo $melok_challenge-1; ?> تحديات من اصل 6</span></li>  
+    <li class="<? echo $chal1; ?>"><span>1</span></li>  
+    <li class="<? echo $chal2; ?>"><span>2</span></li>
+    <li class="<? echo $chal3; ?>"><span>3</span></li>  
+    <li class="<? echo $chal4; ?>"><span>4</span></li>
+    <li class="<? echo $chal5; ?>"><span>5</span></li>
+    <li class="<? echo $chal6; ?>"><span>6</span></li>  
+  
+
+  </ol>
+</section>
+<br>
+	
+	</body>
+</html>

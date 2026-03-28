@@ -1,0 +1,632 @@
+<script src="core-f/style-f/js/jquery.js" type="text/javascript"></script> 
+<script>
+$(document).ready(function() {
+      // Tooltip
+    $('[title]').hover(function(){
+        // on Hover
+        var title = $(this).attr('title');
+        $(this).data('tipText', title).removeAttr('title');
+        $('<p class="tooltip"></p>')
+		.html(title)
+        .appendTo('body')
+        .fadeIn('slow');
+    }, function() {
+        // Hover out
+        $(this).attr('title', $(this).data('tipText'));
+        $('.tooltip').remove();
+    }).mousemove(function(e) {
+        var mousey = e.pageY + 0;
+        var mousex = e.pageX + -75;
+        $('.tooltip')
+        .css({ top: mousey, left: mousex })
+    });
+
+});
+
+
+ 
+$(document).ready(function(){
+  $("#flip").click(function(){
+    $("#panel").slideToggle("slow");
+  });
+});
+</script>
+<style>
+.tooltip {
+	display: none;
+	position: absolute;
+	border-radius: 3px;
+	box-shadow: 2px 2px 3px rgba(0, 0, 0, .2);
+	background-color: rgba(0, 0, 0, .8);
+	border: 1px solid #181818;
+	color: #D0D0D0;
+	font-size: 11px;
+	padding: 6px;
+	z-index: 999;
+}
+.nextlvl {
+	margin: 6px 0;
+}
+.resinfo {
+	margin-top: 6px;
+	line-height: 16px;
+}
+.resinfo span {
+	margin: 4px 6px;
+}
+</style>
+<?php 
+
+if ( ! isset ( $_GET['id'] ) and ! isset ( $_GET['ok'] ) )
+{
+	header( "location:village3" );
+}
+
+if ( isset( $_GET['new_oasis'] ) )
+{
+	?>
+<p><br></p><p>
+</p><h3>الزراعة كواحه </h3>
+هل الواحات بعيده عن قريتك ، هل جميع الواحات الذي تريدها محتله ، تستطيع الان زراعه اي مكان مهجور من قربك الى واحه لأحتلالها 
+<p>
+سيكلفك ذلك : <b><?php echo $this->appConfig['Game']['village_type_new_oasis']; ?></b> <img alt="ذهب" class="gold" src="core-f/style-f/x.gif" title="ذهب">
+</p><p>
+</p><form action="village_type.php?new_oasis&id=<?php echo $_GET['id'] ; ?>" method="POST">
+	<table cellpadding="1" cellspacing="1" id="sign_select"><tbody>
+		<tr class="top"><th>يرجى اختيار نوع الواحة</th><th></th></tr>
+		<tr>
+			<td class="nat"><label><input class="radio" type="radio" name="fid" value="1">&nbsp; <img src="core-f/style-f/default/img/m/w1.webp" width="55" height="55" class=""></label></td>
+			<td class="nat"><label><input class="radio" type="radio" name="fid" value="2">&nbsp; <img src="core-f/style-f/default/img/m/w2.webp" width="55" height="55" class=""></label></td>
+		</tr>
+		<tr>
+			<td class="nat"><label><input class="radio" type="radio" name="fid" value="3">&nbsp; <img src="core-f/style-f/default/img/m/w3.webp" width="55" height="55" class=""></label></td>
+			<td class="nat"><label><input class="radio" type="radio" name="fid" value="4">&nbsp; <img src="core-f/style-f/default/img/m/w4.webp" width="55" height="55" class=""></label></td>
+		</tr>
+		<tr>
+			<td class="nat"><label><input class="radio" type="radio" name="fid" value="5">&nbsp; <img src="core-f/style-f/default/img/m/w5.webp" width="55" height="55" class=" "></label></td>
+			<td class="nat"><label><input class="radio" type="radio" name="fid" value="6">&nbsp; <img src="core-f/style-f/default/img/m/w6.webp" width="55" height="55" class=" "></label></td>
+		</tr>
+		<tr>
+			<td class="na"><label><input class="radio" type="radio" name="fid" value="7">&nbsp; <img src="core-f/style-f/default/img/m/w7.webp" width="55" height="55" class=" "></label></td>
+			<td class="nat"><label><input class="radio" type="radio" name="fid" value="8">&nbsp; <img src="core-f/style-f/default/img/m/w8.webp" width="55" height="55" class=" "></label></td>
+		</tr>
+		<tr>
+			<td class="nat"><label><input class="radio" type="radio" name="fid" value="9">&nbsp; <img src="core-f/style-f/default/img/m/w9.webp" width="55" height="55" class=" "></label></td>
+			<td class="nat"><label><input class="radio" type="radio" name="fid" value="10">&nbsp; <img src="core-f/style-f/default/img/m/w10.webp" width="55" height="55" class=" "></label></td>
+		</tr>
+		<tr>
+			<td class="nat"><label><input class="radio" type="radio" name="fid" value="11">&nbsp; <img src="core-f/style-f/default/img/m/w11.webp" width="55" height="55" class=" "></label></td>
+			<td class="nat"><label><input class="radio" type="radio" name="fid" value="12">&nbsp; <img src="core-f/style-f/default/img/m/w12.webp" width="55" height="55" class=" "></label></td>
+		</tr>
+	</tbody></table>
+
+	<p class="btn"><input type="image" value="" tabindex="9" name="s1" id="btn_ok" class="dynamic_img" src="core-f/style-f/x.gif" alt="تمام"></p>
+	<p class="error"></p>
+</form>
+	<?php
+}
+else
+if ( isset( $_GET['farmmmm'] ) )
+	
+	{
+		
+		?>
+		<Br>
+		<Br>
+		<Br>
+		<h3>كل عضو يستطيع زراعة 20 مــــــزارعة </h3>
+			ستنتج لك نفس انتاجك في القرية كل ساعة مع العلم انت وحدك تستطيع النهب منها ولن يستطيع اي احد من اللاعبين الأخرين مهاجمتها او النهب منها فهي ملكك وحدك ،ستعمل حتى نهاية الجولة 
+			<p>
+				ستنتج لك حاليا ، 20 مــــــزارعة لكل عضو 
+			</p>
+			<p>
+			
+				خشب :  <b><?php echo $this->resources[1]['calc_prod_rate']; ?></b> كل ساعه <br>
+				طين :  <b><?php echo $this->resources[2]['calc_prod_rate']; ?></b> كل ساعه <br>
+				حديد :  <b><?php echo $this->resources[3]['calc_prod_rate']; ?></b> كل ساعه <br>
+				القمح :  <b><?php echo $this->resources[4]['calc_prod_rate']; ?></b> كل ساعه <br>
+				السعه التخزينيه ، اذ كنت تريد رفعها ارفع مخازنك في القريه 
+				
+			</p>
+			<p>
+			
+				المخازن :  <b><?php echo $this->resources[1]['store_max_limit']; ?></b> كل ساعه <br>
+				مخازن الحبوب :  <b><?php echo $this->resources[4]['store_max_limit']; ?></b> كل ساعه <br>
+
+			</p>
+			<?php
+			
+				if ( isset ( $_GET['ok'] ) )
+				{
+					?>
+						<div style="
+							color: #E7FFE6;
+							background-color: #00B16A;
+							padding: 10px;
+							margin: 0 auto;
+							width: 400px;
+							text-align: center;
+						">تمت العملية بنجاح . </div>
+					<?php
+				}
+				else
+				{
+			
+			?>
+			<p>
+				
+				سيكلفك ذلك : <b> <?php echo $this->appConfig['Game']['village_type_farm']; ?> </b> <img alt="ذهب" class="gold" src="core-f/style-f/x.gif" title="ذهب">
+
+			</p>
+			
+			<p>
+				
+				<?php echo $this->warriorMessage; ?>
+			
+			</p>
+			
+			<p>
+				<b>
+				    <?php $server_startz = $this->queueModel->provider->fetchScalar("SELECT end_date FROM p_queue WHERE proc_type='57'"); ?>
+					<?php if($server_startz > 0) { ?>
+                    <span class="none">اللعبة لم تبدأ ،، يمكنك زرع المسفط فقط</span>
+                    <?php } else { ?>
+					<a href="village_type.php?farm&id=<?php echo $_GET['id']; ?>&go">زراعة المزرعه</a> 
+					<?php } ?> 
+				</b>
+			</p>
+		
+		<?php
+		} 
+		if ( isset ( $_GET['go'] ) and isset ( $_GET['id'] ) and is_numeric( $_GET['id'] ) and $_GET['id'] > 0 AND $server_startz <= 0 )	
+		{
+
+$z3mah = new QueueModel();
+$mdist = $this->setupMetadata['field_maps_summary'][$this->data['field_maps_id']];
+$gold_num = $this->appConfig['Game']['village_type_farm'];
+$time = ceil($this->data['people_count']/5);
+$id = $_GET['id'];
+$this->warriorMessage = "";
+if ($this->data['gold_num'] < $gold_num)
+{
+$this->warriorMessage = "الذهب غير كافي";
+}
+$resultvvcount = $z3mah->provider->fetchResultSet ("SELECT * FROM `p_villages` WHERE `serv_id` = '1' and `player_id` = '". $this->player->playerId ."' ");
+	$vvcount = 0;
+	while($resultvvcount->next ())
+	{
+		$vvcount++;
+	}
+if ( $this->appConfig['Game']['village_type_farm_count'] < $vvcount )
+{
+$this->warriorMessage = "لا يمكنك زراعة اكثر من ".$this->appConfig['Game']['village_type_farm_count'];
+}
+if ($this->data['gold_num'] >= $gold_num )
+{
+$r_row = $z3mah->provider->fetchRow("SELECT * FROM p_villages where id='".$id."' and ISNULL(player_id)");
+$v_row = $z3mah->provider->fetchRow("SELECT * FROM p_villages where id = '".$this->data['selected_village_id']."'");
+if (!$r_row) {
+$this->warriorMessage = "يجب ان تكون الاحداثيات تابعه لوادي مهجور";
+}
+if ($r_row){
+$vid = $r_row['id'];
+$fmaps = $r_row['field_maps_id'];
+$mdistmaps = $this->setupMetadata['field_maps_summary'][$fmaps];
+
+if ($r_row['is_oasis'])
+{
+$this->warriorMessage = "لايمكن زراعة الواحه";
+}
+
+if ( !$r_row['is_oasis'] && $this->warriorMessage == '') {
+	
+        $toVillageRow = $r_row;
+        $fromVillageRow = $v_row;
+        $z3mah->provider->executeQuery2("UPDATE p_players SET gold_num =gold_num-".$gold_num." WHERE id = '".$fromVillageRow['player_id']."'");
+        $cropConsumption = 0;
+        $GameMetadata = $GLOBALS['GameMetadata'];
+        $SetupMetadata = $GLOBALS['SetupMetadata'];
+        $villageName = "مزرعة مملوكه ";
+        $update_key = substr( md5( $fromVillageRow['player_id'].$fromVillageRow['tribe_id'].$toVillageRow['id'].$fromVillageRow['player_name'].$villageName ), 2, 5 );
+        #$field_map_id = $fromVillageRow['field_maps_id'];
+		$field_map_id = 101;
+        #$image_num = $fromVillageRow['image_num'];
+        $image_num = 101;
+        $buildings = $fromVillageRow['buildings'];
+        $resources = $fromVillageRow['resources'];
+        $troops_training = "";
+        $troops_num = "";
+        foreach ( $GameMetadata['troops'] as $k => $v )
+        {
+            if ( $v['for_tribe_id'] == 0 - 1 || $v['for_tribe_id'] == $fromVillageRow['tribe_id'] )
+            {
+                if ( $troops_training != "" )
+                {
+                    $troops_training .= ",";
+                }
+                $researching_done = $v['research_time_consume'] == 0 ? 1 : 0;
+                $troops_training .= $k." ".$researching_done." 0 0";
+                if ( $troops_num != "" )
+                {
+                    $troops_num .= ",";
+                }
+                $troops_num .= $k." 0";
+            }
+        }
+        $troops_num = "-1:".$troops_num;
+        $z3mah->provider->executeQuery( "UPDATE p_villages v\r\n\t\t\tSET\r\n\t\t\t\tv.parent_id=%s,\r\n\t\t\t\tv.tribe_id=%s,\r\n\t\t\t\tv.player_id=%s,\r\n\t\t\t\tv.alliance_id=%s,\r\n\t\t\t\tv.player_name='%s',\r\n\t\t\t\tv.village_name='%s',\r\n\t\t\t\tv.alliance_name='%s',\r\n\t\t\t\tv.is_capital=0,\r\n\t\t\t\tv.buildings='%s', v.field_maps_id = '%s' , v.image_num = '%s', v.serv_id = '1' , v.serv_player_id = '%s', v.is_oasis = '1',\r\n\t\t\t\tv.resources='%s',\r\n\t\t\t\tv.cp='0 2',\r\n\t\t\t\tv.troops_training='%s',\r\n\t\t\t\tv.troops_num='%s',\r\n\t\t\t\tv.update_key='%s',troops_training='%s',\r\n\t\t\t\tv.creation_date=NOW(),\r\n\t\t\t\tv.last_update_date=NOW()\r\n\t\t\tWHERE v.id=%s", array(
+            intval( $fromVillageRow['id'] ),
+            intval( $fromVillageRow['tribe_id'] ),
+            intval( $fromVillageRow['player_id'] ),
+            0 < intval( $fromVillageRow['alliance_id'] ) ? intval( $fromVillageRow['alliance_id'] ) : "NULL",
+            $fromVillageRow['player_name'],
+            $villageName,
+            $fromVillageRow['alliance_name'],
+            $buildings,
+            $field_map_id,
+            $image_num,
+            $fromVillageRow['player_id'],
+            $resources,
+            $troops_training,
+            $troops_num,
+            $update_key,
+            $troops_training,
+            intval( $toVillageRow['id'] )
+        ) );
+        $child_villages_id = trim( $fromVillageRow['child_villages_id'] );
+        if ( $child_villages_id != "" )
+        {
+            $child_villages_id .= ",";
+        }
+        $child_villages_id .= $toVillageRow['id'];
+        $z3mah->provider->executeQuery( "UPDATE p_villages v\r\n\t\t\tSET\r\n\t\t\t\tv.crop_consumption=v.crop_consumption-%s,\r\n\t\t\t\t\r\n\t\t\tWHERE v.id=%s", array(
+            $cropConsumption,
+            intval( $fromVillageRow['id'] )
+        ) );
+        $prow = $z3mah->provider->fetchRow( "SELECT p.villages_id, p.villages_data_pull FROM p_players p WHERE p.id=%s", array(
+            floatval( $fromVillageRow['player_id'] )
+        ) );
+        $villages_id = trim( $prow['villages_id'] );
+        if ( $villages_id != "" )
+        {
+            $villages_id .= ",";
+        }
+        $villages_id .= $toVillageRow['id'];
+        $villages_data = trim( $prow['villages_data_pull'] );
+        if ( $villages_data != "" )
+        {
+            $villages_data .= "\n";
+        }
+        $villages_data .= $toVillageRow['id']." ".$toVillageRow['rel_x']." ".$toVillageRow['rel_y']." ".$villageName;
+		#$z3mah->provider->executeQuery( "UPDATE p_players SET villages_data_pull='%s' WHERE id=%s", array($villages_data, $this->player->playerId) );
+		$z3mah->provider->executeQuery( "UPDATE p_players p SET p.villages_data_pull='%s' WHERE p.id=%s", array(
+            $villages_data,
+            floatval( $fromVillageRow['player_id'] )
+        ) );
+        $z3mah->provider->executeQuery2("UPDATE p_villages SET people_count='".$fromVillageRow['people_count']."' WHERE id = '".$toVillageRow['id']."'");
+require_once(MODEL_PATH."plus.php");
+$msl = new Puls();
+$msl->plusress($toVillageRow['id'],1);
+$msl->plusress($toVillageRow['id'],2);
+$msl->plusress($toVillageRow['id'],3);
+$msl->plusress($toVillageRow['id'],4);
+$this->redirect ('village_type.php?farm&ok');
+
+
+}
+}
+}
+
+
+			
+		}
+		
+	}
+	else if ( isset( $_GET['mfarm'] ) )
+	{
+		
+		?>
+		
+			<br>
+			<br>
+			
+			<h3>الزراعة كمسفط للقوات واخفائهم</h3>
+			
+			<p>
+			
+				اخفاء القوات عن الاعداء وتوفير الاكل اللازم لعدم قتلهم من الجوع ، يمكنك احتلال عدد 1 من المسافط .
+			
+			</p>
+			<p>
+			
+				المسفط سيتحمل  :  <b>عدد لانهائي من القوات</b> 
+				
+				<br>
+			
+			</p>
+			<?php
+			
+				if ( isset ( $_GET['ok'] ) )
+				{
+					?>
+						<div style="
+							color: #E7FFE6;
+							background-color: #00B16A;
+							padding: 10px;
+							margin: 0 auto;
+							width: 400px;
+							text-align: center;
+						">تمت العملية بنجاح . </div>
+					<?php
+				}
+				else
+				{
+			
+			?>
+			<p>
+				
+				سيكلفك ذلك : <b> <?php echo $this->appConfig['Game']['village_type_mfarm']; ?> </b> <img alt="ذهب" class="gold" src="core-f/style-f/x.gif" title="ذهب">
+
+			</p>
+			<h3>
+			
+				<a href="village_type.php?mfarm&id=<?php echo $_GET['id']; ?>&go">زراعة المسفط</a>
+			
+			</h3>
+			
+		
+		<?php
+				}
+		if ( isset ( $_GET['go'] ) and isset ( $_GET['id'] ) and is_numeric( $_GET['id'] ) and $_GET['id'] > 0 ) 
+		{
+			
+
+
+$z3mah = new QueueModel();
+$mdist = $this->setupMetadata['field_maps_summary'][$this->data['field_maps_id']];
+$gold_num = $this->appConfig['Game']['village_type_mfarm'];
+$time = ceil($this->data['people_count']/5);
+$id = $_GET['id'];
+$this->warriorMessage = "";
+if ($this->data['gold_num'] < $gold_num)
+{
+$this->warriorMessage = "الذهب غير كافي";
+}
+
+if ($this->data['gold_num'] >= $gold_num )
+{
+$z_row = $z3mah->provider->fetchRow("SELECT * FROM p_villages where player_id='". $this->player->playerId ."' and serv_id = '2'");
+$r_row = $z3mah->provider->fetchRow("SELECT * FROM p_villages where id='".$id."' and ISNULL(player_id)");
+$v_row = $z3mah->provider->fetchRow("SELECT * FROM p_villages where id = '".$this->data['selected_village_id']."'");
+if ($z_row) {
+	$this->warriorMessage = "لديك مسفط .";
+}
+if (!$r_row) {
+	$this->warriorMessage = "يجب ان تكون الاحداثيات تابعه لوادي مهجور";
+}
+if ($r_row){
+$vid = $r_row['id'];
+$fmaps = $r_row['field_maps_id'];
+$mdistmaps = $this->setupMetadata['field_maps_summary'][$fmaps];
+
+if ($r_row['is_oasis'])
+{
+$this->warriorMessage = "لايمكن زراعة الواحه";
+}
+
+if ( !$r_row['is_oasis'] && $this->warriorMessage == '') {
+	
+        $toVillageRow = $r_row;
+        $fromVillageRow = $v_row;
+        $z3mah->provider->executeQuery2("UPDATE p_players SET gold_num =gold_num-".$gold_num." WHERE id = '".$fromVillageRow['player_id']."'");
+        $cropConsumption = 0;
+        $GameMetadata = $GLOBALS['GameMetadata'];
+        $SetupMetadata = $GLOBALS['SetupMetadata'];
+        $villageName = "مسفط مملوك ";
+        $update_key = substr( md5( $fromVillageRow['player_id'].$fromVillageRow['tribe_id'].$toVillageRow['id'].$fromVillageRow['player_name'].$villageName ), 2, 5 );
+        #$field_map_id = $fromVillageRow['field_maps_id'];
+		$field_map_id = 100;
+        #$image_num = $fromVillageRow['image_num'];
+        $image_num = 100;
+        $buildings = $fromVillageRow['buildings'];
+        #$resources = "1 0 1000000 24000000 24000000 25,2 0 1000000 24000000 24000000 25,3 0 1000000 24000000 24000000 25,4 99999999999999900000000000000000 99999999999999900000000000000000 24000000 999999999999999999999999999999999900000000000000000 100";
+        $resources = "1 0 0 0 0 25,2 0 0 0 0 25,3 0 0 0 0 25,4 0 0 0 0 100";
+        $troops_training = "";
+        $troops_num = "";
+        foreach ( $GameMetadata['troops'] as $k => $v )
+        {
+            if ( $v['for_tribe_id'] == 0 - 1 || $v['for_tribe_id'] == $fromVillageRow['tribe_id'] )
+            {
+                if ( $troops_training != "" )
+                {
+                    $troops_training .= ",";
+                }
+                $researching_done = $v['research_time_consume'] == 0 ? 1 : 0;
+                $troops_training .= $k." ".$researching_done." 0 0";
+                if ( $troops_num != "" )
+                {
+                    $troops_num .= ",";
+                }
+                $troops_num .= $k." 0";
+            }
+        }
+        $troops_num = "-1:".$troops_num;
+        $z3mah->provider->executeQuery( "UPDATE p_villages v\r\n\t\t\tSET\r\n\t\t\t\tv.parent_id=%s,\r\n\t\t\t\tv.tribe_id=%s,\r\n\t\t\t\tv.player_id=%s,\r\n\t\t\t\tv.alliance_id=%s,\r\n\t\t\t\tv.player_name='%s',\r\n\t\t\t\tv.village_name='%s',\r\n\t\t\t\tv.alliance_name='%s',\r\n\t\t\t\tv.is_capital=0,\r\n\t\t\t\tv.buildings='%s', v.field_maps_id = '%s' , v.image_num = '%s', v.serv_id = '2' , v.serv_player_id = '%s', v.is_oasis = '1',\r\n\t\t\t\tv.resources='%s',\r\n\t\t\t\tv.cp='0 2',\r\n\t\t\t\tv.troops_training='%s',\r\n\t\t\t\tv.troops_num='%s',\r\n\t\t\t\tv.update_key='%s',troops_training='%s',\r\n\t\t\t\tv.creation_date=NOW(),\r\n\t\t\t\tv.last_update_date=NOW()\r\n\t\t\tWHERE v.id=%s", array(
+            intval( $fromVillageRow['id'] ),
+            intval( $fromVillageRow['tribe_id'] ),
+            intval( $fromVillageRow['player_id'] ),
+            0 < intval( $fromVillageRow['alliance_id'] ) ? intval( $fromVillageRow['alliance_id'] ) : "NULL",
+            $fromVillageRow['player_name'],
+            $villageName,
+            $fromVillageRow['alliance_name'],
+            $buildings,
+            $field_map_id,
+            $image_num,
+            $fromVillageRow['player_id'],
+            $resources,
+            $troops_training,
+            $troops_num,
+            $update_key,
+            $troops_training,
+            intval( $toVillageRow['id'] )
+        ) );
+        $child_villages_id = trim( $fromVillageRow['child_villages_id'] );
+        if ( $child_villages_id != "" )
+        {
+            $child_villages_id .= ",";
+        }
+        $child_villages_id .= $toVillageRow['id'];
+        $z3mah->provider->executeQuery( "UPDATE p_villages v\r\n\t\t\tSET\r\n\t\t\t\tv.crop_consumption=v.crop_consumption-%s,\r\n\t\t\t\t\r\n\t\t\tWHERE v.id=%s", array(
+            $cropConsumption,
+            intval( $fromVillageRow['id'] )
+        ) );
+        $prow = $z3mah->provider->fetchRow( "SELECT p.villages_id, p.villages_data FROM p_players p WHERE p.id=%s", array(
+            intval( $fromVillageRow['player_id'] )
+        ) );
+        $villages_id = trim( $prow['villages_id'] );
+        if ( $villages_id != "" )
+        {
+            $villages_id .= ",";
+        }
+        $villages_id .= $toVillageRow['id'];
+        $villages_data = trim( $prow['villages_data'] );
+        if ( $villages_data != "" )
+        {
+            $villages_data .= "\n";
+        }
+        $villages_data .= $toVillageRow['id']." ".$toVillageRow['rel_x']." ".$toVillageRow['rel_y']." ".$villageName;
+       
+        $z3mah->provider->executeQuery2("UPDATE p_villages SET people_count='".$fromVillageRow['people_count']."' WHERE id = '".$toVillageRow['id']."'");
+require_once(MODEL_PATH."plus.php");
+$msl = new Puls();
+$msl->plusress($toVillageRow['id'],1);
+$msl->plusress($toVillageRow['id'],2);
+$msl->plusress($toVillageRow['id'],3);
+$msl->plusress($toVillageRow['id'],4);
+$this->redirect ('village_type.php?mfarm&ok');
+
+
+}
+else
+{
+	?>
+	
+		<p>
+			<div style="
+						color: #FFE6E6;
+						background-color: #FD4141;
+						padding: 10px;
+						margin: 0 auto;
+						width: 400px;
+						font-weight:900;
+						text-align: center;
+			"><?php echo $this->warriorMessage; ?> </div>
+		</p>
+	<?php
+}
+}
+}
+
+
+			
+		}
+		
+	}
+	else 
+	{
+		
+
+	
+if(!isset($_GET['oasis'])) { ?>
+<br><br><br>
+<h1>تغيير نوع القرية</h1>
+يمكنك من خلال هذه الخاصية تغيير نوع القرية على سبيل المثال من 4-4-4-6 الى 1-1-1-15 بسهولة تامة
+<br>
+سيكلفك تغيير نوع القرية : <b><?= $this->appConfig['Game']['village_type']; ?></b> <img alt="ذهب" class="gold" src="core-f/style-f/x.gif" title="ذهب">
+<br><br>
+نوع القرية الحالي: <img src="core-f/style-f/default/img/g/f<?= $this->mapItemData['field_maps_id']; ?>.webp" width="55" height="55">
+<br><br>
+
+<form action="" method="POST">
+	<table cellpadding="1" cellspacing="1" id="sign_select"><tbody>
+		<tr class="top"><th>يرجى اختيار نوع القرية الجديد</th><th></th></tr>
+		<tr>
+			<td class="nat"><label><input class="radio" type="radio" name="fid" value="1">&nbsp; <img src="core-f/style-f/default/img/g/f1.webp" width="55" height="55"></label></td>
+			<td class="nat"><label><input class="radio" type="radio" name="fid" value="2">&nbsp; <img src="core-f/style-f/default/img/g/f2.webp" width="55" height="55"></label></td>
+		</tr>
+		<tr>
+			<td class="nat"><label><input class="radio" type="radio" name="fid" value="3">&nbsp; <img src="core-f/style-f/default/img/g/f3.webp" width="55" height="55"></label></td>
+			<td class="nat"><label><input class="radio" type="radio" name="fid" value="4">&nbsp; <img src="core-f/style-f/default/img/g/f4.webp" width="55" height="55"></label></td>
+		</tr>
+		<tr>
+			<td class="nat"><label><input class="radio" type="radio" name="fid" value="5">&nbsp; <img src="core-f/style-f/default/img/g/f5.webp" width="55" height="55"></label></td>
+			<td class="nat"><label><input class="radio" type="radio" name="fid" value="6">&nbsp; <img src="core-f/style-f/default/img/g/f6.webp" width="55" height="55"></label></td>
+		</tr>
+		<tr>
+			<td class="nat"><label><input class="radio" type="radio" name="fid" value="7">&nbsp; <img src="core-f/style-f/default/img/g/f7.webp" width="55" height="55"></label></td>
+			<td class="nat"><label><input class="radio" type="radio" name="fid" value="8">&nbsp; <img src="core-f/style-f/default/img/g/f8.webp" width="55" height="55"></label></td>
+		</tr>
+		<tr>
+			<td class="nat"><label><input class="radio" type="radio" name="fid" value="9">&nbsp; <img src="core-f/style-f/default/img/g/f9.webp" width="55" height="55"></label></td>
+			<td class="nat"><label><input class="radio" type="radio" name="fid" value="10">&nbsp; <img src="core-f/style-f/default/img/g/f10.webp" width="55" height="55"></label></td>
+		</tr>
+		<tr>
+			<td class="nat"><label><input class="radio" type="radio" name="fid" value="11">&nbsp; <img src="core-f/style-f/default/img/g/f11.webp" width="55" height="55"></label></td>
+			<td class="nat"><label><input class="radio" type="radio" name="fid" value="12">&nbsp; <img src="core-f/style-f/default/img/g/f12.webp" width="55" height="55"></label></td>
+		</tr>
+		<tr>
+			<td class="nat"><label><input class="radio" type="radio" name="fid" value="13">&nbsp; <img src="core-f/style-f/default/img/g/f13.webp" width="55" height="55"></label></td>
+			<td class="nat"></td>
+		</tr>
+	</tbody></table>
+
+	<p class="btn"><input type="image" value="" tabindex="9" name="s1" id="btn_ok" class="dynamic_img" src="core-f/style-f/x.gif" alt="تمام"></p>
+	<p class="error"><?= $this->error_message; ?></p>
+</form>
+
+<?php } else { ?>
+<br><br><br>
+<h1>تغيير نوع الواحة</h1>
+يمكنك من خلال هذه الخاصية تغيير نوع الواحة على سبيل المثال من واحة خشبية الى واحة قمحية بسهولة تامة 
+<br>
+سيكلفك تغيير نوع الواحة : <b><?= $this->appConfig['Game']['village_type2']; ?></b> <img alt="ذهب" class="gold" src="core-f/style-f/x.gif" title="ذهب">
+<br><br>
+نوع الواحة الحالي: <img src="core-f/style-f/default/img/m/w<?= $this->mapItemData['image_num']; ?>.webp" width="55" height="55">
+<br><br>
+
+<form action="" method="POST">
+	<table cellpadding="1" cellspacing="1" id="sign_select"><tbody>
+		<tr class="top"><th>يرجى اختيار نوع الواحة الجديد</th><th></th></tr>
+		<tr>
+			<td class="nat"><label><input class="radio" type="radio" name="fid" value="1">&nbsp; <img src="core-f/style-f/default/img/m/w1.webp" width="55" height="55"></label></td>
+			<td class="nat"><label><input class="radio" type="radio" name="fid" value="2">&nbsp; <img src="core-f/style-f/default/img/m/w2.webp" width="55" height="55"></label></td>
+		</tr>
+		<tr>
+			<td class="nat"><label><input class="radio" type="radio" name="fid" value="3">&nbsp; <img src="core-f/style-f/default/img/m/w3.webp" width="55" height="55"></label></td>
+			<td class="nat"><label><input class="radio" type="radio" name="fid" value="4">&nbsp; <img src="core-f/style-f/default/img/m/w4.webp" width="55" height="55"></label></td>
+		</tr>
+		<tr>
+			<td class="nat"><label><input class="radio" type="radio" name="fid" value="5">&nbsp; <img src="core-f/style-f/default/img/m/w5.webp" width="55" height="55"></label></td>
+			<td class="nat"><label><input class="radio" type="radio" name="fid" value="6">&nbsp; <img src="core-f/style-f/default/img/m/w6.webp" width="55" height="55"></label></td>
+		</tr>
+		<tr>
+			<td class="nat"><label><input class="radio" type="radio" name="fid" value="7">&nbsp; <img src="core-f/style-f/default/img/m/w7.webp" width="55" height="55"></label></td>
+			<td class="nat"><label><input class="radio" type="radio" name="fid" value="8">&nbsp; <img src="core-f/style-f/default/img/m/w8.webp" width="55" height="55"></label></td>
+		</tr>
+		<tr>
+			<td class="nat"><label><input class="radio" type="radio" name="fid" value="9">&nbsp; <img src="core-f/style-f/default/img/m/w9.webp" width="55" height="55"></label></td>
+			<td class="nat"><label><input class="radio" type="radio" name="fid" value="10">&nbsp; <img src="core-f/style-f/default/img/m/w10.webp" width="55" height="55"></label></td>
+		</tr>
+		<tr>
+			<td class="nat"><label><input class="radio" type="radio" name="fid" value="11">&nbsp; <img src="core-f/style-f/default/img/m/w11.webp" width="55" height="55"></label></td>
+			<td class="nat"><label><input class="radio" type="radio" name="fid" value="12">&nbsp; <img src="core-f/style-f/default/img/m/w12.webp" width="55" height="55"></label></td>
+		</tr>
+	</tbody></table>
+
+	<p class="btn"><input type="image" value="" tabindex="9" name="s1" id="btn_ok" class="dynamic_img" src="core-f/style-f/x.gif" alt="تمام"></p>
+	<p class="error"><?= $this->error_message; ?></p>
+</form>
+<?php 
+		}
+	}
+ ?>
