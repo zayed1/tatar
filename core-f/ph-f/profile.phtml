@@ -259,8 +259,8 @@ echo '                                <table cellpadding="0" cellspacing="0">
     }
 if ($this->player->playerId != $this->profileData['id']) {
         $m                      = new ProfileModel();
-            $war_alliance_id = trim($this->data['avatar']);
-
+            $war_alliance_id = trim($this->data['avatar'] ?? '');
+            $b = 0;
             if ($war_alliance_id != '')
                 {
                 $war_alliance_idArr = explode(',', $war_alliance_id);

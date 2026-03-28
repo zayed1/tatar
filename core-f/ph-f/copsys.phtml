@@ -92,16 +92,15 @@ echo "<table border='1'>
 </tr>";
 echo '<ul>';
 include('./core-f/config-f/s1.php');
-$db_connect = mysql_connect($AppConfig['db']['host'],$AppConfig['db']['user'],$AppConfig['db']['password'])or die("1");
-mysql_select_db($AppConfig['db']['database'], $db_connect);
+$db_connect = mysqli_connect($AppConfig['db']['host'],$AppConfig['db']['user'],$AppConfig['db']['password'],$AppConfig['db']['database'],$AppConfig['db']['port']) or die("1");
 
-		$select = mysql_query("SELECT * FROM money_log");
+		$select = mysqli_query($db_connect, "SELECT * FROM money_log");
 
-		$select1 = mysql_query("SELECT * FROM copon");
+		$select1 = mysqli_query($db_connect, "SELECT * FROM copon");
 
 // Retrieve the number of rows from MySQL
-$num_rows = mysql_num_rows($select);
-$num_rows1 = mysql_num_rows($select1);
+$num_rows = mysqli_num_rows($select);
+$num_rows1 = mysqli_num_rows($select1);
 
 // Output the HTML table structure
 echo "<table>";
@@ -116,7 +115,7 @@ echo "<tbody>";
 
 // Loop through the results and output the table rows
 if ($num_rows > 0) {
-  while ($row = mysql_fetch_array($select)) {
+  while ($row = mysqli_fetch_array($select)) {
     echo "<tr>";
     if ($row['transID'] != NULL || $row['transID'] != ''){
       echo "<td>" . $row['transID'] . "</td>";
@@ -150,7 +149,7 @@ echo "<tbody>";
 
 // Loop through the results and output the table rows
 if ($num_rows1 > 0) {
-  while ($row1 = mysql_fetch_array($select1)) {
+  while ($row1 = mysqli_fetch_array($select1)) {
     echo "<tr>";
     if ($row1['name'] != NULL || $row1['name'] != ''){
       echo "<td>" . $row1['gold'] . " <img src='core-f/style-f/gold.gif'></td>";

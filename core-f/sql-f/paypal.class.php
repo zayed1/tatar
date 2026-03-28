@@ -64,7 +64,7 @@ class paypal_class
             $this->ipn_response .= fgets( $fp, 1024 );
         }
         fclose( $fp );
-        if ( eregi( "VERIFIED", $this->ipn_response ) )
+        if ( preg_match( "/VERIFIED/i", $this->ipn_response ) )
         {
             $this->log_ipn_results( TRUE );
             return TRUE;

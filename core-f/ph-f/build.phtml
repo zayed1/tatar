@@ -230,6 +230,7 @@ $r4 = ceil($this->resources[4]['current_value']*100/$this->resources[4]['store_m
 <?php
 $x_o = $this->buildProperties['building']['level']+1;
 echo '<option value="0">المستوى الحالي '.$this->buildProperties['building']['level'].'</option>';
+$gold = 0;
 for ($x=$x_o; $x<=$this->buildProperties['maxLevel']; $x++) {
 $gold += floor($x/21)+1;
 echo '

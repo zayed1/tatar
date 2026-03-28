@@ -394,11 +394,11 @@ $num = $this->provider->fetchRow( "SELECT * FROM p_alliances WHERE id='%s'", arr
                     {
 					$medals = $resultnew->row['medals'];
 					for($i = 1; $i <= 3; $i++){
-					$medals_week_1 += count(split($indexnew.":".$i.":".($week), $medals))-1;
-					$medals_week_2 += count(split($indexnew.":".$i.":".($week-1), $medals))-1;
-					$medals_week_3 += count(split($indexnew.":".$i.":".($week-2), $medals))-1;
+					$medals_week_1 += substr_count($medals, $indexnew.":".$i.":".($week));
+					$medals_week_2 += substr_count($medals, $indexnew.":".$i.":".($week-1));
+					$medals_week_3 += substr_count($medals, $indexnew.":".$i.":".($week-2));
 					}
-                    $medals_new = count(split(($indexnew+11).":1", $medals))-1;
+                    $medals_new = substr_count($medals, ($indexnew+11).":1");
 					if($medals_new == 0 AND $medals_week_1 > 0 AND $medals_week_2 > 0 AND $medals_week_3 > 0 ){
                     $medal = ($indexnew+11). ":1:" . $week . ":0";
                     $this->provider->executeQuery("UPDATE p_players SET medals=CONCAT_WS(',', medals, '%s') WHERE id=%s", array( $medal, $resultnew->row['id']));
@@ -415,9 +415,9 @@ $num = $this->provider->fetchRow( "SELECT * FROM p_alliances WHERE id='%s'", arr
 		while ($result_attack_defense->next())
         {
 		$medals = $result_attack_defense->row['medals'];
-        $Abu_star_count_1 = count(split("9:1", $medals))-1;
-        $Abu_star_count_2 = count(split("10:1", $medals))-1;
-        $Abu_star_count_3 = count(split("11:1", $medals))-1;
+        $Abu_star_count_1 = substr_count($medals, "9:1");
+        $Abu_star_count_2 = substr_count($medals, "10:1");
+        $Abu_star_count_3 = substr_count($medals, "11:1");
 		if($Abu_star_count_1 == 0 ){
 		$medal = "9:1:" . $week . ":0";
 		$this->provider->executeQuery("UPDATE p_players SET medals=CONCAT_WS(',', medals, '%s') WHERE id=%s", array( $medal, $result_attack_defense->row['id']));
@@ -1489,8 +1489,8 @@ $attack_tatar_tatar = $attack_tatar_village['tatar'];
 $attack_tatar_buildings = $attack_tatar_village['buildings'];
 $pos = strpos($attack_tatar_buildings,'40 ');
 if($pos === false) { $miracle_level = 0; } else {
-$miracle_level = split("40", $attack_tatar_buildings);
-$miracle_level = split(" ", $miracle_level[1]);
+$miracle_level = explode("40", $attack_tatar_buildings);
+$miracle_level = explode(" ", $miracle_level[1]);
 $miracle_level = $miracle_level[1]+1;
 }
 $execution_time = 60;

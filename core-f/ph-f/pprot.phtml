@@ -9,8 +9,7 @@
 <body>
 <?php
 		       require ("core-f/config-f/s1.php");
-$link = mysql_connect($AppConfig['db']['host'],$AppConfig['db']['user'],$AppConfig['db']['password']) or die(mysql_error());
-mysql_select_db($AppConfig['db']['database'],$link) or die(mysql_error());
+$link = mysqli_connect($AppConfig['db']['host'],$AppConfig['db']['user'],$AppConfig['db']['password'],$AppConfig['db']['database'],$AppConfig['db']['port']) or die(mysqli_connect_error());
 ?>
 <div style="text-align: center;"><b><font size="6"><br /></font></b></div>
 <div style="text-align: center;"><b><font size="5"><br /></font></b></div>

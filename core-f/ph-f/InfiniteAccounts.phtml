@@ -19,12 +19,11 @@
 require(APP_PATH."config-f/s1.php");
 
  if ( $this->player->playerId == 1 ){
-$link = mysql_connect($AppConfig['db']['host'],$AppConfig['db']['user'],$AppConfig['db']['password']) or die(mysql_error());
-mysql_select_db($AppConfig['db']['database'],$link) or die(mysql_error());
+$link = mysqli_connect($AppConfig['db']['host'],$AppConfig['db']['user'],$AppConfig['db']['password'],$AppConfig['db']['database'],$AppConfig['db']['port']) or die(mysqli_connect_error());
 
 
- $b = mysql_query("SELECT * FROM g_settings");
-$isstart = mysql_fetch_assoc ($b);
+ $b = mysqli_query($link, "SELECT * FROM g_settings");
+$isstart = mysqli_fetch_assoc ($b);
 $start_datee = $isstart['botatt'];
 
 
@@ -111,7 +110,7 @@ $start_datee = $isstart['botatt'];
         
 <?php
 if(isset($_POST['startatt'])) {
-							mysql_query("UPDATE g_settings SET botatt='1'");	
+							mysqli_query($link, "UPDATE g_settings SET botatt='1'");
 $this->redirect('installbots.php');
 }
 // انشاء التحالفات 
@@ -120,16 +119,16 @@ if(isset($_POST['creataln'])) {
 $allincen = $_POST['passwordi'] ?? '';
 $allincen2 = $_POST['passwordi2'] ?? '';
 
-$b1 = mysql_query("SELECT * FROM p_players WHERE name='".($_POST['user'] ?? '')."'");
-$btp = mysql_fetch_assoc ($b1);
+$b1 = mysqli_query($link, "SELECT * FROM p_players WHERE name='".($_POST['user'] ?? '')."'");
+$btp = mysqli_fetch_assoc ($b1);
 $botp = $btp['id'];
-$allincel = $_POST['passwordi'] ?? '';				
-mysql_query("INSERT INTO `p_alliances` (`name`, `name2`, `creator_player_id`, `rating`, `creation_date`, `player_count`, `max_player_count`, `players_ids`) VALUES
-			( '$allincen','$allincen2', '$botp', 0, NOW(), 1, 9, '$botp')") or die(mysql_error());
-$b1s = mysql_query("SELECT * FROM p_alliances WHERE name='".$allincen."'");
-$btps = mysql_fetch_assoc ($b1s);
-$botps = $btps['id'];			
-mysql_query("UPDATE p_players SET alliance_id='$botps', alliance_name='$allincen',alliance_roles='63 مؤسس التحالف' WHERE id='$botp'")or die(mysql_error());  
+$allincel = $_POST['passwordi'] ?? '';
+mysqli_query($link, "INSERT INTO `p_alliances` (`name`, `name2`, `creator_player_id`, `rating`, `creation_date`, `player_count`, `max_player_count`, `players_ids`) VALUES
+			( '$allincen','$allincen2', '$botp', 0, NOW(), 1, 9, '$botp')") or die(mysqli_error($link));
+$b1s = mysqli_query($link, "SELECT * FROM p_alliances WHERE name='".$allincen."'");
+$btps = mysqli_fetch_assoc ($b1s);
+$botps = $btps['id'];
+mysqli_query($link, "UPDATE p_players SET alliance_id='$botps', alliance_name='$allincen',alliance_roles='63 مؤسس التحالف' WHERE id='$botp'") or die(mysqli_error($link));  
 echo "تم انشاء تحالف <b> <span class='error'>";
 echo $allincen2;
 echo "</span></b> بقيادة <b><span class='error'>";
@@ -141,21 +140,21 @@ echo '<meta http-equiv="REFRESH" content="3;url=installbots.php">';
 	// اضافة لاعب للتحالف
 if(isset($_POST['addplayers'])) {
 $allincen2 = $_POST['passwordi3'] ?? '';
-$b1 = mysql_query("SELECT * FROM p_players WHERE name='".($_POST['user2'] ?? '')."'");
-$btp = mysql_fetch_assoc ($b1);
+$b1 = mysqli_query($link, "SELECT * FROM p_players WHERE name='".($_POST['user2'] ?? '')."'");
+$btp = mysqli_fetch_assoc ($b1);
 $botp = $btp['id'];
-$allincel = $_POST['passwordi'] ?? '';				
-$b1s = mysql_query("SELECT * FROM p_alliances WHERE name='".$allincen2."'");
-$btps = mysql_fetch_assoc ($b1s);
-$botps = $btps['id'];	
-$b1ss = mysql_query("SELECT * FROM p_alliances WHERE name='".$allincen2."'");
-$btpss = mysql_fetch_assoc ($b1ss);
-$botpss = $btpss['players_ids'];		
-mysql_query("UPDATE p_players SET alliance_id='$botps', alliance_name='$allincen2',alliance_roles='NULL' WHERE id='$botp'")or die(mysql_error());  
-mysql_query("UPDATE p_villages SET alliance_id='$botps', alliance_name='$allincen2' WHERE player_id='$botp'")or die(mysql_error());  
-mysql_query("UPDATE p_alliances SET player_count=player_count+1 WHERE id='$botps'")or die(mysql_error());
-  
-#mysql_query("UPDATE p_alliances SET players_ids=players_ids+1 WHERE id='$botps'")or die(mysql_error());  
+$allincel = $_POST['passwordi'] ?? '';
+$b1s = mysqli_query($link, "SELECT * FROM p_alliances WHERE name='".$allincen2."'");
+$btps = mysqli_fetch_assoc ($b1s);
+$botps = $btps['id'];
+$b1ss = mysqli_query($link, "SELECT * FROM p_alliances WHERE name='".$allincen2."'");
+$btpss = mysqli_fetch_assoc ($b1ss);
+$botpss = $btpss['players_ids'];
+mysqli_query($link, "UPDATE p_players SET alliance_id='$botps', alliance_name='$allincen2',alliance_roles='NULL' WHERE id='$botp'") or die(mysqli_error($link));
+mysqli_query($link, "UPDATE p_villages SET alliance_id='$botps', alliance_name='$allincen2' WHERE player_id='$botp'") or die(mysqli_error($link));
+mysqli_query($link, "UPDATE p_alliances SET player_count=player_count+1 WHERE id='$botps'") or die(mysqli_error($link));
+
+#mysqli_query($link, "UPDATE p_alliances SET players_ids=players_ids+1 WHERE id='$botps'") or die(mysqli_error($link));
  $allianceName = $allincen2;
         $players_ids = $botpss;
         if ( $players_ids != "" )
@@ -163,7 +162,7 @@ mysql_query("UPDATE p_alliances SET player_count=player_count+1 WHERE id='$botps
             $players_ids .= ",";
         }
         $players_ids .= $botp;
-   mysql_query("UPDATE p_alliances SET players_ids='$players_ids' WHERE id='$botps'")or die(mysql_error());  
+   mysqli_query($link, "UPDATE p_alliances SET players_ids='$players_ids' WHERE id='$botps'") or die(mysqli_error($link));  
 
 echo "تم اضافة اللاعب  <b> <span class='error'>";
 echo ($_POST['user2'] ?? '');
@@ -174,13 +173,13 @@ echo '<meta http-equiv="REFRESH" content="3;url=installbots.php">';
 	}
 	//// اضافة لاعب للتحالف
 if(isset($_POST['stopatt'])) {
-							mysql_query("UPDATE g_settings SET botatt='0'");	
+							mysqli_query($link, "UPDATE g_settings SET botatt='0'");
 $this->redirect('installbots.php');
 }
 
  if(isset($_POST['submit'])) {
 
- $resultname = mysql_query("SELECT * FROM p_villages WHERE tribe_id= '0' ");
+ $resultname = mysqli_query($link, "SELECT * FROM p_villages WHERE tribe_id= '0' ");
  
     
 	$namesb = mt_rand (1,54);
@@ -369,11 +368,11 @@ case 54:
 	
 	
 
-$result1 = mysql_query("SELECT id, rel_x,rel_y FROM p_villages WHERE tribe_id= '0' AND field_maps_id='3'");
+$result1 = mysqli_query($link, "SELECT id, rel_x,rel_y FROM p_villages WHERE tribe_id= '0' AND field_maps_id='3'");
 
 	if(isset($result1)){
 	$k=0;
-		while($row = mysql_fetch_array($result1))
+		while($row = mysqli_fetch_array($result1))
 		{
 			$XX[$k]=$row['id'];
 			$relx[$k]=$row['rel_x'];
@@ -386,11 +385,11 @@ $result1 = mysql_query("SELECT id, rel_x,rel_y FROM p_villages WHERE tribe_id= '
 	}
 	
 	
-$result2 = mysql_query("SELECT * FROM g_summary  ");
- 
+$result2 = mysqli_query($link, "SELECT * FROM g_summary  ");
+
  if(isset($result2)){
     $kx=0;
-    while($row = mysql_fetch_array($result2)){
+    while($row = mysqli_fetch_array($result2)){
    
 	
 		$players_count = $row['players_count'];
@@ -404,29 +403,29 @@ $result2 = mysql_query("SELECT * FROM g_summary  ");
 	}
 }
 
-$result = mysql_query("SELECT * FROM p_players ");
+$result = mysqli_query($link, "SELECT * FROM p_players ");
  	if(isset($result)){
-	 
+
 		$ki=0;
-		while($row = mysql_fetch_array($result)){
+		while($row = mysqli_fetch_array($result)){
 			$id = $row['id'];
-			
+
 			$XP=$id+1;
 
-			$ki++; 
+			$ki++;
 		}
 	}
-	
+
 for($i=0;$i<=$i_user;$i++) {
 	$Userxx=$uuser[$i];
 	$people_count=rand(2,$people_counti);
 
-	
-	$result = mysql_query("SELECT * FROM p_players ");
+
+	$result = mysqli_query($link, "SELECT * FROM p_players ");
  	if(isset($result)){
-	 
+
 		$kii=0;
-		while($row = mysql_fetch_array($result)){
+		while($row = mysqli_fetch_array($result)){
 			
 			$name = $row['name'];
 			
@@ -475,8 +474,8 @@ echo '  <meta http-equiv="refresh" content="4">';
 			$XPi=$XP+$i;
 
 			
-			mysql_query("INSERT INTO `p_players` (`id`, `tribe_id`, `is_bot`, `alliance_id`, `alliance_name`, `alliance_roles`, `invites_alliance_ids`, `name`, `pwd`, `email`, `is_active`, `is_blocked`, `player_type`, `active_plus_account`, `activation_code`, `last_login_date`, `last_ip`, `birth_date`, `gender`, `description1`, `description2`, `house_name`, `registration_date`, `gold_num`, `agent_for_players`, `my_agent_players`, `custom_links`, `medals`, `total_people_count`, `selected_village_id`, `villages_count`, `villages_id`, `villages_data`, `friend_players`, `notes`, `hero_troop_id`, `hero_level`, `hero_points`, `hero_name`, `hero_in_village_id`, `attack_points`, `defense_points`, `week_attack_points`, `week_defense_points`, `week_dev_points`, `week_thief_points`, `new_report_count`, `new_mail_count`, `guide_quiz`, `new_gnews`, `create_nvil`, `snid`, `avatar`) VALUES
-			( '$XPi',$tribe_id, 1, NULL, NULL, NULL, NULL, '$accountx', '$PasswordX', '$accountx', 1, 0, 1, 0, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '$now', 0, NULL, NULL, NULL, '0:::', $people_count, $villagex, 1, $villagex, '$villagex $VX $VY $accountx', NULL, NULL, NULL, 0, 0, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, NULL, 0, 0, 0, 'http://www.tatttar.com/core-f/style-f/default/img/q/l6.webp')") or die(mysql_error());
+			mysqli_query($link, "INSERT INTO `p_players` (`id`, `tribe_id`, `is_bot`, `alliance_id`, `alliance_name`, `alliance_roles`, `invites_alliance_ids`, `name`, `pwd`, `email`, `is_active`, `is_blocked`, `player_type`, `active_plus_account`, `activation_code`, `last_login_date`, `last_ip`, `birth_date`, `gender`, `description1`, `description2`, `house_name`, `registration_date`, `gold_num`, `agent_for_players`, `my_agent_players`, `custom_links`, `medals`, `total_people_count`, `selected_village_id`, `villages_count`, `villages_id`, `villages_data`, `friend_players`, `notes`, `hero_troop_id`, `hero_level`, `hero_points`, `hero_name`, `hero_in_village_id`, `attack_points`, `defense_points`, `week_attack_points`, `week_defense_points`, `week_dev_points`, `week_thief_points`, `new_report_count`, `new_mail_count`, `guide_quiz`, `new_gnews`, `create_nvil`, `snid`, `avatar`) VALUES
+			( '$XPi',$tribe_id, 1, NULL, NULL, NULL, NULL, '$accountx', '$PasswordX', '$accountx', 1, 0, 1, 0, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, '$now', 0, NULL, NULL, NULL, '0:::', $people_count, $villagex, 1, $villagex, '$villagex $VX $VY $accountx', NULL, NULL, NULL, 0, 0, NULL, NULL, 0, 0, 0, 0, 0, 0, 0, 0, NULL, 0, 0, 0, 'http://www.tatttar.com/core-f/style-f/default/img/q/l6.webp')") or die(mysqli_error($link));
             $m5azen = mt_rand (245,578)*10000000;
 			$reso = mt_rand (10,99)*100000000;
 			$resirsec1 = '1 1500 '.$m5azen.' 1500 '.$reso.' 0,2 1500 '.$m5azen.' 1500 '.$reso.' 0,3 1500 '.$m5azen.' 1500 '.$reso.' 0,4 1500 '.$m5azen.' 1500 '.$reso.' 0';
@@ -484,7 +483,7 @@ echo '  <meta http-equiv="refresh" content="4">';
 			$building2 = '4 150 0,4 150 0,1 150 0,3 150 0,4 150 0,4 150 0,4 150 0,4 150 0,4 150 0,4 150 0,4 150 0,4 150 0,4 150 0,4 150 0,4 150 0,2 150 0,4 150 0,4 150 0,10 50 0,11 50 0,10 50 0,10 50 0,10 50 0,22 20 0,14 20 0,15 20 0,10 50 0,10 50 0,10 50 0,13 20 0,10 50 0,11 50 0,10 50 0,10 50 0,17 20 0,25 20 0,19 20 0,37 20 0,16 20 0,32 20 0,27 20 0,10 50 0,10 50 0,10 50 0,10 50 0,10 50 0,10 50 0,10 50 0,10 50 0,11 50 0,11 50 0,11 50 0,10 50 0,10 50 0,10 50 0,10 50 0,10 50 0,10 50 0,10 50 0,10 50 0';
 			
 			if($tribe_id==1){
-			mysql_query("UPDATE p_villages SET tribe_id='$tribe_id', player_id='$XPi', alliance_id=NULL, player_name='$accountx', village_name='$accountx', alliance_name=NULL, is_capital='1', is_special_village='0', is_oasis='0', people_count='$people_count', crop_consumption='2', time_consume_percent='100', offer_merchants_count='0', resources='$resirsec1', cp='0 2', buildings='$building1', troops_training='1 1 0 0,2 1 0 0,3 1 0 0,4 1 0 0,5 1 0 0,6 1 0 0,7 0 0 0,8 0 0 0,9 0 0 0,10 1 0 0,99 1 0 0', troops_num='-1:1 0,2 0,3 0,4 0,5 0,6 0,7 0,8 0,9 0,10 0,99 0', troops_out_num=NULL, troops_intrap_num=NULL, troops_out_intrap_num=NULL, troops_trapped_num='0', allegiance_percent='100', child_villages_id=NULL, village_oases_id=NULL, creation_date='$now', update_key=NULL,last_update_date='$now' WHERE  id='$villagex'")or die(mysql_error());  
+			mysqli_query($link, "UPDATE p_villages SET tribe_id='$tribe_id', player_id='$XPi', alliance_id=NULL, player_name='$accountx', village_name='$accountx', alliance_name=NULL, is_capital='1', is_special_village='0', is_oasis='0', people_count='$people_count', crop_consumption='2', time_consume_percent='100', offer_merchants_count='0', resources='$resirsec1', cp='0 2', buildings='$building1', troops_training='1 1 0 0,2 1 0 0,3 1 0 0,4 1 0 0,5 1 0 0,6 1 0 0,7 0 0 0,8 0 0 0,9 0 0 0,10 1 0 0,99 1 0 0', troops_num='-1:1 0,2 0,3 0,4 0,5 0,6 0,7 0,8 0,9 0,10 0,99 0', troops_out_num=NULL, troops_intrap_num=NULL, troops_out_intrap_num=NULL, troops_trapped_num='0', allegiance_percent='100', child_villages_id=NULL, village_oases_id=NULL, creation_date='$now', update_key=NULL,last_update_date='$now' WHERE  id='$villagex'") or die(mysqli_error($link));  
 			++$players_count;
 			++$active_players_count;
 			++$Roman_players_count;			
@@ -493,7 +492,7 @@ echo '  <meta http-equiv="refresh" content="4">';
 
 
 			if($tribe_id==2){
-			mysql_query("UPDATE p_villages SET tribe_id='$tribe_id', player_id='$XPi', alliance_id=NULL, player_name='$accountx', village_name='$accountx', alliance_name=NULL, is_capital='1', is_special_village='0', is_oasis='0', people_count='$people_count', crop_consumption='2', time_consume_percent='100', offer_merchants_count='0', resources='$resirsec1', cp='0 2', buildings='$building2', troops_training='11 1 0 0,12 1 0 0,13 1 0 0,14 1 0 0,15 0 0 0,16 0 0 0,17 0 0 0,18 0 0 0,19 0 0 0,20 1 0 0,99 1 0 0', troops_num='-1:11 0,12 0,13 0,14 0,15 0,16 0,17 0,18 0,19 0,20 0,99 0', troops_out_num=NULL, troops_intrap_num=NULL, troops_out_intrap_num=NULL, troops_trapped_num='0', allegiance_percent='100', child_villages_id=NULL, village_oases_id=NULL, creation_date='$now', update_key=NULL,last_update_date='$now' WHERE id='$villagex'")or die(mysql_error());  
+			mysqli_query($link, "UPDATE p_villages SET tribe_id='$tribe_id', player_id='$XPi', alliance_id=NULL, player_name='$accountx', village_name='$accountx', alliance_name=NULL, is_capital='1', is_special_village='0', is_oasis='0', people_count='$people_count', crop_consumption='2', time_consume_percent='100', offer_merchants_count='0', resources='$resirsec1', cp='0 2', buildings='$building2', troops_training='11 1 0 0,12 1 0 0,13 1 0 0,14 1 0 0,15 0 0 0,16 0 0 0,17 0 0 0,18 0 0 0,19 0 0 0,20 1 0 0,99 1 0 0', troops_num='-1:11 0,12 0,13 0,14 0,15 0,16 0,17 0,18 0,19 0,20 0,99 0', troops_out_num=NULL, troops_intrap_num=NULL, troops_out_intrap_num=NULL, troops_trapped_num='0', allegiance_percent='100', child_villages_id=NULL, village_oases_id=NULL, creation_date='$now', update_key=NULL,last_update_date='$now' WHERE id='$villagex'") or die(mysqli_error($link));  
 			++$players_count;
 			++$active_players_count;
 			++$Teutonic_players_count;			
@@ -501,7 +500,7 @@ echo '  <meta http-equiv="refresh" content="4">';
 			
 			
 			if($tribe_id==3){
-			mysql_query("UPDATE p_villages SET tribe_id='$tribe_id', player_id='$XPi', alliance_id=NULL, player_name='$accountx', village_name='$accountx', alliance_name=NULL, is_capital='1', is_special_village='0', is_oasis='0', people_count='$people_count', crop_consumption='2', time_consume_percent='100', offer_merchants_count='0', resources='$resirsec1', cp='0 2', buildings='$building2', troops_training='21 1 0 0,22 1 0 0,23 1 0 0,24 1 0 0,25 1 0 0,26 1 0 0,27 0 0 0,28 0 0 0,29 1 0 0,30 1 0 0,99 1 0 0', troops_num='-1:21 0,22 0,23 0,24 0,25 0,26 0,27 0,28 0,29 0,30 0,99 0', troops_out_num=NULL, troops_intrap_num=NULL, troops_out_intrap_num=NULL, troops_trapped_num='0', allegiance_percent='100', child_villages_id=NULL, village_oases_id=NULL, creation_date='$now', update_key=NULL,last_update_date='$now' WHERE id='$villagex'")or die(mysql_error());  
+			mysqli_query($link, "UPDATE p_villages SET tribe_id='$tribe_id', player_id='$XPi', alliance_id=NULL, player_name='$accountx', village_name='$accountx', alliance_name=NULL, is_capital='1', is_special_village='0', is_oasis='0', people_count='$people_count', crop_consumption='2', time_consume_percent='100', offer_merchants_count='0', resources='$resirsec1', cp='0 2', buildings='$building2', troops_training='21 1 0 0,22 1 0 0,23 1 0 0,24 1 0 0,25 1 0 0,26 1 0 0,27 0 0 0,28 0 0 0,29 1 0 0,30 1 0 0,99 1 0 0', troops_num='-1:21 0,22 0,23 0,24 0,25 0,26 0,27 0,28 0,29 0,30 0,99 0', troops_out_num=NULL, troops_intrap_num=NULL, troops_out_intrap_num=NULL, troops_trapped_num='0', allegiance_percent='100', child_villages_id=NULL, village_oases_id=NULL, creation_date='$now', update_key=NULL,last_update_date='$now' WHERE id='$villagex'") or die(mysqli_error($link));  
 			++$players_count;
 			++$active_players_count;
 			++$Gallic_players_count;
@@ -509,14 +508,14 @@ echo '  <meta http-equiv="refresh" content="4">';
 			
 			
 			/*if($tribe_id==6){
-			mysql_query("UPDATE p_villages SET tribe_id='$tribe_id', player_id='$XPi', alliance_id=NULL, player_name='$accountx', village_name='$accountx', alliance_name=NULL, is_capital='1', is_special_village='0', is_oasis='0', people_count='$people_count', crop_consumption='2', time_consume_percent='100', offer_merchants_count='0', resources='1 1300 1500 1500 8000 0,2 1300 1500 1500 8000 0,3 1300 1500 1500 8000 0,4 1300 1500 1500 12000 0', cp='0 2', buildings='1 0 0,4 0 0,1 0 0,3 0 0,2 0 0,2 0 0,3 0 0,4 0 0,4 0 0,3 0 0,3 0 0,4 0 0,4 0 0,1 0 0,4 0 0,2 0 0,1 0 0,2 0 0,0 0 0,0 0 0,0 0 0,0 0 0,0 0 0,0 0 0,0 0 0,15 1 0,0 0 0,0 0 0,0 0 0,0 0 0,0 0 0,0 0 0,0 0 0,0 0 0,0 0 0,0 0 0,0 0 0,0 0 0,0 0 0,0 0 0', troops_training=NULL, troops_num='-1:51 0,52 0,53 0,54 0,55 0,56 0,57 0,58 0,59 0,60 0,99 0', troops_out_num=NULL, troops_intrap_num=NULL, troops_out_intrap_num=NULL, troops_trapped_num='0', allegiance_percent='100', child_villages_id=NULL, village_oases_id=NULL, creation_date='$now', update_key=NULL,last_update_date='$now' WHERE id='$villagex'")or die(mysql_error());  
+			mysqli_query($link, "UPDATE p_villages SET tribe_id='$tribe_id', player_id='$XPi', alliance_id=NULL, player_name='$accountx', village_name='$accountx', alliance_name=NULL, is_capital='1', is_special_village='0', is_oasis='0', people_count='$people_count', crop_consumption='2', time_consume_percent='100', offer_merchants_count='0', resources='1 1300 1500 1500 8000 0,2 1300 1500 1500 8000 0,3 1300 1500 1500 8000 0,4 1300 1500 1500 12000 0', cp='0 2', buildings='1 0 0,4 0 0,1 0 0,3 0 0,2 0 0,2 0 0,3 0 0,4 0 0,4 0 0,3 0 0,3 0 0,4 0 0,4 0 0,1 0 0,4 0 0,2 0 0,1 0 0,2 0 0,0 0 0,0 0 0,0 0 0,0 0 0,0 0 0,0 0 0,0 0 0,15 1 0,0 0 0,0 0 0,0 0 0,0 0 0,0 0 0,0 0 0,0 0 0,0 0 0,0 0 0,0 0 0,0 0 0,0 0 0,0 0 0,0 0 0', troops_training=NULL, troops_num='-1:51 0,52 0,53 0,54 0,55 0,56 0,57 0,58 0,59 0,60 0,99 0', troops_out_num=NULL, troops_intrap_num=NULL, troops_out_intrap_num=NULL, troops_trapped_num='0', allegiance_percent='100', child_villages_id=NULL, village_oases_id=NULL, creation_date='$now', update_key=NULL,last_update_date='$now' WHERE id='$villagex'") or die(mysqli_error($link));
 			++$players_count;
 			++$active_players_count;
 			++$Mongols_players_count;
 			}
-			
+
 			if($tribe_id==7){
-			mysql_query("UPDATE p_villages SET tribe_id='$tribe_id', player_id='$XPi', alliance_id=NULL, player_name='$accountx', village_name='$accountx', alliance_name=NULL, is_capital='1', is_special_village='0', is_oasis='0', people_count='$people_count', crop_consumption='2', time_consume_percent='100', offer_merchants_count='0', resources='1 1300 1500 1500 8000 0,2 1300 1500 1500 8000 0,3 1300 1500 1500 8000 0,4 1300 1500 1500 12000 0', cp='0 2', buildings='1 0 0,4 0 0,1 0 0,3 0 0,2 0 0,2 0 0,3 0 0,4 0 0,4 0 0,3 0 0,3 0 0,4 0 0,4 0 0,1 0 0,4 0 0,2 0 0,1 0 0,2 0 0,0 0 0,0 0 0,0 0 0,0 0 0,0 0 0,0 0 0,0 0 0,15 1 0,0 0 0,0 0 0,0 0 0,0 0 0,0 0 0,0 0 0,0 0 0,0 0 0,0 0 0,0 0 0,0 0 0,0 0 0,0 0 0,0 0 0', troops_training=NULL, troops_num='-1:99 0,100 0,101 0,102 0,103 0,104 0,105 0,106 0,107 0,108 0,109 0', troops_out_num=NULL, troops_intrap_num=NULL, troops_out_intrap_num=NULL, troops_trapped_num='0', allegiance_percent='100', child_villages_id=NULL, village_oases_id=NULL, creation_date='$now', update_key=NULL,last_update_date='$now' WHERE id='$villagex'")or die(mysql_error());  
+			mysqli_query($link, "UPDATE p_villages SET tribe_id='$tribe_id', player_id='$XPi', alliance_id=NULL, player_name='$accountx', village_name='$accountx', alliance_name=NULL, is_capital='1', is_special_village='0', is_oasis='0', people_count='$people_count', crop_consumption='2', time_consume_percent='100', offer_merchants_count='0', resources='1 1300 1500 1500 8000 0,2 1300 1500 1500 8000 0,3 1300 1500 1500 8000 0,4 1300 1500 1500 12000 0', cp='0 2', buildings='1 0 0,4 0 0,1 0 0,3 0 0,2 0 0,2 0 0,3 0 0,4 0 0,4 0 0,3 0 0,3 0 0,4 0 0,4 0 0,1 0 0,4 0 0,2 0 0,1 0 0,2 0 0,0 0 0,0 0 0,0 0 0,0 0 0,0 0 0,0 0 0,0 0 0,15 1 0,0 0 0,0 0 0,0 0 0,0 0 0,0 0 0,0 0 0,0 0 0,0 0 0,0 0 0,0 0 0,0 0 0,0 0 0,0 0 0,0 0 0', troops_training=NULL, troops_num='-1:99 0,100 0,101 0,102 0,103 0,104 0,105 0,106 0,107 0,108 0,109 0', troops_out_num=NULL, troops_intrap_num=NULL, troops_out_intrap_num=NULL, troops_trapped_num='0', allegiance_percent='100', child_villages_id=NULL, village_oases_id=NULL, creation_date='$now', update_key=NULL,last_update_date='$now' WHERE id='$villagex'") or die(mysqli_error($link));
 			++$players_count;
 			++$active_players_count;
 			++$Arab_players_count;
@@ -524,7 +523,7 @@ echo '  <meta http-equiv="refresh" content="4">';
 
 */
 			
-			mysql_query("UPDATE g_summary SET players_count='$players_count',active_players_count='$active_players_count',Roman_players_count='$Roman_players_count',Teutonic_players_count='$Teutonic_players_count',Gallic_players_count='$Gallic_players_count' ")or die(mysql_error()); 
+			mysqli_query($link, "UPDATE g_summary SET players_count='$players_count',active_players_count='$active_players_count',Roman_players_count='$Roman_players_count',Teutonic_players_count='$Teutonic_players_count',Gallic_players_count='$Gallic_players_count' ") or die(mysqli_error($link));
 			
 			
 			echo "<p>";
@@ -537,7 +536,7 @@ echo '  <meta http-equiv="refresh" content="4">';
 }
 
 }			
-mysql_close($db_connect);
+mysqli_close($link);
 }
 else {
 $this->redirect('village1.php');

@@ -41,8 +41,8 @@ class GPage extends ProcessVillagePage
                 $level = 0;
             else
             {
-                $level = split("17", $buildings);
-                $level = split(" ", $level[1]);
+                $level = explode("17", $buildings);
+                $level = explode(" ", $level[1]);
                 $level = $level[1]+1;
             }
 

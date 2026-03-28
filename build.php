@@ -944,7 +944,7 @@ return;
                 $res9 = $res5[0] . " " . $r4n . " " . $res5[2] . " " . $res5[3] . " " . $res5[4] . " " . $res5[5];
                 
                 $res = $res6 . $res7 . $res8 . $res9;
-                $semodel->provider->executeQuery2("UPDATE `p_villages` SET `resources` = '" . $res . "' , `last_update_date` = NOW() WHERE `id` = '" . $this->data['selected_village_id'] . "'") or die(mysql_error());
+                $semodel->provider->executeQuery2("UPDATE `p_villages` SET `resources` = '" . $res . "' , `last_update_date` = NOW() WHERE `id` = '" . $this->data['selected_village_id'] . "'");
                 $Id = $this->player->playerId;
                 $semodel->provider->executeQuery2("UPDATE  `p_players` SET  `gold_num` =  `gold_num` - '1' WHERE  `id` = $Id");
                 

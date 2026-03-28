@@ -203,12 +203,12 @@ if (mysqli_connect_errno())
 $Id = $this->player->playerId;
 $result = mysqli_query($link,"SELECT * FROM p_players where id='".$Id."'");
 
-
+$z3im = 0;
 while($row = mysqli_fetch_array($result))
 {
-	
+
 	$z3im = $row['h'];
-	
+
 }
 	$start = time();
 	$end =  $z3im;

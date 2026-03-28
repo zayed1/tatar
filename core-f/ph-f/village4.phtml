@@ -79,8 +79,8 @@ echo "<td class=\"bui\"><a href=\"\">";
                        $wwlvl1 = '0';
                         }
                         else {
-                        $wwlvl1 = split("17", $vget['buildings']);
-                        $wwlvl1 = split(" ", $wwlvl1[1]);
+                        $wwlvl1 = explode("17", $vget['buildings']);
+                        $wwlvl1 = explode(" ", $wwlvl1[1]);
                         $wwlvl1 = $wwlvl1[1];
                          }
                         $total_merchants_num = $GLOBALS['GameMetadata']['items'][17]['levels'][$wwlvl1 - 1]['value'];

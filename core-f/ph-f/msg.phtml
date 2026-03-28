@@ -88,7 +88,7 @@ echo "\r</div>\r\r";
 $sb = FALSE;
 if (isset($_GET['banks'])) {
 $sb = TRUE;
-$b = trim (($_GET['banks'] ?? 1)-1);
+$b = intval($_GET['banks'] ?? 1) - 1;
 $this->package = $this->appConfig['plus']['packages'][$b];
 $title = "".MSG_TEXT88." - ".$this->package['name'];
 $g = webhelper::fn($this->package['gold']+($this->package['gold']*$this->package['plus']/100));
