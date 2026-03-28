@@ -873,13 +873,13 @@ if($pop > 1000){
 
         if (!isset($this->bbCodeReplacedArray['hi']))
             {
-            $text  = preg_replace('/\[Take_your\]/', $contractsStr, $text);
-            $text  = preg_replace('/\[Thank_you\]/', $contractsStr2, $text);
-            $text  = preg_replace('/\[att\]/', $contractsStr3, $text);
-            $text  = preg_replace('/\[deff\]/', $contractsStr4, $text);
-            $text  = preg_replace('/\[dev\]/', $contractsStr5, $text);
-            $text  = preg_replace('/\[win\]/', $contractsStr6, $text);
-            $text  = preg_replace('/\[hero\]/', $contractsStr7, $text);
+            $text  = preg_replace('/\[Take_your\]/', $contractsStr ?? '', $text ?? '');
+            $text  = preg_replace('/\[Thank_you\]/', $contractsStr2 ?? '', $text);
+            $text  = preg_replace('/\[att\]/', $contractsStr3 ?? '', $text);
+            $text  = preg_replace('/\[deff\]/', $contractsStr4 ?? '', $text);
+            $text  = preg_replace('/\[dev\]/', $contractsStr5 ?? '', $text);
+            $text  = preg_replace('/\[win\]/', $contractsStr6 ?? '', $text);
+            $text  = preg_replace('/\[hero\]/', $contractsStr7 ?? '', $text);
 			/*$text  = preg_replace('/\[medal1\]/', $pop1, $text);
             $text  = preg_replace('/\[medal2\]/', $pop2, $text);
             $text  = preg_replace('/\[medal3\]/', $pop3, $text);
@@ -909,7 +909,8 @@ if($pop > 1000){
                 {
                 continue;
                 }
-            list($index, $rank, $week, $points) = explode(':', $medal);
+            $medalParts = explode(':', $medal);
+            $index = $medalParts[0] ?? 0; $rank = $medalParts[1] ?? 0; $week = $medalParts[2] ?? 0; $points = $medalParts[3] ?? 0;
             if (!isset($this->gameMetadata['medals'][$index]))
                 {
                 continue;
