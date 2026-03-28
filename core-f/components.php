@@ -91,16 +91,14 @@ class Player
     public $isSpy = FALSE;
     public $gameStatus = NULL;
 
-    public function getKey( )
+    public static function getKey( )
     {
-        $wp = new WebHelper();
-        return md5( $wp->getdomain( ) );
+        return md5( WebHelper::getdomain( ) );
     }
 
-    public function getInstance( )
+    public static function getInstance( )
     {
-        $p = new Player();
-        $key = $p->getkey( );
+        $key = Player::getkey( );
         return isset( $_SESSION[$key] ) ? $_SESSION[$key] : NULL;
     }
 

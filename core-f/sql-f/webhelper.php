@@ -2,7 +2,7 @@
 class WebHelper
 {
 
-    public function sendMail( $in, $out, $sub, $body)
+    public static function sendMail( $in, $out, $sub, $body)
     {
 $out = $GLOBALS['AppConfig']['system']['email'];
 $sname = $GLOBALS['AppConfig']['system']['webname'];
@@ -17,7 +17,7 @@ $headers .= "(anti-spam-(anti-spam-content-type:)) \n";
 return @mail($in,$sub,$body,$headers);
     }
 
-        public function fn( $n )
+        public static function fn( $n )
     {
 $txt = "";
 $ret = "";
@@ -39,13 +39,13 @@ return $n;
     }
 
 
- public function fix_num( $n )
+ public static function fix_num( $n )
     {
        $new_num = number_format($n, 0, ',', '');
        return $new_num;
     }
     
-       public function getDomain( )
+       public static function getDomain( )
     {
         $surl = $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
         $surl = preg_replace( "/^(www\\.)/", "", $surl );
@@ -64,17 +64,17 @@ return $n;
         return strtolower( $surl );
     }
 
-    public function getBaseUrl( )
+    public static function getBaseUrl( )
     {
         return ( WebHelper::isssl( ) ? "https://" : "http://" ).$_SERVER['HTTP_HOST'].strrev( strstr( strrev( $_SERVER['PHP_SELF'] ), "/" ) );
     }
 
-    public function isSSL( )
+    public static function isSSL( )
     {
         return !( !isset( $_SERVER['HTTPS'] ) || preg_match( "/^(|off|false|disabled)\$/i", $_SERVER['HTTPS'] ) );
     }
 
-    public function getClientIP( )
+    public static function getClientIP( )
     {
         $ip = "";
         if ( isset( $_SERVER['REMOTE_ADDR'] ) )
@@ -92,7 +92,7 @@ return $n;
         return $ip;
     }
 
-	public function secondsToString( $seconds ){
+	public static function secondsToString( $seconds ){
 		$seconds = intval( $seconds );
 		$h = floor( $seconds / 3600 );
 		$m = floor( $seconds % 3600 / 60 );
@@ -103,7 +103,7 @@ return $n;
 		return $h.":".( $m < 10 ? "0" : "" ).$m.":".( $s < 10 ? "0" : "" ).$s;
 	}
 
-    public function getDistance( $lat1, $lon1, $lat2, $lon2, $radius )
+    public static function getDistance( $lat1, $lon1, $lat2, $lon2, $radius )
     {
         $angle = $radius / 180;
         $lat1 /= $angle;
