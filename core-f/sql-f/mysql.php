@@ -1,4 +1,5 @@
 <?php
+if (class_exists('MysqlModel')) { return; }
 class MysqlModel
 {
     public $provider = NULL;
