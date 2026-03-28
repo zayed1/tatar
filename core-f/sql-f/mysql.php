@@ -3,7 +3,7 @@ if (class_exists('MysqlModel')) { return; }
 class MysqlModel
 {
     public $provider = NULL;
-    public function MysqlModel( )
+    public function __construct( )
     {
         $this->provider = new MysqlProvider( );
     }
@@ -16,7 +16,7 @@ class MysqlResultSet
 {
     public $_result = NULL;
     public $row = NULL;
-    public function MysqlResultSet( $result )
+    public function __construct( $result )
     {
         $this->_result = $result;
     }

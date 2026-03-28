@@ -4,9 +4,9 @@ require_once( LIB_PATH."mysql.php" );
 class ModelBase extends MysqlModel
 {
 
-    public function ModelBase()
+    public function __construct()
     {
-        parent::mysqlmodel();
+        parent::__construct();
         $this->provider->debug = FALSE;
         $this->provider->properties = $GLOBALS['AppConfig']['db'];
     }

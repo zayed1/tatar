@@ -13,7 +13,7 @@ class QueueTask
     public $buildingId = NULL;
     public $tag = NULL;
 
-    public function QueueTask( $taskType, $playerId, $executionTime )
+    public function __construct( $taskType, $playerId, $executionTime )
     {
         $this->threads = 1;
         $this->taskType = $taskType;
@@ -127,7 +127,7 @@ class ClientData
     public $con = NULL;
     public $showLevels = FALSE;
 
-    public function ClientData( )
+    public function __construct( )
     {
         $this->uiLang = "ar";
         $this->con = "s1";
