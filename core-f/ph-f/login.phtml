@@ -48,7 +48,7 @@ echo date('Y/m/d H:i:s');
 }
 $m = new QueueModel();
 $resultsb = $m->provider->fetchRow("SELECT end_date FROM p_queue WHERE id='3' and proc_type='57'");
-$end_datesb = $resultsb["end_date"];
+$end_datesb = $resultsb["end_date"] ?? null;
 
        
 $fetchst = $m->provider->fetchRow("SELECT end_date FROM p_queue WHERE id='3' and proc_type='57'");
@@ -58,7 +58,7 @@ $subtracted_date_st = $fetchst["end_date"] ?? null;
 $subtracted_st = date('Y-m-d H:i:s', strtotime($subtracted_date_st ?? 'now'));
 
 // calculate the difference in seconds between the subtracted date and now
-$diff_in_seconds_st = strtotime($subtracted_date_st) - time();
+$diff_in_seconds_st = strtotime($subtracted_date_st ?? 'now') - time();
 
 // if the difference is negative, get the absolute value
 $diff_in_seconds_st = abs($diff_in_seconds_st);
@@ -72,7 +72,7 @@ $remaining_minutes_st = floor(($diff_in_seconds_st % 3600) / 60);
 $remaining_time_st = sprintf('%02d:%02d:%02d', $remaining_days_st, $remaining_hours_st, $remaining_minutes_st);
 
 
-if (strtotime($end_datesb) > time()) {
+if ($end_datesb && strtotime($end_datesb) > time()) {
     ?>
     <center><span style="font-size:20px;">باقي على بدأ اللعب:</span>
     <span id="timer1" style="font-size: 22px; color: orange; font-weight: bold; text-shadow: 1px 1px #000;"><?php 

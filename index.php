@@ -122,11 +122,11 @@ $serverStatus = getServerStatus($result, $fetch, $remaining_days, $remaining_hou
                 <form action="login.php" method="POST" class="modal-form">
                     <div class="form-group">
                         <label for="login-user">اسم المستخدم</label>
-                        <input type="text" id="login-user" name="user" placeholder="ادخل اسم المستخدم" required>
+                        <input type="text" id="login-user" name="name" placeholder="ادخل اسم المستخدم" required>
                     </div>
                     <div class="form-group">
                         <label for="login-pass">كلمة المرور</label>
-                        <input type="password" id="login-pass" name="pw" placeholder="ادخل كلمة المرور" required>
+                        <input type="password" id="login-pass" name="password" placeholder="ادخل كلمة المرور" required>
                     </div>
                     <button type="submit" class="btn-submit">دخول</button>
                 </form>
