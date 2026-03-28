@@ -24,13 +24,11 @@ class WebService
     {
         $this->load( );
         $this->unload( );
-        unset( $this );
     }
 
     public function redirect( $url )
     {
         $this->unload( );
-        unset( $this );
         header( "location: ".$url );
         exit( 0 );
     }
