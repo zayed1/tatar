@@ -1,6 +1,6 @@
 <?php
 // Standalone installer for first-time setup on Railway
-error_reporting(E_ALL);
+error_reporting(E_ALL & ~E_WARNING & ~E_DEPRECATED & ~E_NOTICE);
 ini_set('display_errors', 1);
 ini_set('opcache.enable', 0);
 set_time_limit(300);
