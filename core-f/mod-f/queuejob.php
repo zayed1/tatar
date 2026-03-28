@@ -144,6 +144,7 @@ $villages_id = $botpss;
 				// attack oasis
 				#$oasisid = $this->provider->fetchRow("SELECT id FROM p_villages WHERE is_oasis='1' AND tribe_id='4' ORDER BY RAND() LIMIT 10");
 				$botvid = $this->provider->fetchRow("SELECT id,selected_village_id FROM p_players WHERE is_bot='1' ORDER BY RAND() LIMIT 20");
+							if (!$botvid) { continue; }
 							$execution_timet = strip_tags(mt_rand(30,60));
 							if($pgmp->row['tribe_id'] == 1) {
 							$attack1 =  mt_rand(0,548234567845);
@@ -610,6 +611,7 @@ $num = $this->provider->fetchRow( "SELECT * FROM p_alliances WHERE id='%s'", arr
 		if ($row == NULL)
 			return null;
 		$playerRow = $this->provider->fetchRow ("SELECT p.villages_data FROM p_players p WHERE p.id=%s", Array ($playerId));
+		if ($playerRow == NULL) return null;
 		$pvill = explode ("\n", $playerRow['villages_data']);
 		$villArr = Array ();
 		$vilArr[] = -1;
