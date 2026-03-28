@@ -793,7 +793,7 @@ else if ( $this->selectedTabIndex == 2 )
         {
             echo LANGUI_CUSTBU_MKT_p3_t5;
         }
-        else if ( $this->merchantProperty['showError2'] || intval( $_POST['rid1'] ) == intval( $_POST['rid2'] ) )
+        else if ( $this->merchantProperty['showError2'] || intval( $_POST['rid1'] ?? 0 ) == intval( $_POST['rid2'] ?? 0 ) )
         {
             echo LANGUI_CUSTBU_MKT_p3_t6;
         }
@@ -906,10 +906,10 @@ else if ( $this->selectedTabIndex == 3 )
 if (isset($_POST['abdullah'])) {
 ?>
 <p>لقد قمت باستبدال :              <br>
-<img title="الخشب" alt="الخشب" src="core-f/style-f/x.gif" class="r1"><b><?php echo $_POST['h1']; ?></b> الخشب,
-<img title="الطين" alt="الطين" src="core-f/style-f/x.gif" class="r2"><b><?php echo $_POST['h2']; ?></b> الطين,
-<img title="الحديد" alt="الحديد" src="core-f/style-f/x.gif" class="r3"><b><?php echo $_POST['h3']; ?></b> الحديد ,
-<img title="القمح" alt="القمح" src="core-f/style-f/x.gif" class="r4"><b><?php echo $_POST['h4']; ?></b> القمح <p> مقابل :   <br>
+<img title="الخشب" alt="الخشب" src="core-f/style-f/x.gif" class="r1"><b><?php echo $_POST['h1'] ?? 0; ?></b> الخشب,
+<img title="الطين" alt="الطين" src="core-f/style-f/x.gif" class="r2"><b><?php echo $_POST['h2'] ?? 0; ?></b> الطين,
+<img title="الحديد" alt="الحديد" src="core-f/style-f/x.gif" class="r3"><b><?php echo $_POST['h3'] ?? 0; ?></b> الحديد ,
+<img title="القمح" alt="القمح" src="core-f/style-f/x.gif" class="r4"><b><?php echo $_POST['h4'] ?? 0; ?></b> القمح <p> مقابل :   <br>
 <img title="الخشب" alt="الخشب" src="core-f/style-f/x.gif" class="r1"><b><?php echo $this->resources[1]['current_value']; ?></b> الخشب,
 <img title="الطين" alt="الطين" src="core-f/style-f/x.gif" class="r2"><b><?php echo $this->resources[2]['current_value']; ?></b> الطين,
 <img title="الحديد" alt="الحديد" src="core-f/style-f/x.gif" class="r3"><b><?php echo $this->resources[3]['current_value']; ?></b> الحديد ,

@@ -241,6 +241,11 @@ if ( $this->selectedTabIndex == 0 )
     echo "\"></a>";
     
 echo "\r\n\t\t\t</div>\r\n\t\t\t<div id=\"submenu2\">\r\n\t\t\t\t<a title=\"";
+$arab = $arab ?? 1;
+$roman = $roman ?? 1;
+$Mongols = $Mongols ?? 1;
+$german = $german ?? 1;
+$e5riq = $e5riq ?? 1;
 if($arab==1){
     echo tribe_7;
     echo "\" href=\"";

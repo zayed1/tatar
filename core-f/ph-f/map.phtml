@@ -59,13 +59,14 @@ echo "<td>المسافة</td>\n";
 echo "</tr>\n";
 echo "</thead>\n";
 echo "<tbody>\n";
+$rows = [];
 while ($result->next ())
   {
 
   $distance = WebHelper::getDistance(addslashes(($_POST['x'] ?? '')), addslashes(($_POST['y'] ?? '')), $result->row['rel_x'], $result->row['rel_y'], $this->setupMetadata['map_size']/1);
 
   $rows[$distance] = $result->row;
- 
+
   }
   ksort($rows);
 $s = 0;
@@ -128,13 +129,14 @@ echo "<td>المسافة</td>\n";
 echo "</tr>\n";
 echo "</thead>\n";
 echo "<tbody>\n";
+$rows = [];
 while ($result->next ())
   {
 
   $distance = WebHelper::getDistance(addslashes(($_POST['x'] ?? '')), addslashes(($_POST['y'] ?? '')), $result->row['rel_x'], $result->row['rel_y'], $this->setupMetadata['map_size']/1);
 
   $rows[$distance] = $result->row;
- 
+
   }
   ksort($rows);
 $s = 0;
@@ -199,13 +201,14 @@ echo "<td>المسافة</td>\n";
 echo "</tr>\n";
 echo "</thead>\n";
 echo "<tbody>\n";
+$rows = [];
 while ($result->next ())
   {
 
   $distance = WebHelper::getDistance(addslashes(($_POST['x'] ?? '')), addslashes(($_POST['y'] ?? '')), $result->row['rel_x'], $result->row['rel_y'], $this->setupMetadata['map_size']/1);
 
   $rows[$distance] = $result->row;
- 
+
   }
   ksort($rows);
 $s = 0;
@@ -269,13 +272,14 @@ echo "<td>المسافة</td>\n";
 echo "</tr>\n";
 echo "</thead>\n";
 echo "<tbody>\n";
+$rows = [];
 while ($result->next ())
   {
 
   $distance = WebHelper::getDistance(addslashes(($_POST['x'] ?? '')), addslashes(($_POST['y'] ?? '')), $result->row['rel_x'], $result->row['rel_y'], $this->setupMetadata['map_size']/1);
 
   $rows[$distance] = $result->row;
- 
+
   }
   ksort($rows);
 $s = 0;
