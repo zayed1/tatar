@@ -376,7 +376,7 @@ $ssss = ($rws <= $newn);
             }else {
         $link = "profile?tst";
         if (isset ($_GET['uid'])) {
-        $link .= "&uid=".$_GET['uid']."";
+        $link .= "&uid=".($_GET['uid'] ?? '')."";
         }
         $link .= "&p=" . ($this->pageIndex + 1);
         $Pre = "<a href=\"" . $link . "\">" . $text . "</a>";
@@ -384,7 +384,7 @@ $ssss = ($rws <= $newn);
 
 
         $text = "«";
-        if (!isset($_GET['p']) || $_GET['p'] == 0)
+        if (!isset($_GET['p']) || ($_GET['p'] ?? 0) == 0)
             {
             $nexx = $text;
             }else {
@@ -402,9 +402,9 @@ $ssss = ($rws <= $newn);
             $link = "&" . $link;
             }
         if (isset ($_GET['uid'])) {
-        $linkuid = "&uid=".$_GET['uid']."";
+        $linkuid = "&uid=".($_GET['uid'] ?? '')."";
         }
-$p = $_GET['p']-1;
+$p = ($_GET['p'] ?? 1)-1;
         $link = "profile?tst".$linkuid."&p=".$p;
         $nexx = "<a href=\"" . $link . "\">" . $text . "</a>";
 }
@@ -1049,7 +1049,7 @@ else if ( $this->selectedTabIndex == 2 )
                 <tr>
                         <th>اللون الجديد:</th>
                         <td><input class="text" type="text" name="color_name" maxlength="50" value="<?php if (isset ($_GET['color'])) { echo
-"#".$_GET['color']; } ?>"></td>
+"#".($_GET['color'] ?? ''); } ?>"></td>
                 </tr>
                 <tr>
                         <th>التأكيد كلمة السر:</th>

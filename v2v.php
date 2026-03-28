@@ -31,7 +31,7 @@ var $onlyOneSpyAction = FALSE;
 var $backTroopsProperty = array ();
 function __construct()
 {
-parent::villagepage ();
+parent::__construct();
 $this->viewFile = 'v2v.phtml';
 $this->contentCssClass = 'a2b';
 }

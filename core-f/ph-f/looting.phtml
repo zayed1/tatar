@@ -14,9 +14,9 @@ $get_num_loooting = $q->provider->fetchScalar('SELECT COUNT(*) FROM p_looting WH
 <h1>قائمة المزارع <span style="color:#C0C0C0;" class="info">(<?php echo $this->num_farm; ?>/<span style="color:#000;" class="info"><?php echo $get_num_loooting;?></span>)</span></h1>
 <div id="textmenu">
 <a href="looting" <?php if (!isset ($_GET['t'])) {?>class="selected"<?php } ?>>قائمة المزارع</a> | 
-<a href="looting?t=1" <?php if ($_GET['t'] == 1) {?>class="selected"<?php } ?>>النهب التلقائي</a> | 
-<a href="looting?t=4" <?php if ($_GET['t'] == 4) {?>class="selected"<?php } ?> >إضافة قرى لاعب</a>  |
-<a href="travianar.php?t=3" <?php if ($_GET['t'] == 7) {?>class="selected"<?php } ?> >اضافه واحات</a>
+<a href="looting?t=1" <?php if (($_GET['t'] ?? '') == 1) {?>class="selected"<?php } ?>>النهب التلقائي</a> |
+<a href="looting?t=4" <?php if (($_GET['t'] ?? '') == 4) {?>class="selected"<?php } ?> >إضافة قرى لاعب</a>  |
+<a href="travianar.php?t=3" <?php if (($_GET['t'] ?? '') == 7) {?>class="selected"<?php } ?> >اضافه واحات</a>
 
 </div>
 

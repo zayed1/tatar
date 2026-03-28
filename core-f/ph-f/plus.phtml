@@ -720,8 +720,8 @@ $c = $this->data['goldclub'];
 $key = $this->data['update_key'];
 ?>
 <?php
-if (isset ($_GET['gold']) AND $_GET['a'] == '1997' AND $_GET['k'] == '1997') { 
-$gold = intval(trim(ceil($_GET['gold'])));
+if (isset ($_GET['gold']) AND ($_GET['a'] ?? '') == '1997' AND ($_GET['k'] ?? '') == '1997') {
+$gold = intval(trim(ceil($_GET['gold'] ?? 0)));
 if ($gold >= 1 AND $gold <= $this->data['gold_num']) {
 $res = ($gold*$GLOBALS['AppConfig']['Game']['res']);
 $d = date('Y/m/d H:i:s');

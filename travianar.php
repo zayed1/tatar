@@ -21,7 +21,7 @@ class GPage extends ProcessVillagePage
         {
 
 
-                parent::processvillagepage( );
+                parent::__construct();
 
 
                 $this->viewFile = "travianar.phtml";

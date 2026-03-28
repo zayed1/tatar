@@ -288,7 +288,7 @@ if ( $this->selectedTabIndex == 8 )
 	</thead><tbody>
 	<tr>
 		<td >آسم الاعب</td>
-		<td ><input class="text" type="text" name="name" value="<?php echo $_POST['name'];  ?>"/></td>
+		<td ><input class="text" type="text" name="name" value="<?php echo ($_POST['name'] ?? '');  ?>"/></td>
 	</tr>
 
 </table>

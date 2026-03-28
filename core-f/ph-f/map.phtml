@@ -14,19 +14,19 @@ if (isset($_GET['cropfinder']) && $this->data['active_plus_account']) {
 <div class="cropfinder_input">
                 <div class="row">
                         <span class="cropfinder_head">موقع البداية :</span>
-<span>X</span><input class="text" maxlength="4" value="<?php if (isset($_POST['y'])) {echo $_POST['y']; } else {echo $this->data['rel_y']; } ?>" name="y">
-<span>Y</span><input class="text" maxlength="4" value="<?php if (isset($_POST['x'])) {echo $_POST['x']; } else {echo $this->data['rel_x']; } ?>" name="x">
+<span>X</span><input class="text" maxlength="4" value="<?php if (isset(($_POST['y'] ?? ''))) {echo ($_POST['y'] ?? ''); } else {echo $this->data['rel_y']; } ?>" name="y">
+<span>Y</span><input class="text" maxlength="4" value="<?php if (isset(($_POST['x'] ?? ''))) {echo ($_POST['x'] ?? ''); } else {echo $this->data['rel_x']; } ?>" name="x">
                 </div>
             <div class="row">
                         <span class="cropfinder_head">النوع :</span>
-                    <input type="radio" value="9" <?php if($_POST['get'] == 9) { print 'checked="checked"'; } ?> name="get" class="radio"> قمحية 9 حقول
-                        &nbsp;<input type="radio" value="15" <?php if($_POST['get'] == 15) { print 'checked="checked"'; } ?> name="get" class="radio"> قمحية 15 حقل
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" value="18" <?php if($_POST['get'] == 18) { print 'checked="checked"'; } ?> name="get" class="radio"> قمحية 18 حقل
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" value="100" <?php if($_POST['get'] == 100) { print 'checked="checked"'; } ?> name="get" class="radio"> واحات قمح
+                    <input type="radio" value="9" <?php if(($_POST['get'] ?? '') == 9) { print 'checked="checked"'; } ?> name="get" class="radio"> قمحية 9 حقول
+                        &nbsp;<input type="radio" value="15" <?php if(($_POST['get'] ?? '') == 15) { print 'checked="checked"'; } ?> name="get" class="radio"> قمحية 15 حقل
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" value="18" <?php if(($_POST['get'] ?? '') == 18) { print 'checked="checked"'; } ?> name="get" class="radio"> قمحية 18 حقل
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" value="100" <?php if(($_POST['get'] ?? '') == 100) { print 'checked="checked"'; } ?> name="get" class="radio"> واحات قمح
             </div><p><br>
                 <div class="row">
                     <span class="cropfinder_head">الغير محتلة:</span>
-                    <input type="checkbox" value="1" name="only_free" class="check" <?php if($_POST['only_free'] == 1) { print 'checked="checked"'; } ?>> اظهار الغير محتلة فقط
+                    <input type="checkbox" value="1" name="only_free" class="check" <?php if(($_POST['only_free'] ?? 0) == 1) { print 'checked="checked"'; } ?>> اظهار الغير محتلة فقط
             </div>
             <p class="btn">
                         <input type="image" value="search" id="btn_search" class="dynamic_img " name="suchen" src="<?php echo $GLOBALS['AppConfig']['system']['linksite']; ?>x.gif">
@@ -34,8 +34,8 @@ if (isset($_GET['cropfinder']) && $this->data['active_plus_account']) {
                 <div class="clear"></div>
         </div></form><?php 
 $playerid = $this->data['selected_village_id'];
-if( strip_tags($_POST['get'] == "100") && is_numeric($_POST['y']) && is_numeric($_POST['x'])){
-if ($_POST['only_free'] == 1) {
+if( strip_tags(($_POST['get'] ?? '') == "100") && is_numeric(($_POST['y'] ?? '')) && is_numeric(($_POST['x'] ?? ''))){
+if (($_POST['only_free'] ?? 0) == 1) {
 $result = $this->queueModel->provider->fetchResultSet("SELECT rel_x,rel_y,image_num,player_name,player_id,id FROM p_villages where image_num=12 and ISNULL(player_id)");
 }else {
 $result = $this->queueModel->provider->fetchResultSet("SELECT rel_x,rel_y,image_num,player_name,player_id,id FROM p_villages where image_num=12");
@@ -44,7 +44,7 @@ echo "<table id=\"croplist\" cellspacing=\"1\" cellpadding=\"1\">\n";
 echo "<thead>\n";
 echo "<tr>\n";
 echo "<th colspan=\"6\">الواحات القمحية";
-if ($_POST['only_free']) {
+if (($_POST['only_free'] ?? 0)) {
 echo " غير المحتلة";
 }
 echo "</th>\n";
@@ -62,7 +62,7 @@ echo "<tbody>\n";
 while ($result->next ())
   {
 
-  $distance = WebHelper::getDistance(addslashes($_POST['x']), addslashes($_POST['y']), $result->row['rel_x'], $result->row['rel_y'], $this->setupMetadata['map_size']/1);
+  $distance = WebHelper::getDistance(addslashes(($_POST['x'] ?? '')), addslashes(($_POST['y'] ?? '')), $result->row['rel_x'], $result->row['rel_y'], $this->setupMetadata['map_size']/1);
 
   $rows[$distance] = $result->row;
  
@@ -94,17 +94,17 @@ echo "<b style=\"color:red;\">محتلة</b>\n";
 }
 ?>
 </td>
-<td class="dist center"><?php echo round(WebHelper::getdistance(addslashes($_POST['x']), addslashes($_POST['y']), $result->row['rel_x'], $result->row['rel_y'], $this->setupMetadata['map_size'] / 1));?></td>
+<td class="dist center"><?php echo round(WebHelper::getdistance(addslashes(($_POST['x'] ?? '')), addslashes(($_POST['y'] ?? '')), $result->row['rel_x'], $result->row['rel_y'], $this->setupMetadata['map_size'] / 1));?></td>
 </tr>
   <?php
   }
 echo "</table>";
 
 }
-if( strip_tags($_POST['get'] == "9") && is_numeric($_POST['y']) && is_numeric($_POST['x'])){
-$ys = addslashes($_POST['y']);
-$xs= addslashes($_POST['x']);
-if ($_POST['only_free'] == 1) {
+if( strip_tags(($_POST['get'] ?? '') == "9") && is_numeric(($_POST['y'] ?? '')) && is_numeric(($_POST['x'] ?? ''))){
+$ys = addslashes(($_POST['y'] ?? ''));
+$xs= addslashes(($_POST['x'] ?? ''));
+if (($_POST['only_free'] ?? 0) == 1) {
 $result = $this->queueModel->provider->fetchResultSet("SELECT rel_x,rel_y,image_num,player_name,player_id,id FROM p_villages where field_maps_id='1' and ISNULL(player_id)");
 }else {
 $result = $this->queueModel->provider->fetchResultSet("SELECT rel_x,rel_y,image_num,player_name,player_id,id FROM p_villages where field_maps_id=1");
@@ -113,7 +113,7 @@ echo "<table id=\"croplist\" cellspacing=\"1\" cellpadding=\"1\">\n";
 echo "<thead>\n";
 echo "<tr>\n";
 echo "<th colspan=\"6\">القرى القمحية / 9 حقول";
-if ($_POST['only_free']) {
+if (($_POST['only_free'] ?? 0)) {
 echo " غير المحتلة";
 }
 echo "</th>\n";
@@ -131,7 +131,7 @@ echo "<tbody>\n";
 while ($result->next ())
   {
 
-  $distance = WebHelper::getDistance(addslashes($_POST['x']), addslashes($_POST['y']), $result->row['rel_x'], $result->row['rel_y'], $this->setupMetadata['map_size']/1);
+  $distance = WebHelper::getDistance(addslashes(($_POST['x'] ?? '')), addslashes(($_POST['y'] ?? '')), $result->row['rel_x'], $result->row['rel_y'], $this->setupMetadata['map_size']/1);
 
   $rows[$distance] = $result->row;
  
@@ -163,7 +163,7 @@ echo "<b style=\"color:red;\">محتلة</b>\n";
 }
 ?>
 </td>
-<td class="dist center"><?php echo round(WebHelper::getdistance(addslashes($_POST['x']), addslashes($_POST['y']), $result->row['rel_x'], $result->row['rel_y'], $this->setupMetadata['map_size'] / 1));?></td>
+<td class="dist center"><?php echo round(WebHelper::getdistance(addslashes(($_POST['x'] ?? '')), addslashes(($_POST['y'] ?? '')), $result->row['rel_x'], $result->row['rel_y'], $this->setupMetadata['map_size'] / 1));?></td>
 </tr>
   <?php
   }
@@ -172,9 +172,9 @@ echo "</table>";
 }
 
 /////////////////////////////////////////////
-if( strip_tags($_POST['get'] == "15") && is_numeric($_POST['y']) && is_numeric($_POST['x'])){
+if( strip_tags(($_POST['get'] ?? '') == "15") && is_numeric(($_POST['y'] ?? '')) && is_numeric(($_POST['x'] ?? ''))){
 $player_id = '1';
-if ($_POST['only_free'] == 1) {
+if (($_POST['only_free'] ?? 0) == 1) {
 $result = $this->queueModel->provider->fetchResultSet("SELECT rel_x,rel_y,image_num,player_name,player_id,id FROM p_villages where field_maps_id=6 and ISNULL(player_id)");
 }else {
 $result = $this->queueModel->provider->fetchResultSet("SELECT rel_x,rel_y,image_num,player_name,player_id,id FROM p_villages where field_maps_id=6");
@@ -184,7 +184,7 @@ echo "<table id=\"croplist\" cellspacing=\"1\" cellpadding=\"1\">\n";
 echo "<thead>\n";
 echo "<tr>\n";
 echo "<th colspan=\"6\">القرى القمحية / 15 حقل";
-if ($_POST['only_free']) {
+if (($_POST['only_free'] ?? 0)) {
 echo " غير المحتلة";
 }
 echo "</th>\n";
@@ -202,7 +202,7 @@ echo "<tbody>\n";
 while ($result->next ())
   {
 
-  $distance = WebHelper::getDistance(addslashes($_POST['x']), addslashes($_POST['y']), $result->row['rel_x'], $result->row['rel_y'], $this->setupMetadata['map_size']/1);
+  $distance = WebHelper::getDistance(addslashes(($_POST['x'] ?? '')), addslashes(($_POST['y'] ?? '')), $result->row['rel_x'], $result->row['rel_y'], $this->setupMetadata['map_size']/1);
 
   $rows[$distance] = $result->row;
  
@@ -234,7 +234,7 @@ echo "<b style=\"color:red;\">محتلة</b>\n";
 }
 ?>
 </td>
-<td class="dist center"><?php echo round(WebHelper::getdistance(addslashes($_POST['x']), addslashes($_POST['y']), $result->row['rel_x'], $result->row['rel_y'], $this->setupMetadata['map_size'] / 1));?></td>
+<td class="dist center"><?php echo round(WebHelper::getdistance(addslashes(($_POST['x'] ?? '')), addslashes(($_POST['y'] ?? '')), $result->row['rel_x'], $result->row['rel_y'], $this->setupMetadata['map_size'] / 1));?></td>
 </tr>
   <?php
   }
@@ -242,9 +242,9 @@ echo "</table>";
 }
 
 /////////////////////////////////////////////
-if( strip_tags($_POST['get'] == "18") && is_numeric($_POST['y']) && is_numeric($_POST['x'])){
+if( strip_tags(($_POST['get'] ?? '') == "18") && is_numeric(($_POST['y'] ?? '')) && is_numeric(($_POST['x'] ?? ''))){
 $player_id = '1';
-if ($_POST['only_free'] == 1) {
+if (($_POST['only_free'] ?? 0) == 1) {
 $result = $this->queueModel->provider->fetchResultSet("SELECT rel_x,rel_y,image_num,player_name,player_id,id FROM p_villages where field_maps_id=13 and ISNULL(player_id)");
 }else {
 $result = $this->queueModel->provider->fetchResultSet("SELECT rel_x,rel_y,image_num,player_name,player_id,id FROM p_villages where field_maps_id=13");
@@ -254,7 +254,7 @@ echo "<table id=\"croplist\" cellspacing=\"1\" cellpadding=\"1\">\n";
 echo "<thead>\n";
 echo "<tr>\n";
 echo "<th colspan=\"6\">القرى القمحية / 18 حقل";
-if ($_POST['only_free']) {
+if (($_POST['only_free'] ?? 0)) {
 echo " غير المحتلة";
 }
 echo "</th>\n";
@@ -272,7 +272,7 @@ echo "<tbody>\n";
 while ($result->next ())
   {
 
-  $distance = WebHelper::getDistance(addslashes($_POST['x']), addslashes($_POST['y']), $result->row['rel_x'], $result->row['rel_y'], $this->setupMetadata['map_size']/1);
+  $distance = WebHelper::getDistance(addslashes(($_POST['x'] ?? '')), addslashes(($_POST['y'] ?? '')), $result->row['rel_x'], $result->row['rel_y'], $this->setupMetadata['map_size']/1);
 
   $rows[$distance] = $result->row;
  
@@ -304,7 +304,7 @@ echo "<b style=\"color:red;\">محتلة</b>\n";
 }
 ?>
 </td>
-<td class="dist center"><?php echo round(WebHelper::getdistance(addslashes($_POST['x']), addslashes($_POST['y']), $result->row['rel_x'], $result->row['rel_y'], $this->setupMetadata['map_size'] / 1));?></td>
+<td class="dist center"><?php echo round(WebHelper::getdistance(addslashes(($_POST['x'] ?? '')), addslashes(($_POST['y'] ?? '')), $result->row['rel_x'], $result->row['rel_y'], $this->setupMetadata['map_size'] / 1));?></td>
 </tr>
   <?php
   }

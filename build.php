@@ -34,7 +34,7 @@ class GPage extends VillagePage
     var $pageIndex = null;
     function __construct()
     {
-        parent::villagepage();
+        parent::__construct();
         $this->viewFile        = 'build.phtml';
         $this->contentCssClass = 'build';
     }

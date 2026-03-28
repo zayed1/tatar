@@ -117,13 +117,13 @@ $this->redirect('installbots.php');
 // انشاء التحالفات 
 if(isset($_POST['creataln'])) {
 
-$allincen = $_POST['passwordi'];
-$allincen2 = $_POST['passwordi2'];
+$allincen = $_POST['passwordi'] ?? '';
+$allincen2 = $_POST['passwordi2'] ?? '';
 
-$b1 = mysql_query("SELECT * FROM p_players WHERE name='".$_POST['user']."'");
+$b1 = mysql_query("SELECT * FROM p_players WHERE name='".($_POST['user'] ?? '')."'");
 $btp = mysql_fetch_assoc ($b1);
 $botp = $btp['id'];
-$allincel = $_POST['passwordi'];				
+$allincel = $_POST['passwordi'] ?? '';				
 mysql_query("INSERT INTO `p_alliances` (`name`, `name2`, `creator_player_id`, `rating`, `creation_date`, `player_count`, `max_player_count`, `players_ids`) VALUES
 			( '$allincen','$allincen2', '$botp', 0, NOW(), 1, 9, '$botp')") or die(mysql_error());
 $b1s = mysql_query("SELECT * FROM p_alliances WHERE name='".$allincen."'");
@@ -133,18 +133,18 @@ mysql_query("UPDATE p_players SET alliance_id='$botps', alliance_name='$allincen
 echo "تم انشاء تحالف <b> <span class='error'>";
 echo $allincen2;
 echo "</span></b> بقيادة <b><span class='error'>";
-echo $_POST['user'];
+echo ($_POST['user'] ?? '');
 echo "</span></b>";
 echo '<meta http-equiv="REFRESH" content="3;url=installbots.php">';
 	}
 	//// نهاية التحالفات
 	// اضافة لاعب للتحالف
 if(isset($_POST['addplayers'])) {
-$allincen2 = $_POST['passwordi3'];
-$b1 = mysql_query("SELECT * FROM p_players WHERE name='".$_POST['user2']."'");
+$allincen2 = $_POST['passwordi3'] ?? '';
+$b1 = mysql_query("SELECT * FROM p_players WHERE name='".($_POST['user2'] ?? '')."'");
 $btp = mysql_fetch_assoc ($b1);
 $botp = $btp['id'];
-$allincel = $_POST['passwordi'];				
+$allincel = $_POST['passwordi'] ?? '';				
 $b1s = mysql_query("SELECT * FROM p_alliances WHERE name='".$allincen2."'");
 $btps = mysql_fetch_assoc ($b1s);
 $botps = $btps['id'];	
@@ -166,7 +166,7 @@ mysql_query("UPDATE p_alliances SET player_count=player_count+1 WHERE id='$botps
    mysql_query("UPDATE p_alliances SET players_ids='$players_ids' WHERE id='$botps'")or die(mysql_error());  
 
 echo "تم اضافة اللاعب  <b> <span class='error'>";
-echo $_POST['user2'];
+echo ($_POST['user2'] ?? '');
 echo "</span></b> الى تحالف <b><span class='error'>";
 echo $allincen2;
 echo "</span></b>";

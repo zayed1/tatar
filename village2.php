@@ -5,7 +5,7 @@ class GPage extends ProcessVillagePage
 public $showLevelsStr = NULL;
 public function __construct()
 {
-parent::processvillagepage( );
+parent::__construct();
 $this->viewFile = "village2.phtml";
 $this->contentCssClass = "village2";
 }

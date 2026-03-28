@@ -429,7 +429,7 @@ class GPage extends PopupPage
 
     {
 
-        parent::popuppage();
+        parent::__construct();
 $this->contentCssClass = 'payment';
 
         $this->viewFile = "payment.phtml";

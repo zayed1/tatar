@@ -12,7 +12,7 @@
 echo "<h1><img class=\"point\" src=\"".$GLOBALS['AppConfig']['system']['linksite']."x.gif\" alt=\"\" title=\"\">";
 echo LANGUI_ALLIROL_T1;
 echo "</h1>\r\n<p></p>\r\n<form method=\"post\" action=\"alliancerole?uid=";
-echo intval( $_GET['uid'] );
+echo intval( $_GET['uid'] ?? 0 );
 echo "\">\r\n<table cellpadding=\"1\" cellspacing=\"1\" id=\"position\" class=\"small_option\">\r\n\t<thead>\r\n\t\t<tr><th colspan=\"2\">";
 echo LANGUI_ALLIROL_T1;
 echo "</th></tr>\r\n\t</thead>\r\n\t<tbody>\r\n\t\t<tr>\r\n\t\t\t<th>";

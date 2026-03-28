@@ -52,7 +52,7 @@ class GPage extends GamePage
                   }
                   $villageName = new_village_name_prefix." ".$get_register_first['name'];
                   $Ip = WebHelper::getclientip( );
-                  session_start ();
+                  if (session_status() === PHP_SESSION_NONE) { session_start(); }
                   $_SESSION['is_rig'] = $get_register_first['name'];
                   $result = $m->createNewPlayer( $get_register_first['name'], $get_register_first['email'], md5($get_register_first['pwd']), $_POST['tid'], $_POST['kid'], $villageName, $this->setupMetadata['map_size'], PLAYERTYPE_NORMAL, 1, $this->SNdata, $Ip, $get_register_first['invite'] ,  $_POST['fid'] );
                   $subject = "مرحبا بك ".$get_register_first['name']." في عودة التتار";
@@ -63,7 +63,7 @@ class GPage extends GamePage
                   $start_time = (time()-$this->datastats['server_start_time']);
                   $a = date('Y/m/d H:i:s');
                   $p = $GLOBALS['AppConfig']['Game']['protection'];
-				  $ss = $GLOBALS['AppConfig']['Game']['tatar'];
+				  $ss = $GLOBALS['AppConfig']['system']['tatar'];
 				  $sss = $GLOBALS['AppConfig']['system']['moda'];
 				  $waq = $GLOBALS['AppConfig']['system']['wqt'];
 				  $sas = $GLOBALS['AppConfig']['system']['sasa'];

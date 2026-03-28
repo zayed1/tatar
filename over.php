@@ -6,7 +6,7 @@ class GPage extends ProcessVillagePage{
 
     public $playerData = NULL;
         public function __construct(){
-        parent::processvillagepage( );
+        parent::__construct();
         $this->viewFile = "over.phtml";
         $this->contentCssClass = "messages";
     }

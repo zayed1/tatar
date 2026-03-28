@@ -6,7 +6,7 @@ class GPage extends ProcessVillagePage
 
         public function __construct()
         {
-                parent::processvillagepage( );
+                parent::__construct();
                 $this->viewFile = "looting.phtml";
                 $this->contentCssClass = "a2b";
         }

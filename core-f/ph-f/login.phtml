@@ -167,9 +167,9 @@ $islamLover = new QueueModel();
 ///// ARTS COUNTER
 $fetcharts = $islamLover->provider->fetchRow("SELECT end_date FROM p_queue WHERE id='2' and proc_type='26'");
 // Fetch row as associative array
-$fetchedarts = $fetcharts["end_date"];
+$fetchedarts = $fetcharts["end_date"] ?? null;
 
-$subtracted_arts = date('Y-m-d H:i:s', strtotime($fetchedarts));
+$subtracted_arts = date('Y-m-d H:i:s', strtotime($fetchedarts ?? 'now'));
 
 // calculate the difference in seconds between the subtracted date and now
 $diff_in_arts = strtotime($subtracted_arts) - time();
@@ -262,7 +262,7 @@ echo "<font color='red'><b>لم يبدأ السيرفر بعد</b></font></span>
         <th>
             <strong>سيتم نزول التحف بعد:</strong>
         </th>
-<?php if (strtotime($fetchedarts) > time()) {
+<?php if (strtotime($fetchedarts ?? 'now') > time()) {
 ?>        <td><span id="timer1">
       
       
@@ -281,7 +281,7 @@ echo "<font color='red'><b>لم يبدأ السيرفر بعد</b></font></span>
         <th>
             <strong>سيتم نزول التتار بعد:</strong>
         </th>
-<?php if (strtotime($fetchedtatar) > time()) {
+<?php if (strtotime($fetchedtatar ?? 'now') > time()) {
 ?>       
         <td><span id="timer1">
 <?php 

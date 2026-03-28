@@ -17,7 +17,7 @@ public function isPlayerNameExists2( $playerName )
     }
     public function delete_register_firstByname($name)
     {
-         $this->provider->fetchRow("DELETE FROM register_first WHERE name='%s'", array($name));
+         $this->provider->executeQuery("DELETE FROM register_first WHERE name='%s'", array($name));
     }
     public function get_register_first($id)
     {
@@ -25,7 +25,7 @@ public function isPlayerNameExists2( $playerName )
     }
     public function delete_register_first($id)
     {
-         $this->provider->fetchRow("DELETE FROM register_first WHERE id_av='%s'", array($id));
+         $this->provider->executeQuery("DELETE FROM register_first WHERE id_av='%s'", array($id));
     }
     public function createNewPlayer1( $playerName, $playerEmail, $playerPassword, $Invite, $activationCode)
     {
