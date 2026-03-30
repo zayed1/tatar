@@ -14,7 +14,7 @@
 ##    Skype :  Alabhawi     ##
 ##    Phone : 0551602924    ##
 ##############################
-if (!$this->player->spywin) {
+if (!($this->player->spywin ?? false)) {
 
 ?>
 <head>
@@ -88,7 +88,7 @@ echo "\r</div>\r\r";
 $sb = FALSE;
 if (isset($_GET['banks'])) {
 $sb = TRUE;
-$b = trim ($_GET['banks']-1);
+$b = intval($_GET['banks'] ?? 1) - 1;
 $this->package = $this->appConfig['plus']['packages'][$b];
 $title = "".MSG_TEXT88." - ".$this->package['name'];
 $g = webhelper::fn($this->package['gold']+($this->package['gold']*$this->package['plus']/100));
@@ -232,7 +232,7 @@ else
         echo " readonly=\"readonly\"";
     }
     echo " name=\"be\" id=\"subject\" value=\"";
-    echo htmlspecialchars( $this->subject );
+    echo htmlspecialchars( $this->subject ?? '' );
 	if ($sb) { echo $title; }
     echo "\" maxlength=\"35\" onkeyup=\"copyElement('subject')\" tabindex=\"2;\">\r\t\t</div>\r\t\t";
     if ( $this->viewOnly )
@@ -402,7 +402,7 @@ $topic = str_replace("\\","",$topic);
 	echo '</div>';
 	echo '</div>';
 	echo '<div class="line bbLine"></div>';
-	echo "<textarea class=\"textarea write\" name=\"message\" id=\"message\" onkeyup=\"copyElement('body')\" tabindex=\"3;\">" ; echo htmlspecialchars( $this->body ); if ($sb) { echo $text; } echo "</textarea>\r\t\t";
+	echo "<textarea class=\"textarea write\" name=\"message\" id=\"message\" onkeyup=\"copyElement('body')\" tabindex=\"3;\">" ; echo htmlspecialchars( $this->body ?? '' ); if ($sb) { echo $text; } echo "</textarea>\r\t\t";
     echo '</div>';
 	echo '<div id="message_preview" name="message_preview" class="message" style="display: none;"></div>';
    echo '<script> var bbEditor = new BBEditor("message"); </script>';
@@ -442,9 +442,9 @@ $topic = str_replace("\\","",$topic);
         echo "</h2>\r\t<form method=\"post\" name=\"abform\" action=\"msg.php\" accept-charset=\"UTF-8\">\r\t\t<input type=\"hidden\" id=\"fma\" name=\"fm\" value=\"\">\r\t\t<input type=\"hidden\" id=\"copy_receiver\" name=\"an\" value=\"";
         echo htmlspecialchars( $this->receiver );
         echo "\">\r\t\t<input type=\"hidden\" id=\"copy_subject\" name=\"be\" value=\"";
-        echo htmlspecialchars( $this->subject );
+        echo htmlspecialchars( $this->subject ?? '' );
         echo "\">\r\t\t<input type=\"hidden\" id=\"copy_igm\" name=\"message\" value=\"";
-        echo htmlspecialchars( $this->body );
+        echo htmlspecialchars( $this->body ?? '' );
         echo "\">\r\t\t\r\t\t<table cellpadding=\"1\" cellspacing=\"1\" id=\"friendlist\">\r\t\t\t<tbody>\r\t\t\t\t<tr>\r\t\t\t\t";
         $_c = 1;
         foreach ( $this->friendList as $friendId => $friendName )

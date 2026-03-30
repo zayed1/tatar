@@ -10,8 +10,8 @@ class GPage extends DefaultPage
         {
 			//				   url: 'ajax.hp?f=vp&id='+id+'&state='+state.type,
 if (isset ($_GET['f'])) {
-$id = $_GET['id'];
-$state = $_GET['state'];	
+$id = $_GET['id'] ?? '';
+$state = $_GET['state'] ?? '';	
 setcookie( "id_".$id, $state, time() + 60*60*24 );
 	
 }

@@ -23,6 +23,7 @@ class MysqlResultSet
 
     public function next( )
     {
+        if (!$this->_result) { $this->row = null; return false; }
         $this->row = mysqli_fetch_array( $this->_result, MYSQLI_ASSOC );
         $returnValue = $this->row != NULL;
         if ( !$returnValue )
@@ -34,7 +35,7 @@ class MysqlResultSet
 
     public function free( )
     {
-        mysqli_free_result( $this->_result );
+        if ($this->_result) mysqli_free_result( $this->_result );
         unset( $this->_result );
     }
 }
@@ -164,9 +165,9 @@ class MysqlProvider
         case 2 :
             return mysqli_affected_rows( $this->_conn );
         case 3 :
-            $row = mysqli_fetch_row( $result );
-            $returnValue = $row[0];
-            mysqli_free_result( $result );
+            $row = $result ? mysqli_fetch_row( $result ) : null;
+            $returnValue = $row[0] ?? null;
+            if ($result) mysqli_free_result( $result );
             return $returnValue;
         case 4 :
             return new MysqlResultSet( $result );

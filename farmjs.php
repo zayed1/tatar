@@ -11,5 +11,4 @@ include("core-f/style-f/js/secretfarmjs.js");
 exit;
 }
 include("core-f/style-f/js/jquery.js");
-mysql_close();
 ?>

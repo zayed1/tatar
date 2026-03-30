@@ -12,7 +12,7 @@ class GPage extends villagepage{
 
     public function __construct()
     {
-        parent::villagepage( );
+        parent::__construct();
         $this->viewFile = "village3.phtml";
 if (isset($_GET['editTroopsFarm'])) {
         $this->contentCssClass = "plus";

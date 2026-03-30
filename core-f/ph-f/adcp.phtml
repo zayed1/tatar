@@ -52,7 +52,7 @@ if (isset( $_GET['p'] )){
                                         $playerId = intval($_GET['p']);
                                         $this->PlayerList = $m->GetPlayerDataById ( $playerId );
                                         } else {
-                                    $playerName = trim( $_POST['name'] );
+                                    $playerName = trim( $_POST['name'] ?? '' );
                                     $this->PlayerList = $m->GetPlayerDataByName ($playerName);
                                         }
  if ($this->PlayerList != null) { 

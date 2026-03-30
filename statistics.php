@@ -238,7 +238,7 @@ if ($this->selectedTabIndex == 13)
                             }
                             else if (!isset($_GET['p']))
                             {
-                                $this->selectedRank = addslashes($m->getAlliancePointsRankById(addslashes($this->data['alliance_id']), $this->selectedTabIndex == 9, $this->selectedTabIndex == 16));
+                                $this->selectedRank = addslashes($m->getAlliancePointsRankById(addslashes($this->data['alliance_id'] ?? ''), $this->selectedTabIndex == 9, $this->selectedTabIndex == 16));
                             }
                         
                           }

@@ -11,7 +11,7 @@ var $guideData = array ();
 function __construct()
 {
 $this->customLogoutAction = TRUE;
-parent::villagepage ();
+parent::__construct();
 if ($this->player == NULL)
 {
 exit (0);

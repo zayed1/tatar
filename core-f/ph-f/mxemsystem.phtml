@@ -30,12 +30,11 @@ echo "<table border='1'>
 </tr>";
 echo '<ul>';
 include('./core-f/config-f/s1.php');
-$db_connect = mysql_connect($AppConfig['db']['host'],$AppConfig['db']['user'],$AppConfig['db']['password'])or die("1");
-mysql_select_db($AppConfig['db']['database'], $db_connect);
+$db_connect = mysqli_connect($AppConfig['db']['host'],$AppConfig['db']['user'],$AppConfig['db']['password'],$AppConfig['db']['database'],$AppConfig['db']['port']) or die("1");
 
-		$select = mysql_query("SELECT * FROM p_players ");
+		$select = mysqli_query($db_connect, "SELECT * FROM p_players ");
 
-while ( $row = mysql_fetch_array($select) )
+while ( $row = mysqli_fetch_array($select) )
 {
 echo "<tr>";
 if ($row['email'] != NULL || $row['email'] != ''){

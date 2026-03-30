@@ -21,7 +21,7 @@ $session_timeout = $this->gameMetadata['session_timeout'];
 @session_cache_expire ($session_timeout);
 session_start ();
 if(isset($_POST) && count($_POST)>1) {
-if(isset($_SESSION['visitload']) && $_SESSION['boot'] != 1) {
+if(isset($_SESSION['visitload']) && (!isset($_SESSION['boot']) || $_SESSION['boot'] != 1)) {
 $timer = ($_SESSION['visitload']>(time()-2)) ? true : false ;
 if($timer) {
 }
@@ -40,10 +40,10 @@ $tatarz = $m->provider->fetchRow("SELECT end_date FROM p_queue WHERE proc_type='
 $resetz = $m->provider->fetchRow("SELECT end_date FROM p_queue WHERE proc_type='25'");
 $artz   = $m->provider->fetchRow("SELECT end_date FROM p_queue WHERE proc_type='26'");
 $server_startz = $m->provider->fetchRow("SELECT end_date FROM p_queue WHERE proc_type='57'");
-$this->appConfig['system']['artefect'] = date('Y/m/d H:i:s',strtotime($artz['end_date']));
-$this->appConfig['system']['calltatar'] = date('Y/m/d H:i:s',strtotime($tatarz['end_date']));
-$this->appConfig['system']['reset'] = date('Y/m/d H:i:s',strtotime($resetz['end_date']));
-$this->appConfig['system']['server_start'] = date('Y/m/d H:i:s',strtotime($server_startz['end_date']));
+$this->appConfig['system']['artefect'] = date('Y/m/d H:i:s',strtotime($artz['end_date'] ?? 'now'));
+$this->appConfig['system']['calltatar'] = date('Y/m/d H:i:s',strtotime($tatarz['end_date'] ?? 'now'));
+$this->appConfig['system']['reset'] = date('Y/m/d H:i:s',strtotime($resetz['end_date'] ?? 'now'));
+$this->appConfig['system']['server_start'] = date('Y/m/d H:i:s',strtotime($server_startz['end_date'] ?? 'now'));
 if ( ($this->appConfig['system']['reset'] < date('Y/m/d H:i:s'))){
 if ($reset == 1){
 require_once( MODEL_PATH . 'install.php' );
@@ -231,7 +231,7 @@ $this->queueModel->provider->executeQuery( "UPDATE p_players v SET v.show_ref='%
 				$p_id = $auto_order->row['player_id'];
 				
 				$p_row = $this->queueModel->provider->fetchRow(' SELECT `gold_num` FROM `p_players` WHERE `id`="'. $p_id .'" ');
-						
+				if (!$p_row) { continue; }
 				$last_go = $auto_order->row['last_go'];
 				$dur = $auto_order->row['dur'];
 				$ended_time = ( $time - $last_go );
@@ -272,7 +272,7 @@ $this->queueModel->provider->executeQuery( "UPDATE p_players v SET v.show_ref='%
 						$troop_id = $auto_order->row['troop_id'];
 						
 						$v_row = $this->queueModel->provider->fetchRow(' SELECT resources , TIME_TO_SEC(TIMEDIFF(NOW(), last_update_date)) elapsedTimeInSeconds FROM `p_villages` WHERE `id`="'. $v_id .'" ');
-						
+						if (!$v_row) { continue; }
 						$v_res = $v_row['resources'];
 						
 						$elapsedTimeInSeconds = $v_row['elapsedTimeInSeconds'];
@@ -411,7 +411,7 @@ $m->provider->executeQuery2("UPDATE p_players SET gold_num =gold_num+".$gold."")
             $playerI++;
         }
 
-        if($playerI >= 4 && $_SESSION['is_phantom'] != 1 && $this->player->playerId != 1)
+        if($playerI >= 4 && ($_SESSION['is_phantom'] ?? 0) != 1 && $this->player->playerId != 1)
         {
             $blocked_reason = 'التعدد';
 
@@ -438,8 +438,8 @@ return;
 }
 if (!$this->player->isSpy){
 if (!$this->player->isAgent){
-if ($_SESSION['pwd'] != '') {
-if ($_SESSION['pwd'] != $this->data['pwd']) {
+if (($_SESSION['pwd'] ?? '') != '') {
+if (($_SESSION['pwd'] ?? '') != $this->data['pwd']) {
 $this->redirect("login?dcookie");
 exit;
 }
@@ -457,8 +457,8 @@ foreach ($myAgentPlayers as $agent)
 list($agentId, $agentName) = explode('|', $agent);
 $this->myAgentPlayers[$agentId] = $agentName;
 }
-$idp = $_SESSION['id_agent'];
-if ($this->myAgentPlayers[$idp] == '') {
+$idp = $_SESSION['id_agent'] ?? '';
+if (($this->myAgentPlayers[$idp] ?? '') == '') {
 $this->redirect("login?dcookie");
 exit;
 }
@@ -470,7 +470,7 @@ return;
 }
 }
 $this->queueModel->fetchQueue ($this->player->playerId);
-if (trim ($this->data['custom_links']) != '') {
+if (trim ($this->data['custom_links'] ?? '') != '') {
 $lnk_arr = explode( "\n\n", $this->data['custom_links'] );
 foreach ( $lnk_arr as $lnk_str ) {
 list ($linkName, $linkHref, $linkSelfTarget) = explode ("\n", $lnk_str);
@@ -482,8 +482,8 @@ $this->playerLinks [] = array (
 }
 }
 //black_list
-session_start ();
-$last_name = $_SESSION['last_name'];
+if (session_status() === PHP_SESSION_NONE) { session_start(); }
+$last_name = $_SESSION['last_name'] ?? null;
 if (!isset ($last_name)) {
 $_SESSION['last_name'] = $this->data['name'];		
 }
@@ -541,10 +541,10 @@ list ($this->cpValue, $this->cpRate) = explode (' ', $this->data['cp']);
 $this->cpValue += $elapsedTimeInSeconds * ($this->cpRate/86400);
 $fileName = explode ( '/',$_SERVER['REQUEST_URI']);
 $m = new QueueModel();
-$fileName = $fileName[2];
+$fileName = $fileName[2] ?? '';
 $id = $this->player->playerId;
 $filenameplayer = $m->provider->fetchRow( "SELECT name FROM filename WHERE name='%s' and idp=%s", array($fileName, $id ) );
-if($filenameplayer['name'] != $fileName){
+if(($filenameplayer['name'] ?? '') != $fileName){
 $m->provider->executeQuery( "INSERT INTO `filename` SET `idp` = '%s', `name` = '%s'", array( $id, $fileName ) );
 }
 if (isset ($_GET['herorstart'])) {
@@ -583,7 +583,7 @@ $this->queueModel->dispose();
 }
 }
 function getGuideQuizClassName () {
-$quiz = trim ($this->data['guide_quiz']);
+$quiz = trim ($this->data['guide_quiz'] ?? '');
 $newQuiz = ($quiz == '' || $quiz == GUIDE_QUIZ_SUSPENDED);
 if (!$newQuiz) {
 $quizArray = explode (',', $quiz);
@@ -779,6 +779,7 @@ return FALSE;
 return TRUE;
 }
 function needMoreUpgrades ($neededResources, $itemId=0) {
+$result = 0;
 foreach ( $neededResources as $k=>$v ) {
 if ( $v > $this->resources[$k]['store_max_limit'] ) {
 if ( $result == 0 && ($k == 1 || $k == 2 || $k == 3)) {
@@ -881,7 +882,7 @@ return array (
   
   $gmy = new QueueModel();
 $gmyy1 = $gmy->provider->fetchRow("SELECT plus_oases FROM p_villages WHERE id=".$this->data['selected_village_id']);
-$capital += $gmyy1['plus_oases'];
+$capital += intval($gmyy1['plus_oases'] ?? 0);
 
 
 	
@@ -1051,7 +1052,7 @@ if (isset ($_GET['up']) && $this->appConfig['system']['server_start'] < date('Y/
 && !$this->isGameTransientStopped () && !$this->isGameOver () ) {
 if ( isset ($_GET['id']) && is_numeric ($_GET['id'])){
 if ( isset ($_GET['lvl']) && is_numeric ($_GET['lvl'])){
-$timer = ($_SESSION['uptime']>(time())) ? true : false ;
+$timer = (($_SESSION['uptime'] ?? 0) > time()) ? true : false ;
 if ($timer) {
 
 }
@@ -1266,21 +1267,21 @@ $diff .= ":".$diff_in_unix;
 return $diff;
 }
 class GameLicense {
-function isValid( $domain ) {
+public static function isValid( $domain ) {
 $m = new GameLicenseModel();
 $licenseKey = $m->getLicense( $domain );
 $m->dispose();
 return ( $licenseKey == GameLicense::_getKeyFor( $domain ) );
 }
-function set( $domain ) {
+public static function set( $domain ) {
 $m = new GameLicenseModel();
 $m->setLicense( GameLicense::_getKeyFor( $domain ) );
 $m->dispose();
 }
-function clear() {
+public static function clear() {
 GameLicense::set('');
 }
-function _getKeyFor( $domain ) {
+public static function _getKeyFor( $domain ) {
 return md5 ( 'SPSLINK TATARWAR' . strrev ( $domain ) . 'SPSLINK TATARWAR' );
 }
 }

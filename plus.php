@@ -47,7 +47,7 @@ $this->redirect ('plus?t=2');
 
 $run = ($GLOBALS['AppConfig']['Game']['plus7_on']);
 if (!$run){
-if ($_GET['a'] == 7) {
+if (($_GET['a'] ?? '') == 7) {
 return exit("<center><h1></h1></center>");
 }
 }
@@ -58,8 +58,8 @@ return null;
 }
 }
 if (isset($_GET['a'])) {
-if ($_GET['a'] == 1000) {
-if ($_GET['k'] == $this->data['update_key']) {
+if (($_GET['a'] ?? '') == 1000) {
+if (($_GET['k'] ?? '') == $this->data['update_key']) {
 $gc = $GLOBALS['AppConfig']['Game']['plus8'];
 if ($tihs->data['goldclub'] == 1) {
 exit;
@@ -130,9 +130,9 @@ if ( $this->selectedTabIndex == 5 )
                                 $total_people_count = $this->data['total_people_count'];
                                 $ip_player = $this->data['last_ip'];
 
-                                $playernamesendgold = trim( $_POST['name'] );
-                                                                $goldsendplayername = intval($_POST['gold']);
-                                                                $pwdsend = trim(md5($_POST['pass']));
+                                $playernamesendgold = trim( $_POST['name'] ?? '' );
+                                                                $goldsendplayername = intval($_POST['gold'] ?? 0);
+                                                                $pwdsend = trim(md5($_POST['pass'] ?? ''));
 
                                                                 $getplayerid = $m->getPlayerDataByName($playernamesendgold);
                                                                 $id_getplayerid = $getplayerid['id'];
@@ -257,7 +257,8 @@ $tatarzx->provider->executeQuery("INSERT INTO `p_plus` (`pid`, `date`, `gold`, `
 
 				{
 						
-						$link =mysqli_connect("localhost",$GLOBALS['AppConfig']['db']['user'],$GLOBALS['AppConfig']['db']['password'],$GLOBALS['AppConfig']['db']['database']);
+						$db_port = isset($GLOBALS['AppConfig']['db']['port']) ? intval($GLOBALS['AppConfig']['db']['port']) : 3306;
+						$link =mysqli_connect($GLOBALS['AppConfig']['db']['host'],$GLOBALS['AppConfig']['db']['user'],$GLOBALS['AppConfig']['db']['password'],$GLOBALS['AppConfig']['db']['database'],$db_port);
 if (mysqli_connect_errno())
 {
     die(mysqli_connect_errno());
@@ -290,7 +291,8 @@ $ressArray = explode(',' , $this->data['resources']);
      $newRessArray .= $resources_fix.",";
     }
   }
-						$link =mysqli_connect("localhost",$GLOBALS['AppConfig']['db']['user'],$GLOBALS['AppConfig']['db']['password'],$GLOBALS['AppConfig']['db']['database']);
+						$db_port = isset($GLOBALS['AppConfig']['db']['port']) ? intval($GLOBALS['AppConfig']['db']['port']) : 3306;
+						$link =mysqli_connect($GLOBALS['AppConfig']['db']['host'],$GLOBALS['AppConfig']['db']['user'],$GLOBALS['AppConfig']['db']['password'],$GLOBALS['AppConfig']['db']['database'],$db_port);
 if (mysqli_connect_errno())
 {
     die(mysqli_connect_errno());
@@ -418,7 +420,7 @@ $this->redirect ('plus?t=2');
 
             }
         }
-                                     if ($_GET['a'] == 7) {
+                                     if (($_GET['a'] ?? '') == 7) {
 $this->redirect ('village1');
 return null;
 

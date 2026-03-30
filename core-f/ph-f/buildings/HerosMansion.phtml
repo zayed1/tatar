@@ -202,7 +202,7 @@ if ( $this->selectedTabIndex == 0 )
 </table>
 
 <?php
-if ($_GET['hero'] == 'rename') {
+if (($_GET['hero'] ?? '') == 'rename') {
 echo "<p>";
         echo "<form method=\"post\" name=\"snd\" action=\"build.php?id=";
         echo $this->buildingIndex;
@@ -457,12 +457,12 @@ $capital += $gmyy1['plus_oases'];
 	
 	<?php
 	
-	if (  ( $_POST['fid'] ) )
+	if ( isset($_POST['fid']) && ( $_POST['fid'] ) )
 	{
 		//echo $_POST['allv'];
 		if ( $_POST['fid'] != '' and $_POST['fid'] < 13 )
 		{
-			
+
 			//if ( $oasiscount > 0 and ($goldperone*$oasiscount) <= $this->data['gold_num'] )
 			//{
 				//$this->getcaptureoasisengineer($oasiscount,($goldperone*$oasiscount),$_POST['fid']);

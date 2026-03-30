@@ -5,14 +5,14 @@ class GPage extends ProcessVillagePage
 public $showLevelsStr = NULL;
 public function __construct()
 {
-parent::processvillagepage( );
+parent::__construct();
 $this->viewFile = "village2.phtml";
 $this->contentCssClass = "village2";
 }
 public function load( )
 {
 parent::load( );
-$cookie = ClientData::getinstance( );
+$cookie = $GLOBALS['cd']->getinstance( );
 $this->showLevelsStr = $cookie->showLevels ? "on" : "off";
 }
 public function getWallCssName( )

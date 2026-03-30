@@ -161,7 +161,9 @@ echo ' <script type="text/javascript">
         layer.className = "hide";
         document.body.appendChild(layer);
     </script>';
-        if ( $this->profileData['color_name'] != '' )
+        $c = '';
+        $ec = '';
+        if ( ($this->profileData['color_name'] ?? '') != '' )
         {
         $c = "<span style=\"color:".$this->profileData['color_name'].";\" >";
         $ec = "</span>";
@@ -183,7 +185,7 @@ echo '
 
                 <tr>
                         <td class="details">';
-$is->total = $this->queueModel->provider->fetchRow ( "SELECT SUM(people_count) as t FROM p_villages WHERE is_oasis=0 AND player_id='".$this->profileData['id']."'");
+$is_total = $this->queueModel->provider->fetchRow ( "SELECT SUM(people_count) as t FROM p_villages WHERE is_oasis=0 AND player_id='".$this->profileData['id']."'");
 echo '                                <table cellpadding="0" cellspacing="0">
                                 <tbody>
                                         <tr>
@@ -204,7 +206,7 @@ echo '                                <table cellpadding="0" cellspacing="0">
                             </tr>
                             <tr>
                                 <th>'.LANGUI_PROFILE_T14.' :</th>
-                                <td>'.number_format($is->total['t']).'</td>
+                                <td>'.number_format($is_total['t'] ?? 0).'</td>
                              </tr>';     
                             if(0 < $this->profileData['age']){echo '
                             <tr>
@@ -257,8 +259,8 @@ echo '                                <table cellpadding="0" cellspacing="0">
     }
 if ($this->player->playerId != $this->profileData['id']) {
         $m                      = new ProfileModel();
-            $war_alliance_id = trim($this->data['avatar']);
-
+            $war_alliance_id = trim($this->data['avatar'] ?? '');
+            $b = 0;
             if ($war_alliance_id != '')
                 {
                 $war_alliance_idArr = explode(',', $war_alliance_id);
@@ -376,7 +378,7 @@ $ssss = ($rws <= $newn);
             }else {
         $link = "profile?tst";
         if (isset ($_GET['uid'])) {
-        $link .= "&uid=".$_GET['uid']."";
+        $link .= "&uid=".($_GET['uid'] ?? '')."";
         }
         $link .= "&p=" . ($this->pageIndex + 1);
         $Pre = "<a href=\"" . $link . "\">" . $text . "</a>";
@@ -384,7 +386,7 @@ $ssss = ($rws <= $newn);
 
 
         $text = "«";
-        if (!isset($_GET['p']) || $_GET['p'] == 0)
+        if (!isset($_GET['p']) || ($_GET['p'] ?? 0) == 0)
             {
             $nexx = $text;
             }else {
@@ -402,9 +404,9 @@ $ssss = ($rws <= $newn);
             $link = "&" . $link;
             }
         if (isset ($_GET['uid'])) {
-        $linkuid = "&uid=".$_GET['uid']."";
+        $linkuid = "&uid=".($_GET['uid'] ?? '')."";
         }
-$p = $_GET['p']-1;
+$p = ($_GET['p'] ?? 1)-1;
         $link = "profile?tst".$linkuid."&p=".$p;
         $nexx = "<a href=\"" . $link . "\">" . $text . "</a>";
 }
@@ -596,7 +598,7 @@ else if ( $this->selectedTabIndex == 1 )
     echo "</label>\r\n\t\t\t\t</td>\r\n\t\t\t</tr>\r\n\t\t\t<tr>\r\n\t\t\t\t<th>";
     echo LANGUI_PROFILE_T19;
     echo ":</th>\r\n\t\t\t\t<td><input tabindex=\"5\" type=\"text\" name=\"ort\" value=\"";
-    echo htmlspecialchars( $this->profileData['house_name'] );
+    echo htmlspecialchars( $this->profileData['house_name'] ?? '' );
     echo "\" maxlength=\"30\" class=\"text\" /></td>\r\n\t\t\t\r\n ";
     echo"\r\n\t\t\t<tr><td colspan=\"2\" class=\"desc2\"><textarea tabindex=\"8\" name=\"be2\">";
     echo $this->profileData['description2'];
@@ -918,15 +920,16 @@ if($pop > 5000){
 
         $rank = explode( ":", $medal );
 
-        $index = explode( ":", $medal );
+        $parts = explode( ":", $medal );
 
-        $point = explode( ":", $medal );
-
-        list( $index, $rank, $week, $point) = $index;
+        $index = $parts[0] ?? 0;
+        $rank = $parts[1] ?? 0;
+        $week = $parts[2] ?? 0;
+        $point = $parts[3] ?? 0;
 
         $mdl[] = array();
 
-        $mdl[$week+$tst] =  $medal;
+        $mdl[intval($week)+$tst] =  $medal;
 
     }
 
@@ -1049,7 +1052,7 @@ else if ( $this->selectedTabIndex == 2 )
                 <tr>
                         <th>اللون الجديد:</th>
                         <td><input class="text" type="text" name="color_name" maxlength="50" value="<?php if (isset ($_GET['color'])) { echo
-"#".$_GET['color']; } ?>"></td>
+"#".($_GET['color'] ?? ''); } ?>"></td>
                 </tr>
                 <tr>
                         <th>التأكيد كلمة السر:</th>

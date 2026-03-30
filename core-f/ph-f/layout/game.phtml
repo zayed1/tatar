@@ -1,4 +1,5 @@
 <?php
+$isApp = (($_GET['platform'] ?? '') === 'app');
 $tatar      = $this->queueModel->provider->fetchRow("SELECT end_date FROM p_queue WHERE proc_type='24'");
 $reset      = $this->queueModel->provider->fetchRow("SELECT end_date FROM p_queue WHERE proc_type='25'");
 $art        = $this->queueModel->provider->fetchRow("SELECT end_date FROM p_queue WHERE proc_type='26'");
@@ -194,7 +195,8 @@ echo '<a href="h1231restore.php"><b><font style="color:Tomato">إرجاع الب
 <a href="plus?t=2"><strong><span style="color:#007700">حساب</span></strong> <span style="color:#eea113"><strong>بلاس</strong></span></a></p>
 <?php
 include('core-f/config-f/s1.php');
-$link = mysqli_connect($AppConfig['db']['host'], $AppConfig['db']['user'], $AppConfig['db']['password'], $AppConfig['db']['database']);
+$db_port_g = isset($AppConfig['db']['port']) ? intval($AppConfig['db']['port']) : 3306;
+$link = mysqli_connect($AppConfig['db']['host'], $AppConfig['db']['user'], $AppConfig['db']['password'], $AppConfig['db']['database'], $db_port_g);
 if (mysqli_connect_errno())
 {
     die(mysqli_connect_errno());
@@ -202,12 +204,12 @@ if (mysqli_connect_errno())
 $Id = $this->player->playerId;
 $result = mysqli_query($link,"SELECT * FROM p_players where id='".$Id."'");
 
-
+$z3im = 0;
 while($row = mysqli_fetch_array($result))
 {
-	
+
 	$z3im = $row['h'];
-	
+
 }
 	$start = time();
 	$end =  $z3im;
@@ -227,9 +229,9 @@ $islamLover = new QueueModel();
 $tatar = $islamLover->provider->fetchRow("SELECT end_date FROM p_queue WHERE proc_type='24'");
 $reset = $islamLover->provider->fetchRow("SELECT end_date FROM p_queue WHERE proc_type='25'");
 $art   = $islamLover->provider->fetchRow("SELECT end_date FROM p_queue WHERE proc_type='26'");
-$this->appConfig['system']['artefect'] = date('Y/m/d H:i:s',strtotime($art['end_date']));
-$this->appConfig['system']['calltatar'] = date('Y/m/d H:i:s',strtotime($tatar['end_date']));
-$this->appConfig['system']['reset'] = date('Y/m/d H:i:s',strtotime($reset['end_date']));
+$this->appConfig['system']['artefect'] = date('Y/m/d H:i:s',strtotime($art['end_date'] ?? 'now'));
+$this->appConfig['system']['calltatar'] = date('Y/m/d H:i:s',strtotime($tatar['end_date'] ?? 'now'));
+$this->appConfig['system']['reset'] = date('Y/m/d H:i:s',strtotime($reset['end_date'] ?? 'now'));
 echo "<p>";
 if (0 < $this->dataGame['protection_remain_sec'] && $this->player != NULL) {
 echo LIST_LANG_T5." <br>";
@@ -279,11 +281,11 @@ if ( $this->player != NULL )
 {
     if ( 1 <= sizeof( $this->playerVillages ) )
     {
-if ($_COOKIE['showVillages'] == '') {
+if (($_COOKIE['showVillages'] ?? '') == '') {
 $b = "opened";
 $s = '';
 }else
-if ($_COOKIE['showVillages'] == 1) {
+if (($_COOKIE['showVillages'] ?? '') == 1) {
 $b = "opened";
 $s = '';
 }else {
@@ -366,11 +368,11 @@ echo "</tbody></table>";
    }
     if ( sizeof( $this->playerLinks ) && $this->data['active_plus_account'] )
     {
-if ($_COOKIE['showLinks'] == '') {
+if (($_COOKIE['showLinks'] ?? '') == '') {
 $bl = "opened";
 $sl = '';
 }else
-if ($_COOKIE['showLinks'] == 1) {
+if (($_COOKIE['showLinks'] ?? '') == 1) {
 $bl = "opened";
 $sl = '';
 }else {
@@ -412,11 +414,11 @@ echo "<tbody ".$sl.">";
 }
 if ($this->data['alliance_name'] != '' && $this->data['active_plus_account']) {
 echo "<p>";
-if ($_COOKIE['showtatarzx'] == '') {
+if (($_COOKIE['showtatarzx'] ?? '') == '') {
 $blg = "closed";
 $slg = 'class="hide"';
 }else
-if ($_COOKIE['showtatarzx'] == 1) {
+if (($_COOKIE['showtatarzx'] ?? '') == 1) {
 $blg = "opened";
 $slg = '';
 }else {
@@ -431,7 +433,7 @@ $slg = 'class="hide"';
 $run = new QueueModel();
 $playerg = $run->provider->fetchRow ("SELECT players_ids FROM p_alliances WHERE name='".$this->data['alliance_name']."'");
 
-$ids = $playerg['players_ids'];
+$ids = $playerg['players_ids'] ?? '';
 $ii = explode(',', $ids);
 foreach ($ii as $pid) {
 $np = $run->provider->fetchRow("SELECT name,floor(TIME_TO_SEC(TIMEDIFF(NOW(), last_login_date))/3600) lastLoginFromHours FROM p_players WHERE id='".$pid."'");
@@ -513,12 +515,12 @@ $mr = 2;
 <div align="center" style="position: absolute; left: -850px; top: 35px;"></div> 
 <div align="right">
 <?php
-$nwes = $nw[$mr];
+$nwes = $nw[$mr] ?? '';
 ?>
 <p><div id="game">
 <?php
  
-       echo '<br><br><div class="news"><span style="color:#f'. rand(0,99) .'; font-size:11px;"><strong><b>'.$remembrance[rand(0,(count($remembrance)-1))].'</b></strong></span></div>';
+       if (!empty($remembrance)) { echo '<br><br><div class="news"><span style="color:#f'. rand(0,99) .'; font-size:11px;"><strong><b>'.$remembrance[rand(0,(count($remembrance)-1))].'</b></strong></span></div>'; }
 echo "<p>";
   
  echo '<a id="plusMenu">';
@@ -703,5 +705,19 @@ echo "</div></div>\r\n</div>\r\n";
     zoom: 70%;
 	}
 }
+/* Mobile App Mode - hide browser-only elements */
+body.mobile-app #footer,
+body.mobile-app .footer-menu,
+body.mobile-app .footer-stopper {
+    display: none !important;
+}
+body.mobile-app {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
 </style>
+<?php if ($isApp): ?>
+<script>document.body.classList.add('mobile-app');</script>
+<?php endif; ?>
 

@@ -7,7 +7,7 @@ class GPage extends ProcessVillagePage
 {
 	public function __construct()
 	{
-		parent::processvillagepage( );
+		parent::__construct();
 		$this->viewFile 	= "pull_resources.phtml";
 		$this->contentCssClass = "a2b";
 	}
@@ -41,8 +41,8 @@ class GPage extends ProcessVillagePage
                 $level = 0;
             else
             {
-                $level = split("17", $buildings);
-                $level = split(" ", $level[1]);
+                $level = explode("17", $buildings);
+                $level = explode(" ", $level[1]);
                 $level = $level[1]+1;
             }
 

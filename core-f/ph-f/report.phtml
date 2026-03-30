@@ -135,6 +135,7 @@ if ( $this->showList )
                             }
 $a = $this->reportData['total_carry_load'];
 $b = $this->reportData['total_harvest_carry_load'];
+$all = 0;
 if ($b) {
 $all = ($b/$a*100);
 }
@@ -199,8 +200,8 @@ else if ( $this->reportData['rpt_cat'] == 1 )
     if($this->data['active_plus_account'] == 1 && ($this->reportData['from_player_id'] == $this->player->playerId or $this->reportData['to_player_id'] == $this->player->playerId))
     {
     echo '<span style="float:left;">
-        <a href="report?del='. $_GET['id'] .'"><img src="core-f/style-f/default/img/a/del.gif" title="حذف"></a>
-        <a href="report?archiv='. $_GET['id'] .'"><img src="core-f/style-f/default/img/a/archives.webp" style="width: 16px; height: 16px;" title="ارشفة"></a>
+        <a href="report?del='. ($_GET['id'] ?? 0) .'"><img src="core-f/style-f/default/img/a/del.gif" title="حذف"></a>
+        <a href="report?archiv='. ($_GET['id'] ?? 0) .'"><img src="core-f/style-f/default/img/a/archives.webp" style="width: 16px; height: 16px;" title="ارشفة"></a>
         ';
     }
 
@@ -319,8 +320,8 @@ else if ( $this->reportData['rpt_cat'] == 2 )
     if($this->data['active_plus_account'] == 1 && ($this->reportData['from_player_id'] == $this->player->playerId or $this->reportData['to_player_id'] == $this->player->playerId))
     {
     echo '<span style="float:left;">
-        <a href="report?del='. $_GET['id'] .'"><img src="core-f/style-f/default/img/a/del.gif" title="حذف"></a>
-        <a href="report?archiv='. $_GET['id'] .'"><img src="http://www.uobabylon.edu.iq/nt/images/archives.webp" style="width: 16px; height: 16px;" title="ارشفة"></a>
+        <a href="report?del='. ($_GET['id'] ?? 0) .'"><img src="core-f/style-f/default/img/a/del.gif" title="حذف"></a>
+        <a href="report?archiv='. ($_GET['id'] ?? 0) .'"><img src="http://www.uobabylon.edu.iq/nt/images/archives.webp" style="width: 16px; height: 16px;" title="ارشفة"></a>
         ';
     }
 
@@ -470,14 +471,14 @@ else if ( $this->reportData['rpt_cat'] == 3 )
     if($this->data['active_plus_account'] == 1 && ($this->reportData['from_player_id'] == $this->player->playerId or $this->reportData['to_player_id'] == $this->player->playerId))
     {
     echo '<span style="float:left;">
-        <a href="report?del='. $_GET['id'] .'"><img src="core-f/style-f/default/img/a/del.gif" title="حذف"></a>
-        <a href="report?archiv='. $_GET['id'] .'"><img src="core-f/style-f/default/img/a/archives.webp" style="width: 16px; height: 16px;" title="ارشفة"></a>
+        <a href="report?del='. ($_GET['id'] ?? 0) .'"><img src="core-f/style-f/default/img/a/del.gif" title="حذف"></a>
+        <a href="report?archiv='. ($_GET['id'] ?? 0) .'"><img src="core-f/style-f/default/img/a/archives.webp" style="width: 16px; height: 16px;" title="ارشفة"></a>
         ';
 
         if($this->reportData['from_player_id'] == $this->player->playerId)
         {
-            #echo '<a href="report?id='. $_GET['id'] .'&c=3&again"><img src="core-f/style-f/default/img/a/att2.gif" title="تكرار الهجوم - نوع الهجوم كامل"></a>
-            echo '<a href="report?id='. $_GET['id'] .'&c=3&key='. md5('report-'.intval($_GET['id'])) .'&again"><img src="core-f/style-f/default/img/a/att2.gif" title="تكرار الهجوم - نوع الهجوم كامل"></a>
+            #echo '<a href="report?id='. ($_GET['id'] ?? 0) .'&c=3&again"><img src="core-f/style-f/default/img/a/att2.gif" title="تكرار الهجوم - نوع الهجوم كامل"></a>
+            echo '<a href="report?id='. ($_GET['id'] ?? 0) .'&c=3&key='. md5('report-'.intval(($_GET['id'] ?? 0))) .'&again"><img src="core-f/style-f/default/img/a/att2.gif" title="تكرار الهجوم - نوع الهجوم كامل"></a>
             </span>';
         }
     }
@@ -1257,8 +1258,8 @@ else if ( $this->reportData['rpt_cat'] == 4 )
     if($this->data['active_plus_account'] == 1 && ($this->reportData['from_player_id'] == $this->player->playerId or $this->reportData['to_player_id'] == $this->player->playerId))
     {
     echo '<span style="float:left;">
-        <a href="report?del='. $_GET['id'] .'"><img src="core-f/style-f/default/img/a/del.gif" title="حذف"></a>
-        <a href="report?archiv='. $_GET['id'] .'"><img src="http://www.uobabylon.edu.iq/nt/images/archives.webp" style="width: 16px; height: 16px;" title="ارشفة"></a>
+        <a href="report?del='. ($_GET['id'] ?? 0) .'"><img src="core-f/style-f/default/img/a/del.gif" title="حذف"></a>
+        <a href="report?archiv='. ($_GET['id'] ?? 0) .'"><img src="http://www.uobabylon.edu.iq/nt/images/archives.webp" style="width: 16px; height: 16px;" title="ارشفة"></a>
         ';
     }
 
@@ -1685,8 +1686,8 @@ echo ReportHelper::getreportactiontext( $this->reportData['rpt_cat'] );
     if($this->data['active_plus_account'] == 1 && ($this->reportData['from_player_id'] == $this->player->playerId or $this->reportData['to_player_id'] == $this->player->playerId))
     {
     echo '<span style="float:left;">
-        <a href="report?del='. $_GET['id'] .'"><img src="core-f/style-f/default/img/a/del.gif" title="حذف"></a>
-        <a href="report?archiv='. $_GET['id'] .'"><img src="http://www.uobabylon.edu.iq/nt/images/archives.webp" style="width: 16px; height: 16px;" title="ارشفة"></a>
+        <a href="report?del='. ($_GET['id'] ?? 0) .'"><img src="core-f/style-f/default/img/a/del.gif" title="حذف"></a>
+        <a href="report?archiv='. ($_GET['id'] ?? 0) .'"><img src="http://www.uobabylon.edu.iq/nt/images/archives.webp" style="width: 16px; height: 16px;" title="ارشفة"></a>
         ';
     }
     
@@ -2006,10 +2007,10 @@ if ( $this->selectedTabIndex == 0 )
 
     if ($this->showList == 0 && ($this->reportData['from_player_id'] == $this->player->playerId or $this->reportData['to_player_id'] == $this->player->playerId))
     {
-        $id     = $_GET['id'] * $this->player->playerId * 2972;
+        $id     = ($_GET['id'] ?? 0) * $this->player->playerId * 2972;
         $hash   = substr(md5($id), 0, 10);
         $domain = WebHelper::getdomain();
-        $link   = "http://".$domain."report?id=".$_GET['id']."&hash=".$hash;
+        $link   = "http://".$domain."report?id=".($_GET['id'] ?? 0)."&hash=".$hash;
         ?>
         <script type="text/javascript">function selectAll(){document.form1.demo.focus();document.form1.demo.select();}</script>
         <h5>رابط مشاركه التقرير لجميع اللاعبين : (رابط خاص)</h5>

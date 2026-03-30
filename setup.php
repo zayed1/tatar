@@ -25,6 +25,18 @@ if ($key !== $installKey) {
     die('<h2>Access Denied</h2><p>Usage: setup.php?key=YOUR_INSTALL_KEY</p>');
 }
 
+// Quick admin action: make player admin
+if (isset($_GET['make_admin'])) {
+    $playerName = $_GET['make_admin'];
+    $db = new ModelBase();
+    $db->provider->properties = $GLOBALS['AppConfig']['db'];
+    $db->provider->executeQuery("UPDATE p_players SET player_type=2 WHERE name='%s'", array($playerName));
+    echo "<h2>Done! Player '$playerName' is now admin (player_type=2)</h2>";
+    echo "<p><a href='login.php'>Go to login</a></p>";
+    $db->dispose();
+    exit;
+}
+
 echo "<h1>Tatar Game - Database Setup</h1>";
 echo "<pre>";
 

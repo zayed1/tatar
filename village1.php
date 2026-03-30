@@ -7,7 +7,7 @@ public $troops = array( );
 public $heroCount = 0;
 public function __construct()
 {
-parent::processvillagepage( );
+parent::__construct();
 $this->viewFile = "village1.phtml";
 $this->contentCssClass = "village1";
 }

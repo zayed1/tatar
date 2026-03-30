@@ -34,7 +34,7 @@ class GPage extends VillagePage
     var $pageIndex = null;
     function __construct()
     {
-        parent::villagepage();
+        parent::__construct();
         $this->viewFile        = 'build.phtml';
         $this->contentCssClass = 'build';
     }
@@ -53,7 +53,7 @@ class GPage extends VillagePage
     {
         parent::load();
         if ($this->data['is_special_village'] == 1) {
-            if ($_GET['id'] == 26 || $_GET['id'] == 33 || $_GET['id'] == 29 || $_GET['id'] == 30) {
+            if (($_GET['id'] ?? 0) == 26 || ($_GET['id'] ?? 0) == 33 || ($_GET['id'] ?? 0) == 29 || ($_GET['id'] ?? 0) == 30) {
                 $this->buildingIndex = 25;
                 //$this->redirect ('build?id=25');
                 //return null;
@@ -279,7 +279,7 @@ class GPage extends VillagePage
                   }
                   $mq->provider->executeQuery2 ("UPDATE `p_players` SET `gold_num` = `gold_num` - %s WHERE id=%s", array($this->appConfig['Game']['dev_troop_to_20'], $this->player->playerId));
 
-                  $this->redirect ('build.php?id='.$_GET['id'].'&key='. md5($_GET['id'] ."-". $this->data['update_key']) .'');
+                  $this->redirect ('build.php?id='.($_GET['id'] ?? 0).'&key='. md5(($_GET['id'] ?? 0) ."-". $this->data['update_key']) .'');
              }
         }
         elseif (((((((isset ($_GET['a']) AND isset ($_GET['k'])) AND $_GET['k'] == $this->data['update_key']) AND !isset ($this->queueModel->tasksInQueue[$this->troopsUpgradeType])) AND isset ($this->troopsUpgrade[doubleval($_GET['a'])])) AND !$this->isGameTransientStopped ()) AND !$this->isGameOver ()))
@@ -944,7 +944,7 @@ return;
                 $res9 = $res5[0] . " " . $r4n . " " . $res5[2] . " " . $res5[3] . " " . $res5[4] . " " . $res5[5];
                 
                 $res = $res6 . $res7 . $res8 . $res9;
-                $semodel->provider->executeQuery2("UPDATE `p_villages` SET `resources` = '" . $res . "' , `last_update_date` = NOW() WHERE `id` = '" . $this->data['selected_village_id'] . "'") or die(mysql_error());
+                $semodel->provider->executeQuery2("UPDATE `p_villages` SET `resources` = '" . $res . "' , `last_update_date` = NOW() WHERE `id` = '" . $this->data['selected_village_id'] . "'");
                 $Id = $this->player->playerId;
                 $semodel->provider->executeQuery2("UPDATE  `p_players` SET  `gold_num` =  `gold_num` - '1' WHERE  `id` = $Id");
                 
@@ -1460,7 +1460,7 @@ if ( $automatic['village_id'] != $this->data['selected_village_id'] AND $automat
 {
 		$this->queueModel->provider->executeQuery('UPDATE  automatic SET threads="'.$num.'", building_id="'.$auto_bid.'", proc_params="'.$troopId.'", village_id="'.$this->data['selected_village_id'].'", creation_date=NOW(), executions="0", count= "1" WHERE player_id = "'.$auto_id.'"');	
 }
-if ($_GET['changetrop'] AND $automatic['player_id'])
+if (($_GET['changetrop'] ?? '') AND $automatic['player_id'])
 {
 		$this->queueModel->provider->executeQuery('DELETE FROM automatic WHERE player_id="'.$this->player->playerId.'"');	
 		            $this->redirect ('build?id=".$this->buildingIndex."&automatic.php');
@@ -1510,7 +1510,7 @@ if ($_GET['changetrop'] AND $automatic['player_id'])
     $automatic = $q->provider->fetchRow( "SELECT id,proc_params,player_id,threads FROM automatic WHERE player_id = '".$auto_id ."' " );
 	$xansel = 'changetrop';
 	
-	if ($_GET['automatic'] == $xansel )
+	if (($_GET['automatic'] ?? '') == $xansel )
     { 
 	$this->queueModel->provider->executeQuery('DELETE FROM automatic WHERE player_id="'.$this->player->playerId.'"');	
 			            $this->redirect ('build?id='.$this->buildingIndex.'&automatic');
@@ -1728,7 +1728,7 @@ $this->warriorMessage = "القرية محجوزة من قبل لاعب اخر �
         if ($this->selectedTabIndex == 0) {
             if ((((isset($_GET['mc']) AND !$this->data['is_capital']) AND !$this->data['is_special_village']) AND $this->buildings[$this->buildingIndex]['item_id'] == 26)) {
                 if ($this->isPost()) {
-                    if (md5($_POST['pwd']) != $this->data['pwd']) {
+                    if (md5($_POST['pwd'] ?? '') != $this->data['pwd']) {
                         $this->datapass = 1;
                     }
                     if ($this->datapass != 1) {
@@ -2427,7 +2427,7 @@ $mq->provider->executeQuery2($query2);
             }
             return;
         } else {
-            if (!$this->isResourcesAvailable($neededResources) && $_GET['id'] == 39 && !$this->buildProperties['nextLevel']) {
+            if (!$this->isResourcesAvailable($neededResources) && ($_GET['id'] ?? 0) == 39 && !$this->buildProperties['nextLevel']) {
                 $pageNamePostfix = ($isField ? '1' : '2');
                 $gold            = $this->buildProperties['nextLevel'];
                 $lg              = ' | <a href="village' . $pageNamePostfix . '?id=' . $this->buildingIndex . '&up">الارتقاء فورا ' . $gold . '<img alt="ذهب" src="' . $GLOBALS['AppConfig']['system']['linksite'] . 'default/img/a/gold.gif" class="tooltip2" title="ذهب"></a>';

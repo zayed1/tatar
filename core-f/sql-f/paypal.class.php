@@ -10,7 +10,7 @@ class paypal_class
     public $ipn_data = array( );
     public $fields = array( );
 
-    public function paypal_class( )
+    public function __construct( )
     {
         $this->paypal_url = "https://www.paypal.com/cgi-bin/webscr";
         $this->last_error = "";
@@ -64,7 +64,7 @@ class paypal_class
             $this->ipn_response .= fgets( $fp, 1024 );
         }
         fclose( $fp );
-        if ( eregi( "VERIFIED", $this->ipn_response ) )
+        if ( preg_match( "/VERIFIED/i", $this->ipn_response ) )
         {
             $this->log_ipn_results( TRUE );
             return TRUE;

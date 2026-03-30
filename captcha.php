@@ -1,6 +1,6 @@
 <?php
 ini_set('session.save_path',".".DIRECTORY_SEPARATOR."core-f".DIRECTORY_SEPARATOR."cache-f");
-session_start();  
+if (session_status() === PHP_SESSION_NONE) { session_start(); }
 $ttt = rand(111,999);
 header("Content-Type: image/png");
 $im = @imagecreate(35, 20)

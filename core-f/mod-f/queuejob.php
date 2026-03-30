@@ -56,12 +56,12 @@ if ($yn >= $awsmh) {
 
               $berq_player = $this->provider->fetchRow("SELECT player_id FROM p_villages WHERE id='100'");
               #$this->provider->executeQuery("UPDATE g_settings gs SET gs.cur_berq=%s", array( addslashes($row['w1']+1) ));
-              $this->provider->executeQuery("UPDATE p_players SET gold_num = gold_num + '".$GLOBALS['AppConfig']['Game']['berq_gold']."' WHERE id='".$berq_player['player_id']."'");
-//     bots  people       
- 
+              if ($berq_player) { $this->provider->executeQuery("UPDATE p_players SET gold_num = gold_num + '".$GLOBALS['AppConfig']['Game']['berq_gold']."' WHERE id='".$berq_player['player_id']."'"); }
+//     bots  people
+
 	            $bot_player = $this->provider->fetchRow("SELECT total_people_count FROM p_players WHERE is_bot='1'");
 				$bot_player_tribe = $this->provider->fetchRow("SELECT total_people_count FROM p_players WHERE tribe_id='2'");
-				$bot_playerv = $this->provider->fetchRow("SELECT id FROM p_villages WHERE id='".$bot_player['id']."'");
+				$bot_playerv = $bot_player ? $this->provider->fetchRow("SELECT id FROM p_villages WHERE id='".$bot_player['id']."'") : null;
 				$server_start = $this->provider->fetchScalar("SELECT COUNT(*) FROM p_queue WHERE proc_type='57'");
 				$server_ends = $this->provider->fetchScalar("SELECT COUNT(*) FROM p_queue WHERE proc_type='24'");
 			if (!$server_start AND $server_ends){
@@ -83,6 +83,7 @@ if ($yn >= $awsmh) {
 			if($pgmp->row['villages_count'] <= $counts_v AND $pgmp->row['over_pop'] == 1 ) {
 			$tovlg =  $this->provider->fetchRow("SELECT id FROM p_villages WHERE tribe_id= '0' AND is_oasis = '0' AND field_maps_id='3' ORDER BY RAND() LIMIT 1 ");
 		    $botvlg =  $this->provider->fetchRow("SELECT id,player_id,tribe_id,people_count,player_name,buildings,resources,troops_training,troops_num FROM p_villages WHERE is_capital= '1' AND player_id='".$pgmp->row['id']."' ");
+            if (!$tovlg || !$botvlg) { continue; }
             $villageNames = "قريه منسوخه ".($pgmp->row['villages_count']);
             $update_key = substr( md5( $botvlg['player_id'].$botvlg['tribe_id'].$tovlg['id'].$botvlg['player_name'].$villageName ), 2, 5 );
 			$bp_id = $pgmp->row['id'];
@@ -143,6 +144,7 @@ $villages_id = $botpss;
 				// attack oasis
 				#$oasisid = $this->provider->fetchRow("SELECT id FROM p_villages WHERE is_oasis='1' AND tribe_id='4' ORDER BY RAND() LIMIT 10");
 				$botvid = $this->provider->fetchRow("SELECT id,selected_village_id FROM p_players WHERE is_bot='1' ORDER BY RAND() LIMIT 20");
+							if (!$botvid) { continue; }
 							$execution_timet = strip_tags(mt_rand(30,60));
 							if($pgmp->row['tribe_id'] == 1) {
 							$attack1 =  mt_rand(0,548234567845);
@@ -249,8 +251,8 @@ case 2:
 		{
            $this->processTaskQueue(); 
 		{
-               $berq_player_id = $this->provider->fetchRow("SELECT player_id FROM p_villages WHERE land_num='34'");   
-               $this->provider->executeQuery("UPDATE p_players SET registration_date = '0000-00-00 00:00:00' WHERE id='".$berq_player_id['player_id']."'");
+               $berq_player_id = $this->provider->fetchRow("SELECT player_id FROM p_villages WHERE land_num='34'");
+               if ($berq_player_id) { $this->provider->executeQuery("UPDATE p_players SET registration_date = '0000-00-00 00:00:00' WHERE id='".$berq_player_id['player_id']."'"); }
             }                
             $mutex->release();
         }
@@ -392,11 +394,11 @@ $num = $this->provider->fetchRow( "SELECT * FROM p_alliances WHERE id='%s'", arr
                     {
 					$medals = $resultnew->row['medals'];
 					for($i = 1; $i <= 3; $i++){
-					$medals_week_1 += count(split($indexnew.":".$i.":".($week), $medals))-1;
-					$medals_week_2 += count(split($indexnew.":".$i.":".($week-1), $medals))-1;
-					$medals_week_3 += count(split($indexnew.":".$i.":".($week-2), $medals))-1;
+					$medals_week_1 += substr_count($medals, $indexnew.":".$i.":".($week));
+					$medals_week_2 += substr_count($medals, $indexnew.":".$i.":".($week-1));
+					$medals_week_3 += substr_count($medals, $indexnew.":".$i.":".($week-2));
 					}
-                    $medals_new = count(split(($indexnew+11).":1", $medals))-1;
+                    $medals_new = substr_count($medals, ($indexnew+11).":1");
 					if($medals_new == 0 AND $medals_week_1 > 0 AND $medals_week_2 > 0 AND $medals_week_3 > 0 ){
                     $medal = ($indexnew+11). ":1:" . $week . ":0";
                     $this->provider->executeQuery("UPDATE p_players SET medals=CONCAT_WS(',', medals, '%s') WHERE id=%s", array( $medal, $resultnew->row['id']));
@@ -413,9 +415,9 @@ $num = $this->provider->fetchRow( "SELECT * FROM p_alliances WHERE id='%s'", arr
 		while ($result_attack_defense->next())
         {
 		$medals = $result_attack_defense->row['medals'];
-        $Abu_star_count_1 = count(split("9:1", $medals))-1;
-        $Abu_star_count_2 = count(split("10:1", $medals))-1;
-        $Abu_star_count_3 = count(split("11:1", $medals))-1;
+        $Abu_star_count_1 = substr_count($medals, "9:1");
+        $Abu_star_count_2 = substr_count($medals, "10:1");
+        $Abu_star_count_3 = substr_count($medals, "11:1");
 		if($Abu_star_count_1 == 0 ){
 		$medal = "9:1:" . $week . ":0";
 		$this->provider->executeQuery("UPDATE p_players SET medals=CONCAT_WS(',', medals, '%s') WHERE id=%s", array( $medal, $result_attack_defense->row['id']));
@@ -609,6 +611,7 @@ $num = $this->provider->fetchRow( "SELECT * FROM p_alliances WHERE id='%s'", arr
 		if ($row == NULL)
 			return null;
 		$playerRow = $this->provider->fetchRow ("SELECT p.villages_data FROM p_players p WHERE p.id=%s", Array ($playerId));
+		if ($playerRow == NULL) return null;
 		$pvill = explode ("\n", $playerRow['villages_data']);
 		$villArr = Array ();
 		$vilArr[] = -1;
@@ -940,7 +943,7 @@ $last_art = $result['playerId']."|التتار|".$createdVillage."|".$village_na
         {
         $q = new QueueModel();
         $delete = $q->provider->fetchRow( "select id from p_players where name='التتار' AND player_type='3'");
-        $this->deletePlayer ($delete["id"]);
+        if ($delete) { $this->deletePlayer ($delete["id"]); }
         require_once(MODEL_PATH . "register.php");
         $map_size = $GLOBALS['SetupMetadata']['map_size'];
         $m        = new RegisterModel();
@@ -1486,8 +1489,8 @@ $attack_tatar_tatar = $attack_tatar_village['tatar'];
 $attack_tatar_buildings = $attack_tatar_village['buildings'];
 $pos = strpos($attack_tatar_buildings,'40 ');
 if($pos === false) { $miracle_level = 0; } else {
-$miracle_level = split("40", $attack_tatar_buildings);
-$miracle_level = split(" ", $miracle_level[1]);
+$miracle_level = explode("40", $attack_tatar_buildings);
+$miracle_level = explode(" ", $miracle_level[1]);
 $miracle_level = $miracle_level[1]+1;
 }
 $execution_time = 60;

@@ -92,7 +92,7 @@ echo "<div id=\"container\"></div>\r\n\r\n<noscript>Please enable JavaScript in 
 ?>
 <script type="text/javascript">function createRequestObject(){var browser=navigator.appName;if(browser=='Microsoft Internet Explorer'){return new ActiveXObject('Microsoft.XMLHTTP');}else{return new XMLHttpRequest();}
 return null;}
-function loadProviderHtml(){http.open('get','payment.php?c&p=<?php echo $_GET['p']; ?>&pg=<?php echo $_GET['pg']; ?>');http.onreadystatechange=handleLoadProviderHtmlResponse;http.send(null);}
+function loadProviderHtml(){http.open('get','payment.php?c&p=<?php echo ($_GET['p'] ?? ''); ?>&pg=<?php echo ($_GET['pg'] ?? ''); ?>');http.onreadystatechange=handleLoadProviderHtmlResponse;http.send(null);}
 function handleLoadProviderHtmlResponse(){if(http.readyState==4){if(http.status==200){var response=http.responseText;var target=document.getElementById('container');target.innerHTML=response;document.payment.submit();}else{var target=document.getElementById('container');target.innerHTML='Error: unable to load payment provider. ('+http.statusText+')';}}}
 var http=createRequestObject();loadProviderHtml();</script>
 <?php 
@@ -243,13 +243,13 @@ else if ( $this->providerType == "paypal" )
     $p->add_field( "currency_code", $this->payment['currency'] );
     $p->submit_paypal_post( );
 }
-else if ( $_GET['p'] == "payGol" )
+else if ( ($_GET['p'] ?? '') == "payGol" )
 {
    	echo '<form name="payment" method="post" action="http://www.paygol.com/micropayment/paynow" >';
 	echo '<input type="hidden" name="pg_serviceid" value="'. $this->pg_serviceid .'">';
 	echo '<input type="hidden" name="pg_currency" value="SAR">';
 	echo '<input type="hidden" name="pg_name" value="'.$this->pg_name.'">';
-	echo '<input type="hidden" name="pg_price" value="'. ($_GET['pg']+1) .'">';
+	echo '<input type="hidden" name="pg_price" value="'. (($_GET['pg'] ?? 0)+1) .'">';
 	echo '<input type="hidden" name="pg_custom" value="'. $this->player->playerId .'">';
 	echo '</form>';
 } else if ( $this->providerType == "mobily" )

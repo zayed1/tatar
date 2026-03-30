@@ -5,7 +5,7 @@ function getCountryFromIP($ip, $type = "code")
   global $geoipctry, $geoipcntry, $geoipcountry;
   global $geoipcount, $geoipcache;
 
-  if(strpos($ip, ".") === false)
+  if($ip === null || strpos($ip, ".") === false)
     return "";
 
   $ip = substr("0000000000" . sprintf("%u", ip2long($ip)), -10);

@@ -15,7 +15,7 @@ public $nextLink = NULL;
 public $previousLink = NULL;
 public function __construct()
 {
-parent::popuppage( );
+parent::__construct();
 $this->viewFile = "help.phtml";
 }
 public function load( )

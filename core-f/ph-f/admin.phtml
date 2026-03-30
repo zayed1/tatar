@@ -10,12 +10,12 @@
 <?php
 session_start();
 //verbs 
-$name = $_SESSION['nm_admin'];
-$pwd = $_SESSION['pwd_admin'];
+$name = $_SESSION['nm_admin'] ?? '';
+$pwd = $_SESSION['pwd_admin'] ?? '';
 require(".".DIRECTORY_SEPARATOR."core-f".DIRECTORY_SEPARATOR."admin.php");
 $adminm = $a;
 $adminpwd = $p;
-$sumbit = $_POST['s1'];
+$sumbit = $_POST['s1'] ?? null;
 //end verbs
 if ($name == $adminm && $pwd == $adminpwd){
 $login = TRUE;
@@ -24,11 +24,11 @@ $login = FALSE;
 }
 if (isset($sumbit) && !$login) {
 
-if (md5($_POST['name']) == $adminm && md5($_POST['password']) == $adminpwd) {
+if (md5($_POST['name'] ?? '') == $adminm && md5($_POST['password'] ?? '') == $adminpwd) {
 $login = TRUE;
 $sumbit = false;
-$_SESSION['nm_admin'] = md5($_POST['name']);
-$_SESSION['pwd_admin'] = md5($_POST['password']);
+$_SESSION['nm_admin'] = md5($_POST['name'] ?? '');
+$_SESSION['pwd_admin'] = md5($_POST['password'] ?? '');
 }
 }
 if (isset($_GET['log'])){

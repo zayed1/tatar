@@ -19,9 +19,9 @@ class GPage  extends securegamepage
     {
         parent::__construct();
         $this->viewFile = "adwp.phtml"; //forum
-if ($_GET['t'] == 5) {
+if (($_GET['t'] ?? '') == 5) {
         $this->contentCssClass = "plus";
-    } else if ($_GET['t'] == 7){$this->contentCssClass = "forum";} else{
+    } else if (($_GET['t'] ?? '') == 7){$this->contentCssClass = "forum";} else{
         $this->contentCssClass = "messages";
 
 } }
@@ -31,8 +31,8 @@ if ($_GET['t'] == 5) {
         parent::load( );
         $m = new Payhis();
         $this->dataList = $m->PayhisByType();
-session_start();
-//verbs 
+if (session_status() === PHP_SESSION_NONE) { session_start(); }
+//verbs
 $name = $_SESSION['nm_admin'];
 $pwd = $_SESSION['pwd_admin'];
 require(".".DIRECTORY_SEPARATOR."core-f".DIRECTORY_SEPARATOR."admin.php");
@@ -102,9 +102,9 @@ if ($name==$a && $pwd==$p) {
                 if(1 == 1){
                 if ( $this->isPost( ) )
         {
-                $question = $_POST['question'];
-                $answer = $_POST['answer'];
-                $answer_count = count($_POST['answer']);
+                $question = $_POST['question'] ?? '';
+                $answer = $_POST['answer'] ?? [];
+                $answer_count = count($_POST['answer'] ?? []);
                 for($i = 1; $i <= $answer_count; $i++){
                 if($i != $answer_count){ $contsdot = ','; }
                 $options .= $answer[$i].$contsdot;

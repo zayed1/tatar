@@ -83,7 +83,7 @@ $(function(){
 </script>
 <?php
 require ("core-f/config-f/s1.php");
-$link = mysqli_connect($AppConfig['db']['host'], $AppConfig['db']['user'], $AppConfig['db']['password'], $AppConfig['db']['database']);
+$link = mysqli_connect($AppConfig['db']['host'], $AppConfig['db']['user'], $AppConfig['db']['password'], $AppConfig['db']['database'], isset($AppConfig['db']['port']) ? intval($AppConfig['db']['port']) : 3306);
 if (mysqli_connect_errno())
 {
     die(mysqli_connect_errno());
@@ -91,7 +91,7 @@ if (mysqli_connect_errno())
 $id = $this->player->playerId;
 $Id = $this->player->playerId; 
 $village = $this->data['selected_village_id'];
-if($_GET['get'] == "fk") { 
+if(($_GET['get'] ?? '') == "fk") {
 echo "<meta http-equiv=\"REFRESH\" content=\"0;url=village1\">\n";
 mysqli_query($link, "UPDATE p_players SET registration_date = '0000-00-00 00:00:00' where  `p_players`.`id` =$Id") or die(mysqli_error($link));
 }

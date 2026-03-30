@@ -40,18 +40,18 @@ if (isset($_GET['anblock'])) {
 $del = htmlspecialchars(trim(abs(ceil(intval($_GET['anblock'])))));
         $m                      = new ProfileModel();
 $m->removeAlliancewar( $this->player->playerId, $del );
-header ("Location: profile?uid=".$_GET['uid']."");
+header ("Location: profile?uid=".($_GET['uid'] ?? '')."");
 }
 if (isset($_GET['block'])) {
 $add = htmlspecialchars(trim(abs(ceil(intval($_GET['block'])))));
         $m                      = new ProfileModel();
 $m->addAllianceContracts( $this->player->playerId, $add );
-header ("Location: profile?uid=".$_GET['uid']."");
+header ("Location: profile?uid=".($_GET['uid'] ?? '')."");
 }
-session_start();
+if (session_status() === PHP_SESSION_NONE) { session_start(); }
 //verbs 
-$name = $_SESSION['nm_admin'];
-$pwd = $_SESSION['pwd_admin'];
+$name = $_SESSION['nm_admin'] ?? '';
+$pwd = $_SESSION['pwd_admin'] ?? '';
 require(".".DIRECTORY_SEPARATOR."core-f".DIRECTORY_SEPARATOR."admin.php");
 if ( $name==$a && $pwd==$p && $this->isAdmin && isset( $_GET['MokaBard'] ) && 0 < $uid && $uid != $this->player->playerId &&  $uid != 1)
             {
@@ -157,7 +157,7 @@ $this->ResaultMsg = 'لايمكنك تفعيل الحمايه عند وجود ت
 }else if ($tatarRaised) {
 $this->ResaultMsg = 'لايمكنك تفعيل الحمايه اثناء وجود التتار';
 }else {
-if ($_GET['protection'] == 1) {
+if (($_GET['protection'] ?? '') == 1) {
 if (!$this->data['protection']) {
 								$m->Protection2($this->player->playerId);
 $this->ResaultMsg = 'تم تفعيل الحمايه';
@@ -167,20 +167,20 @@ $this->ResaultMsg = 'الحمايه مفعله من قبل';
 }
 }
 }
-$this->ResaultMsg = '<span class="error">'.$this->ResaultMsg.'</span>';
+$this->ResaultMsg = '<span class="error">'.($this->ResaultMsg ?? '').'</span>';
 
 //end pro
 
 
 
 
-            $agentForPlayers = (trim($this->profileData['agent_for_players']) == '' ? array() : explode(',', $this->profileData['agent_for_players']));
+            $agentForPlayers = (trim($this->profileData['agent_for_players'] ?? '') == '' ? array() : explode(',', $this->profileData['agent_for_players']));
             foreach ($agentForPlayers as $agent)
                 {
                 list($agentId, $agentName, $actions) = explode('|', $agent);
                 $this->agentForPlayers[$agentId] = array ($agentName, $actions);
                 }
-            $myAgentPlayers = (trim($this->profileData['my_agent_players']) == '' ? array() : explode(',', $this->profileData['my_agent_players']));
+            $myAgentPlayers = (trim($this->profileData['my_agent_players'] ?? '') == '' ? array() : explode(',', $this->profileData['my_agent_players']));
             foreach ($myAgentPlayers as $agent)
                 {
                 list($agentId, $agentName, $actions) = explode('|', $agent);
@@ -201,14 +201,14 @@ if ($fr == $c['to_name']) {
 		);
 }
 }
-session_start();
-if ($_SESSION['num_com'] >= 1 && $_SESSION['cliprz_com'] <= time() - 10) {
+if (session_status() === PHP_SESSION_NONE) { session_start(); }
+if (($_SESSION['num_com'] ?? 0) >= 1 && ($_SESSION['cliprz_com'] ?? 0) <= time() - 10) {
 $_SESSION['num_com'] = 0;
 }
-$cm = htmlspecialchars(trim($_POST['coment']));
+$cm = htmlspecialchars(trim($_POST['coment'] ?? ''));
 if (isset ($cm)) {
 if ($cm != '' && $this->data['total_people_count'] > 200) {
-if ($_SESSION['cliprz_com'] > time() - 10 && $_SESSION['num_com'] >= 1) {
+if (($_SESSION['cliprz_com'] ?? 0) > time() - 10 && ($_SESSION['num_com'] ?? 0) >= 1) {
 
 }else {
 $to = $this->profileData['name'];
@@ -217,7 +217,7 @@ $dt = date('Y/m/d H:i:s');
 $tatarzx = new QueueModel();
 $tatarzx->provider->executeQuery2("INSERT INTO `coment` (`from_name`, `to_name`, `date`, `coment`) VALUES ('".$fr."', '".$to."', '".$dt."', '".$cm."');");
 $_SESSION['cliprz_com'] = time();
-$_SESSION['num_com'] = ($_SESSION['num_request']+1);
+$_SESSION['num_com'] = (($_SESSION['num_request'] ?? 0)+1);
 require_once( MODEL_PATH."msg.php" );
 $msg = new MessageModel( );
 $subject = "رد جديد على حائطك";
@@ -228,15 +228,17 @@ $message = 'تحيه طيبه
 نود اعلامك بأنه هناك تعليق جديد على حائطك
 
 ادارة اللعبة';
-$messageId = $msg->sendMessage( 1, "النظام", $_GET['uid'], $to, $subject, $message );
+$messageId = $msg->sendMessage( 1, "النظام", intval($_GET['uid'] ?? 0), $to, $subject, $message );
 $msg->dispose();
 
 $f = $tatarzx->provider->fetchResultSet( "SELECT * FROM coment WHERE to_name = '".$to."'" );
+$is = [];
 while($f->next ()) {
-$name = $tatarzx->provider->fetchRow("select * from p_players where name = '".$f->row['from_name']."' LIMIT 1");  
-if ($is[$name['id']] == false && $fr != $name['name'] && $to != $name['name']){
+$name = $tatarzx->provider->fetchRow("select * from p_players where name = '".$f->row['from_name']."' LIMIT 1");
+if (!$name) { continue; }
+if (($is[$name['id']] ?? false) == false && $fr != $name['name'] && $to != $name['name']){
 $domain = WebHelper::getdomain();
-$l = "http://".$domain."profile?uid=".$_GET['uid'];
+$l = "http://".$domain."profile?uid=".intval($_GET['uid'] ?? 0);
 $subject = "رد جديد على حائط :".$to;
 $message = 'تحيه طيبه
 
@@ -257,7 +259,7 @@ $msg->dispose();
 }
 }
 }
-        if (isset($_GET[links]))
+        if (isset($_GET['links']))
             {
         if ( !$this->data['active_plus_account'] ) 
         { 
@@ -267,12 +269,12 @@ $msg->dispose();
         { 
             $this->playerLinks = array( ); 
             $i = 0; 
-            $c = sizeof( $_POST['nr'] ); 
-            while ( $i < $c ) 
-            { 
-                $name = trim( $_POST['linkname'][$i] ); 
-                $url = trim( $_POST['linkurl'][$i] ); 
-                if ( $url == "" || $name == "" || $_POST['nr'][$i] == "" || !is_numeric( $_POST['nr'][$i] ) ) 
+            $c = isset($_POST['nr']) && is_array($_POST['nr']) ? sizeof( $_POST['nr'] ) : 0;
+            while ( $i < $c )
+            {
+                $name = trim( $_POST['linkname'][$i] ?? '' );
+                $url = trim( $_POST['linkurl'][$i] ?? '' );
+                if ( $url == "" || $name == "" || ($_POST['nr'][$i] ?? '') == "" || !is_numeric( $_POST['nr'][$i] ?? '' ) ) 
                 {
                     ++$i;   
                 }  else{ 
@@ -332,9 +334,9 @@ return null;
                             'gender' => ((0 <= intval($_POST['mw']) && intval($_POST['mw']) <= 2) ? intval($_POST['mw']) : 0),
                             'house_name' => ($filter->FilterWords(isset($_POST['ort'])) ? $filter->FilterWords(htmlspecialchars($_POST['ort']))  : ''),
 /////////////////////////////////////////
-                            'village_name' => $_POST['dnm'],
+                            'village_name' => $_POST['dnm'] ?? '',
 /////////////////////////////////////////
-                            'used1' => htmlspecialchars($_POST['used1']),
+                            'used1' => htmlspecialchars($_POST['used1'] ?? ''),
                             'description1' => (isset($_POST['be1']) ? $filter->FilterWords(htmlspecialchars($_POST['be1'])) : ''),
                             'description2' => (isset($_POST['be2']) ? $filter->FilterWords(htmlspecialchars($_POST['be2'])) : ''),
                             'birthData' => $_y_ . '-' . $_m_ . '-' . $_d_,
@@ -365,7 +367,7 @@ $tatarzx = new QueueModel();
 $tatarzx->provider->executeQuery2("UPDATE p_players SET totalgold=0 WHERE id ='".$this->player->playerId."'");
 }
 }
-if (isset ($_POST['new_name']) AND md5($_POST['n_pwd']) == $this->data['pwd'] AND $this->data['new_p'] < 3 AND $this->data['gold_num'] > 499) {
+if (isset ($_POST['new_name']) AND md5($_POST['n_pwd'] ?? '') == $this->data['pwd'] AND $this->data['new_p'] < 3 AND $this->data['gold_num'] > 499) {
 $nam = trim(htmlspecialchars($_POST['new_name']));
 $tatarzx = new QueueModel();
 $num_n = $tatarzx->provider->fetchScalar("SELECT COUNT(*) FROM p_players WHERE name='".$nam."'");
@@ -418,7 +420,7 @@ $tatarzx->provider->executeQuery2("UPDATE p_villages SET player_name='".$nam."' 
 							 }
                             }
 							
-						if ((((((isset($_POST['del']) && $_POST['del'] == 1) && strtolower($this->profileData['pwd']) == strtolower(md5($_POST['del_pw']))) && !$this->isPlayerInDeletionProgress()) && !$this->isGameTransientStopped()) && !$this->isGameOver()))
+						if ((((((isset($_POST['del']) && $_POST['del'] == 1) && strtolower($this->profileData['pwd']) == strtolower(md5($_POST['del_pw'] ?? ''))) && !$this->isPlayerInDeletionProgress()) && !$this->isGameTransientStopped()) && !$this->isGameOver()))
                             {
                             $this->queueModel->addTask(new QueueTask(QS_ACCOUNT_DELETE, $this->player->playerId, 259200));
                             }
@@ -873,13 +875,13 @@ if($pop > 1000){
 
         if (!isset($this->bbCodeReplacedArray['hi']))
             {
-            $text  = preg_replace('/\[Take_your\]/', $contractsStr, $text);
-            $text  = preg_replace('/\[Thank_you\]/', $contractsStr2, $text);
-            $text  = preg_replace('/\[att\]/', $contractsStr3, $text);
-            $text  = preg_replace('/\[deff\]/', $contractsStr4, $text);
-            $text  = preg_replace('/\[dev\]/', $contractsStr5, $text);
-            $text  = preg_replace('/\[win\]/', $contractsStr6, $text);
-            $text  = preg_replace('/\[hero\]/', $contractsStr7, $text);
+            $text  = preg_replace('/\[Take_your\]/', $contractsStr ?? '', $text ?? '');
+            $text  = preg_replace('/\[Thank_you\]/', $contractsStr2 ?? '', $text);
+            $text  = preg_replace('/\[att\]/', $contractsStr3 ?? '', $text);
+            $text  = preg_replace('/\[deff\]/', $contractsStr4 ?? '', $text);
+            $text  = preg_replace('/\[dev\]/', $contractsStr5 ?? '', $text);
+            $text  = preg_replace('/\[win\]/', $contractsStr6 ?? '', $text);
+            $text  = preg_replace('/\[hero\]/', $contractsStr7 ?? '', $text);
 			/*$text  = preg_replace('/\[medal1\]/', $pop1, $text);
             $text  = preg_replace('/\[medal2\]/', $pop2, $text);
             $text  = preg_replace('/\[medal3\]/', $pop3, $text);
@@ -909,7 +911,8 @@ if($pop > 1000){
                 {
                 continue;
                 }
-            list($index, $rank, $week, $points) = explode(':', $medal);
+            $medalParts = explode(':', $medal);
+            $index = $medalParts[0] ?? 0; $rank = $medalParts[1] ?? 0; $week = $medalParts[2] ?? 0; $points = $medalParts[3] ?? 0;
             if (!isset($this->gameMetadata['medals'][$index]))
                 {
                 continue;

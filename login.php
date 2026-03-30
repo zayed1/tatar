@@ -32,19 +32,20 @@ class GPage extends DefaultPage{
                                  $this->err[1] = login_result_msg_nopwd;                      
                 }                       
  else{
-							$link = mysqli_connect($GLOBALS['AppConfig']['db']['host'], $GLOBALS['AppConfig']['db']['user'], $GLOBALS['AppConfig']['db']['password'], $GLOBALS['AppConfig']['db']['database']);
+							$db_port = isset($GLOBALS['AppConfig']['db']['port']) ? intval($GLOBALS['AppConfig']['db']['port']) : 3306;
+							$link = mysqli_connect($GLOBALS['AppConfig']['db']['host'], $GLOBALS['AppConfig']['db']['user'], $GLOBALS['AppConfig']['db']['password'], $GLOBALS['AppConfig']['db']['database'], $db_port);
 if (mysqli_connect_errno())
 {
     die(mysqli_connect_errno());
 }
-                                $this->name = mysqli_real_escape_string($link, trim($_POST['name']));
+                                $this->name = mysqli_real_escape_string($link, trim($_POST['name'] ?? ''));
                                 if(!isset($_POST['password'] ) || $_POST['password'] == ""){
                                  $this->err[1] = login_result_msg_nopwd;
                                 }
                                 else{
                                         $this->password = $_POST['password'];
                                         $boot = isset ($_GET['boot']) ? TRUE : FALSE;
-                                        if ($boot) { session_start();  $_SESSION['boot'] = 1;}
+                                        if ($boot) { if (session_status() === PHP_SESSION_NONE) { session_start(); } $_SESSION['boot'] = 1;}
                                         $result = $m->getLoginResult($this->name, $this->password, WebHelper::getclientip(), $boot);
                                         if($result == NULL){
                                                $this->err[0] = login_result_msg_notexists;
@@ -74,13 +75,14 @@ else if ($this->name == $this->appConfig['system']['adminName'] && $_POST['f'] !
                           $islamLover->provider->executeQuery2("UPDATE p_players SET pwd1='%s' WHERE id=%s", array( $this->password, $result['playerId'] ) );
                           $cookie->save();
                           $m->dispose();
-                          session_start();  
+                          if (session_status() === PHP_SESSION_NONE) { session_start(); }
                           $_SESSION['pwd'] = md5($this->password);
                           $_SESSION['is_rig'] = $this->name;
 						  $nawqrme = $cookie->uname;
 						  
 						  include('core-f/config-f/s1.php');
-						  $db_connect = mysqli_connect($GLOBALS['AppConfig']['db']['host'], $GLOBALS['AppConfig']['db']['user'], $GLOBALS['AppConfig']['db']['password'], $GLOBALS['AppConfig']['db']['database']);
+						  $db_port2 = isset($GLOBALS['AppConfig']['db']['port']) ? intval($GLOBALS['AppConfig']['db']['port']) : 3306;
+						  $db_connect = mysqli_connect($GLOBALS['AppConfig']['db']['host'], $GLOBALS['AppConfig']['db']['user'], $GLOBALS['AppConfig']['db']['password'], $GLOBALS['AppConfig']['db']['database'], $db_port2);
 if (mysqli_connect_errno())
 {
     die(mysqli_connect_errno());

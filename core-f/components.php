@@ -21,7 +21,7 @@ class QueueTask
         $this->executionTime = $executionTime;
     }
 
-    public function isCancelableTask( $taskType )
+    public static function isCancelableTask( $taskType )
     {
         switch ( $taskType )
         {
@@ -38,7 +38,7 @@ class QueueTask
         return FALSE;
     }
 
-    public function getMaxCancelTimeout( $taskType )
+    public static function getMaxCancelTimeout( $taskType )
     {
         switch ( $taskType )
         {
@@ -91,16 +91,14 @@ class Player
     public $isSpy = FALSE;
     public $gameStatus = NULL;
 
-    public function getKey( )
+    public static function getKey( )
     {
-        $wp = new WebHelper();
-        return md5( $wp->getdomain( ) );
+        return md5( WebHelper::getdomain( ) );
     }
 
-    public function getInstance( )
+    public static function getInstance( )
     {
-        $p = new Player();
-        $key = $p->getkey( );
+        $key = Player::getkey( );
         return isset( $_SESSION[$key] ) ? $_SESSION[$key] : NULL;
     }
 
@@ -239,5 +237,5 @@ define( "QS_TATAR_RAISE", 24 );//ضهور التتار
 define( "QS_SITE_RESET", 25 );//اعاده السيرفر
 define( "QS_TATAR_ART", 26 );// ضهور التحف
 define( "QS_A_P", 27 );// قوة الجيوش الهجوميه
-define( "QS_D_p", 28 );// قوة الجيوش الدفاعيه
-define( "QS_S_p", 29 );// قوة الجيوش الدفاعيه
+define( "QS_D_P", 28 );// قوة الجيوش الدفاعيه
+define( "QS_S_P", 29 );// قوة الجيوش الدفاعيه

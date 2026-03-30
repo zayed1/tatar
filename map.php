@@ -140,7 +140,7 @@ if ( intval($_POST['mxp']) < 401 && intval($_POST['mxp']) >'-401' )
             $sjson .= ',"'.$this->getCssClassAttt($mapItem).'"';
             if ($mapItem['player_id'] != '')
                 {
-                $sjson .= sprintf(',%s,%s,"%s","%s","%s"', $mapItem['tribe_id'], $mapItem['people_count'], htmlspecialchars(str_replace('\\', '\\', $mapItem['player_name'])), htmlspecialchars(str_replace('\\', '\\', $mapItem['village_name'])), htmlspecialchars(str_replace('\\', '\\', $mapItem['alliance_name'])));
+                $sjson .= sprintf(',%s,%s,"%s","%s","%s"', $mapItem['tribe_id'], $mapItem['people_count'], htmlspecialchars(str_replace('\\', '\\', $mapItem['player_name'] ?? '')), htmlspecialchars(str_replace('\\', '\\', $mapItem['village_name'] ?? '')), htmlspecialchars(str_replace('\\', '\\', $mapItem['alliance_name'] ?? '')));
                 }
             else
                 {

@@ -71,7 +71,7 @@ if ( isset( $_GET['new_oasis'] ) )
 <p>
 سيكلفك ذلك : <b><?php echo $this->appConfig['Game']['village_type_new_oasis']; ?></b> <img alt="ذهب" class="gold" src="core-f/style-f/x.gif" title="ذهب">
 </p><p>
-</p><form action="village_type.php?new_oasis&id=<?php echo $_GET['id'] ; ?>" method="POST">
+</p><form action="village_type.php?new_oasis&id=<?php echo ($_GET['id'] ?? 0) ; ?>" method="POST">
 	<table cellpadding="1" cellspacing="1" id="sign_select"><tbody>
 		<tr class="top"><th>يرجى اختيار نوع الواحة</th><th></th></tr>
 		<tr>
@@ -171,21 +171,21 @@ if ( isset( $_GET['farmmmm'] ) )
 					<?php if($server_startz > 0) { ?>
                     <span class="none">اللعبة لم تبدأ ،، يمكنك زرع المسفط فقط</span>
                     <?php } else { ?>
-					<a href="village_type.php?farm&id=<?php echo $_GET['id']; ?>&go">زراعة المزرعه</a> 
+					<a href="village_type.php?farm&id=<?php echo ($_GET['id'] ?? 0); ?>&go">زراعة المزرعه</a> 
 					<?php } ?> 
 				</b>
 			</p>
 		
 		<?php
 		} 
-		if ( isset ( $_GET['go'] ) and isset ( $_GET['id'] ) and is_numeric( $_GET['id'] ) and $_GET['id'] > 0 AND $server_startz <= 0 )	
+		if ( isset ( $_GET['go'] ) and isset ( $_GET['id'] ) and is_numeric( ($_GET['id'] ?? 0) ) and ($_GET['id'] ?? 0) > 0 AND $server_startz <= 0 )	
 		{
 
 $z3mah = new QueueModel();
 $mdist = $this->setupMetadata['field_maps_summary'][$this->data['field_maps_id']];
 $gold_num = $this->appConfig['Game']['village_type_farm'];
 $time = ceil($this->data['people_count']/5);
-$id = $_GET['id'];
+$id = ($_GET['id'] ?? 0);
 $this->warriorMessage = "";
 if ($this->data['gold_num'] < $gold_num)
 {
@@ -370,14 +370,14 @@ $this->redirect ('village_type.php?farm&ok');
 			</p>
 			<h3>
 			
-				<a href="village_type.php?mfarm&id=<?php echo $_GET['id']; ?>&go">زراعة المسفط</a>
+				<a href="village_type.php?mfarm&id=<?php echo ($_GET['id'] ?? 0); ?>&go">زراعة المسفط</a>
 			
 			</h3>
 			
 		
 		<?php
 				}
-		if ( isset ( $_GET['go'] ) and isset ( $_GET['id'] ) and is_numeric( $_GET['id'] ) and $_GET['id'] > 0 ) 
+		if ( isset ( $_GET['go'] ) and isset ( $_GET['id'] ) and is_numeric( ($_GET['id'] ?? 0) ) and ($_GET['id'] ?? 0) > 0 ) 
 		{
 			
 
@@ -386,7 +386,7 @@ $z3mah = new QueueModel();
 $mdist = $this->setupMetadata['field_maps_summary'][$this->data['field_maps_id']];
 $gold_num = $this->appConfig['Game']['village_type_mfarm'];
 $time = ceil($this->data['people_count']/5);
-$id = $_GET['id'];
+$id = ($_GET['id'] ?? 0);
 $this->warriorMessage = "";
 if ($this->data['gold_num'] < $gold_num)
 {

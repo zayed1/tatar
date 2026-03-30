@@ -126,14 +126,14 @@ if ( $this->showTroopsTable )
     echo "<p>";
     echo LANGUI_WARSN_T6;
     echo ": <b>";
-    echo intval( $_POST['ktyp'] ) == 1 ? LANGUI_WARSN_T7 : LANGUI_WARSN_T8;
+    echo intval( $_POST['ktyp'] ?? 0 ) == 1 ? LANGUI_WARSN_T7 : LANGUI_WARSN_T8;
     echo "</b></p>\r\n\r\n<table id=\"attacker\" class=\"fill_in\" cellpadding=\"1\" cellspacing=\"1\">\r\n\t<thead>\r\n\t\t<tr><th>";
     echo LANGUI_WARSN_T2;
     echo "</th></tr>\r\n\t</thead>\r\n\t<tbody>\r\n\t\t<tr><th>";
-    echo constant( "tribe_".intval( $_POST['a1'] ) );
+    echo constant( "tribe_".intval( $_POST['a1'] ?? 0 ) );
     echo "</th></tr>\r\n\t\t<tr>\r\n\t\t\t<td class=\"details\">\r\n\t\t\t\t<table cellpadding=\"1\" cellspacing=\"1\">\r\n\t\t\t\t\t<tbody>\r\n\t\t\t\t\t\t";
     $_c = 0;
-    $tribeId = intval( $_POST['a1'] );
+    $tribeId = intval( $_POST['a1'] ?? 0 );
     foreach ( $this->troopsMetadata as $troopId => $troopMetadata )
     {
         if ( $troopMetadata['for_tribe_id'] != $tribeId )

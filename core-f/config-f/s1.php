@@ -183,7 +183,7 @@ $AppConfig = array (
                 'webname'                      => 'عودة التتار',
                 'email'                        => 'smartservs.com@gmail.com',//المرسل
                 'namesite'                     => 'Retatar',//اسم الموقع انجليزي
-                'linksite'                     => 'https://retatar.com/core-f/style-f/',//رابط الصور
+                'linksite'                     => 'core-f/style-f/',//رابط الصور
                 'installkey'                   => 'inst000123213all9',//رمز التسطيب
 
 ),

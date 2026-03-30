@@ -9,7 +9,7 @@ echo "<p><p><span class='error'>سكانك اقل من 1000</span>";
    </div>
 <?php
 echo "<br>";
-if ($_GET['t'] ==1) {
+if (($_GET['t'] ?? '') == 1) {
 ?>
 <form action="" method="post">
 <table class="build_details" cellpadding="1" cellspacing="1">
@@ -26,16 +26,16 @@ if ($_GET['t'] ==1) {
 	<tbody>
 		<tr>
 			<td>
-				<input class="text" type="text" name="pr1" size="5" value="<?php echo 0+$_POST['pr1']; ?>">
+				<input class="text" type="text" name="pr1" size="5" value="<?php echo 0+($_POST['pr1'] ?? 0); ?>">
 			</td>
 			<td>
-				<input class="text" type="text" name="pr2" size="5" value="<?php echo 0+$_POST['pr2']; ?>">
+				<input class="text" type="text" name="pr2" size="5" value="<?php echo 0+($_POST['pr2'] ?? 0); ?>">
 			</td>
 			<td >
-				<input class="text" type="text" name="pr3" size="5" value="<?php echo 0+$_POST['pr3']; ?>">
+				<input class="text" type="text" name="pr3" size="5" value="<?php echo 0+($_POST['pr3'] ?? 0); ?>">
 			</td>
 			<td>
-				<input class="text" type="text" name="pr4" size="5" value="<?php echo 0+$_POST['pr4']; ?>">
+				<input class="text" type="text" name="pr4" size="5" value="<?php echo 0+($_POST['pr4'] ?? 0); ?>">
 			</td>
 			<td><img src="core-f/style-f/default/img/r/6.gif"> <?php echo $GLOBALS['AppConfig']['Game']['res']*$this->data['gold_num']; ?></td>
 		</tr>
@@ -45,10 +45,10 @@ if ($_GET['t'] ==1) {
 </form>
 <?php
 $cost = $GLOBALS['AppConfig']['Game']['res'];
-$pr1 = $_POST['pr1'];
-$pr2 = $_POST['pr2'];
-$pr3 = $_POST['pr3'];
-$pr4 = $_POST['pr4'];
+$pr1 = $_POST['pr1'] ?? 0;
+$pr2 = $_POST['pr2'] ?? 0;
+$pr3 = $_POST['pr3'] ?? 0;
+$pr4 = $_POST['pr4'] ?? 0;
 $allpr = ($pr1+$pr2+$pr3+$pr4);
 $sgold = ceil($allpr/$cost);
 if ($allpr > 0 && $sgold > 0 && isset($pr1) && is_numeric($pr1) && is_numeric($pr2) && is_numeric($pr3) && is_numeric($pr4)) {

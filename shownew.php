@@ -5,7 +5,7 @@ class GPage extends ProcessVillagePage{
         public $saved = NULL;
         public $siteNews = NULL;
         public function __construct(){
-        parent::processvillagepage( );
+        parent::__construct();
         $this->viewFile = "shownew.phtml";
         $this->contentCssClass = "messages";
         $this->checkForGlobalMessage = FALSE;

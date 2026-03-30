@@ -6,7 +6,7 @@ class GPage extends ProcessVillagePage
 
         public function __construct()
         {
-                parent::processvillagepage( );
+                parent::__construct();
                 $this->viewFile = "looting.phtml";
                 $this->contentCssClass = "a2b";
         }
@@ -85,7 +85,7 @@ if ($this->isPost()) {
                   }
                   elseif(isset($_GET['dellall']))
                   {
-$p_name = strip_tags(htmlspecialchars(trim($_POST['p_name'])));
+$p_name = strip_tags(htmlspecialchars(trim($_POST['p_name'] ?? '')));
 $result = $q->provider->fetchResultSet ("SELECT * FROM p_villages WHERE player_name='".$p_name."' AND is_oasis = 0 ORDER BY village_name ASC");
 while ($result->next ())
 {
@@ -122,7 +122,7 @@ $this->time = 15;
              elseif($this->selectedTabIndex == 2)
              {
 if (isset ($_GET['allv'])) {
-$p_name = strip_tags(htmlspecialchars(trim($_POST['p_name'])));
+$p_name = strip_tags(htmlspecialchars(trim($_POST['p_name'] ?? '')));
 $result = $q->provider->fetchResultSet ("SELECT * FROM p_villages WHERE player_name='".$p_name."' AND is_oasis = 0 ORDER BY village_name ASC");
 while ($result->next ())
 {

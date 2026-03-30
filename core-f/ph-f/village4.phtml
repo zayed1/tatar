@@ -79,8 +79,8 @@ echo "<td class=\"bui\"><a href=\"\">";
                        $wwlvl1 = '0';
                         }
                         else {
-                        $wwlvl1 = split("17", $vget['buildings']);
-                        $wwlvl1 = split(" ", $wwlvl1[1]);
+                        $wwlvl1 = explode("17", $vget['buildings']);
+                        $wwlvl1 = explode(" ", $wwlvl1[1]);
                         $wwlvl1 = $wwlvl1[1];
                          }
                         $total_merchants_num = $GLOBALS['GameMetadata']['items'][17]['levels'][$wwlvl1 - 1]['value'];
@@ -216,7 +216,7 @@ foreach ($this->Villages as $vid) {
 
 </table>
 <?php
- } else if (isset($_GET['t']) == 4){
+ } else if (($_GET['t'] ?? '') == 4){
  $m = new Village4Model();
  $this->townHall = $m;
  echo '<table class="rate_details lang_rtl lang_ar" cellpadding="1" cellspacing="1"><thead>';
@@ -235,7 +235,7 @@ $tid9 = explode(',', $tid99[9]);
 $tid10 = explode(',', $tid99[10]);
 
 $child_villages_id = count(explode(',',$townHall['child_villages_id']));
-if(trim($townHall['child_villages_id']) == ''){ $child_villages_id = 0; }
+if(trim($townHall['child_villages_id'] ?? '') == ''){ $child_villages_id = 0; }
 $websec = WebHelper::secondstostring($TownHall_vid['remainingSeconds']);
 
 echo '<tr';

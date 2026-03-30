@@ -11,13 +11,13 @@
 if ( $this->data['player_type'] == PLAYERTYPE_ADMIN ){
 if (isset($_GET['del'])) {
 $q = new QueueModel();
-$q->provider->executeQuery2 ("UPDATE link SET admin=2 WHERE id='".$_GET['del']."'");
+$q->provider->executeQuery2 ("UPDATE link SET admin=2 WHERE id='".intval($_GET['del'] ?? 0)."'");
 }
 
 if (isset($_GET['acept'])) {
 $q = new QueueModel();
-$q->provider->executeQuery2 ("UPDATE link SET admin=1 WHERE id='".$_GET['acept']."'");
-$q->provider->executeQuery2 ("UPDATE p_players SET gold_num=gold_num+1000 WHERE id='".$_GET['pid']."'");
+$q->provider->executeQuery2 ("UPDATE link SET admin=1 WHERE id='".intval($_GET['acept'] ?? 0)."'");
+$q->provider->executeQuery2 ("UPDATE p_players SET gold_num=gold_num+1000 WHERE id='".intval($_GET['pid'] ?? 0)."'");
 }
 ?>
 <table cellpadding="1" cellspacing="1">

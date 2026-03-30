@@ -9,7 +9,7 @@
 
 echo "<div id=\"textmenu\">\r\n";
 echo "   <a href=\"build.php?id=" . $this->buildingIndex . "\"";
-if ($this->selectedTabIndex == 0 && $_GET['t'] != 4) {
+if ($this->selectedTabIndex == 0 && ($_GET['t'] ?? '') != 4) {
     echo " class=\"selected\"";
 }
 echo ">" . LANGUI_CUSTBU_MKT_p1 . "</a>\r\n";
@@ -122,7 +122,7 @@ if ( $this->selectedTabIndex == 0 )
     }
     else
     {
-	    echo '<input type="hidden" name="send_bell" value="'. intval($_POST['send_bell']) .'">';
+	    echo '<input type="hidden" name="send_bell" value="'. intval($_POST['send_bell'] ?? 0) .'">';
 
         echo "<input type=\"hidden\" name=\"act\" value=\"2\" />\r\n<input type=\"hidden\" name=\"vid2\" value=\"";
         echo $this->merchantProperty['to_vid'];
@@ -133,7 +133,7 @@ if ( $this->selectedTabIndex == 0 )
         echo "\"></td>\r\n\t\t\t<td class=\"nam\">";
         echo item_title_1;
         echo ":</td>\r\n\t\t\t<td class=\"val\"><input class=\"text\" type=\"text\" name=\"r1\" id=\"r1\" value=\"";
-        echo $_POST['r1'];
+        echo $_POST['r1'] ?? '';
         echo "\" readonly=\"\"></td>\r\n\t\t\t<td class=\"max\">(";
         echo $this->merchantProperty['capacity'];
         echo ")</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td class=\"ico\"><img class=\"r2\" src=\"core-f/style-f/x.gif\" alt=\"";
@@ -143,7 +143,7 @@ if ( $this->selectedTabIndex == 0 )
         echo "\"></td>\r\n\t\t\t<td class=\"nam\">";
         echo item_title_2;
         echo ":</td>\r\n\t\t\t<td class=\"val\"><input class=\"text\" type=\"text\" name=\"r2\" id=\"r2\" value=\"";
-        echo $_POST['r2'];
+        echo $_POST['r2'] ?? '';
         echo "\" readonly=\"\"></td>\r\n\t\t\t<td class=\"max\">(";
         echo $this->merchantProperty['capacity'];
         echo ")</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td class=\"ico\"><img class=\"r3\" src=\"core-f/style-f/x.gif\" alt=\"";
@@ -153,7 +153,7 @@ if ( $this->selectedTabIndex == 0 )
         echo "\"></td>\r\n\t\t\t<td class=\"nam\">";
         echo item_title_3;
         echo ":</td>\r\n\t\t\t<td class=\"val\"><input class=\"text\" type=\"text\" name=\"r3\" id=\"r3\" value=\"";
-        echo $_POST['r3'];
+        echo $_POST['r3'] ?? '';
         echo "\" readonly=\"\"></td>\r\n\t\t\t<td class=\"max\">(";
         echo $this->merchantProperty['capacity'];
         echo ")</td>\r\n\t\t</tr>\r\n\t\t<tr>\r\n\t\t\t<td class=\"ico\"><img class=\"r4\" src=\"core-f/style-f/x.gif\" alt=\"";
@@ -163,7 +163,7 @@ if ( $this->selectedTabIndex == 0 )
         echo "\"></td>\r\n\t\t\t<td class=\"nam\">";
         echo item_title_4;
         echo ":</td>\r\n\t\t\t<td class=\"val\"><input class=\"text\" type=\"text\" name=\"r4\" id=\"r4\" value=\"";
-        echo $_POST['r4'];
+        echo $_POST['r4'] ?? '';
         echo "\" readonly=\"\"></td>\r\n\t\t\t<td class=\"max\">(";
         echo $this->merchantProperty['capacity'];
         echo ")</td>\r\n\t\t</tr>\r\n\t</tbody>\r\n</table>\r\n\r\n<table id=\"target_validate\" class=\"res_target\" cellpadding=\"1\" cellspacing=\"1\">\r\n\t<tbody>\r\n\t\t<tr><td class=\"vil\" colspan=\"2\">";
@@ -509,7 +509,7 @@ if ( $this->data['active_plus_account'] )
 <tbody>
 <tr>
 <?php
-$v = $_GET['v'];
+$v = $_GET['v'] ?? '';
 if (isset($_GET['b'])) {
 $b = $_GET['b'];
 $s1 = "build.php?id=".$this->buildingIndex."&t=1&v=".$v."&b=".$b."&s=1";
@@ -537,15 +537,15 @@ $b3 = "build.php?id=".$this->buildingIndex."&t=1&v=".$v."&b=3";
 $b4 = "build.php?id=".$this->buildingIndex."&t=1&v=".$v."&b=4";
 }
         ?>
-<td <?php if ($_GET['s'] == 1) { echo 'class="hl"'; } ?>><a href="<?php echo $s1; ?>"><img class="r1" src="core-f/style-f/x.gif" alt="الخشب" title="الخشب" /></a></td>
-<td <?php if ($_GET['s'] == 2) { echo 'class="hl"'; } ?>><a href="<?php echo $s2; ?>"><img class="r2" src="core-f/style-f/x.gif" alt="الطين" title="الطين" /></a></td>
-<td <?php if ($_GET['s'] == 3) { echo 'class="hl"'; } ?>><a href="<?php echo $s3; ?>"><img class="r3" src="core-f/style-f/x.gif" alt="الحديد" title="الحديد" /></a></td>
-<td <?php if ($_GET['s'] == 4) { echo 'class="hl"'; } ?>><a href="<?php echo $s4; ?>"><img class="r4" src="core-f/style-f/x.gif" alt="القمح" title="القمح" /></a></td>
+<td <?php if (($_GET['s'] ?? '') == 1) { echo 'class="hl"'; } ?>><a href="<?php echo $s1; ?>"><img class="r1" src="core-f/style-f/x.gif" alt="الخشب" title="الخشب" /></a></td>
+<td <?php if (($_GET['s'] ?? '') == 2) { echo 'class="hl"'; } ?>><a href="<?php echo $s2; ?>"><img class="r2" src="core-f/style-f/x.gif" alt="الطين" title="الطين" /></a></td>
+<td <?php if (($_GET['s'] ?? '') == 3) { echo 'class="hl"'; } ?>><a href="<?php echo $s3; ?>"><img class="r3" src="core-f/style-f/x.gif" alt="الحديد" title="الحديد" /></a></td>
+<td <?php if (($_GET['s'] ?? '') == 4) { echo 'class="hl"'; } ?>><a href="<?php echo $s4; ?>"><img class="r4" src="core-f/style-f/x.gif" alt="القمح" title="القمح" /></a></td>
 </tr></tbody>
 </table><table id="ratio_select" class="buy_select" cellpadding="1" cellspacing="1">
 <tbody>
-	<tr><td <?php if ($_GET['v'] == 11) { echo 'class="hl"'; } ?>><a href="build.php?id=<?php echo "".$this->buildingIndex.""; ?>&t=1&v=11">1:1</a></td>
-	</tr><tr><td <?php if ($_GET['v'] != 11) { echo 'class="hl"'; } ?>><a href="build.php?id=<?php echo "".$this->buildingIndex.""; ?>&t=1">1:x</a></td>
+	<tr><td <?php if (($_GET['v'] ?? '') == 11) { echo 'class="hl"'; } ?>><a href="build.php?id=<?php echo "".$this->buildingIndex.""; ?>&t=1&v=11">1:1</a></td>
+	</tr><tr><td <?php if (($_GET['v'] ?? '') != 11) { echo 'class="hl"'; } ?>><a href="build.php?id=<?php echo "".$this->buildingIndex.""; ?>&t=1">1:x</a></td>
 	</tr>
 </tbody>
 </table>
@@ -555,10 +555,10 @@ $b4 = "build.php?id=".$this->buildingIndex."&t=1&v=".$v."&b=4";
 <td colspan="4">العرض</td>
 </tr></thead>
 <tbody><tr>
-<td <?php if ($_GET['b'] == 1) { echo 'class="hl"'; } ?>><a href="<?php echo $b1; ?>"><img class="r1" src="core-f/style-f/x.gif" alt="الخشب" title="الخشب" /></a></td>
-<td <?php if ($_GET['b'] == 2) { echo 'class="hl"'; } ?>><a href="<?php echo $b2; ?>"><img class="r2" src="core-f/style-f/x.gif" alt="الطين" title="الطين" /></a></td>
-<td <?php if ($_GET['b'] == 3) { echo 'class="hl"'; } ?>><a href="<?php echo $b3; ?>"><img class="r3" src="core-f/style-f/x.gif" alt="الحديد" title="الحديد" /></a></td>
-<td <?php if ($_GET['b'] == 4) { echo 'class="hl"'; } ?>><a href="<?php echo $b4; ?>"><img class="r4" src="core-f/style-f/x.gif" alt="القمح" title="القمح" /></a></td>
+<td <?php if (($_GET['b'] ?? '') == 1) { echo 'class="hl"'; } ?>><a href="<?php echo $b1; ?>"><img class="r1" src="core-f/style-f/x.gif" alt="الخشب" title="الخشب" /></a></td>
+<td <?php if (($_GET['b'] ?? '') == 2) { echo 'class="hl"'; } ?>><a href="<?php echo $b2; ?>"><img class="r2" src="core-f/style-f/x.gif" alt="الطين" title="الطين" /></a></td>
+<td <?php if (($_GET['b'] ?? '') == 3) { echo 'class="hl"'; } ?>><a href="<?php echo $b3; ?>"><img class="r3" src="core-f/style-f/x.gif" alt="الحديد" title="الحديد" /></a></td>
+<td <?php if (($_GET['b'] ?? '') == 4) { echo 'class="hl"'; } ?>><a href="<?php echo $b4; ?>"><img class="r4" src="core-f/style-f/x.gif" alt="القمح" title="القمح" /></a></td>
 </tr></tbody>
 </table>
 <div class="clear"></div>
@@ -654,7 +654,7 @@ if ($res2_item_id != $_GET['b']) {
 continue;
 }
 }
-if ($_GET['v'] == 11) {
+if (($_GET['v'] ?? '') == 11) {
 if ($res1_value != $res2_value) {
 continue;
 }
@@ -793,7 +793,7 @@ else if ( $this->selectedTabIndex == 2 )
         {
             echo LANGUI_CUSTBU_MKT_p3_t5;
         }
-        else if ( $this->merchantProperty['showError2'] || intval( $_POST['rid1'] ) == intval( $_POST['rid2'] ) )
+        else if ( $this->merchantProperty['showError2'] || intval( $_POST['rid1'] ?? 0 ) == intval( $_POST['rid2'] ?? 0 ) )
         {
             echo LANGUI_CUSTBU_MKT_p3_t6;
         }
@@ -906,10 +906,10 @@ else if ( $this->selectedTabIndex == 3 )
 if (isset($_POST['abdullah'])) {
 ?>
 <p>لقد قمت باستبدال :              <br>
-<img title="الخشب" alt="الخشب" src="core-f/style-f/x.gif" class="r1"><b><?php echo $_POST['h1']; ?></b> الخشب,
-<img title="الطين" alt="الطين" src="core-f/style-f/x.gif" class="r2"><b><?php echo $_POST['h2']; ?></b> الطين,
-<img title="الحديد" alt="الحديد" src="core-f/style-f/x.gif" class="r3"><b><?php echo $_POST['h3']; ?></b> الحديد ,
-<img title="القمح" alt="القمح" src="core-f/style-f/x.gif" class="r4"><b><?php echo $_POST['h4']; ?></b> القمح <p> مقابل :   <br>
+<img title="الخشب" alt="الخشب" src="core-f/style-f/x.gif" class="r1"><b><?php echo $_POST['h1'] ?? 0; ?></b> الخشب,
+<img title="الطين" alt="الطين" src="core-f/style-f/x.gif" class="r2"><b><?php echo $_POST['h2'] ?? 0; ?></b> الطين,
+<img title="الحديد" alt="الحديد" src="core-f/style-f/x.gif" class="r3"><b><?php echo $_POST['h3'] ?? 0; ?></b> الحديد ,
+<img title="القمح" alt="القمح" src="core-f/style-f/x.gif" class="r4"><b><?php echo $_POST['h4'] ?? 0; ?></b> القمح <p> مقابل :   <br>
 <img title="الخشب" alt="الخشب" src="core-f/style-f/x.gif" class="r1"><b><?php echo $this->resources[1]['current_value']; ?></b> الخشب,
 <img title="الطين" alt="الطين" src="core-f/style-f/x.gif" class="r2"><b><?php echo $this->resources[2]['current_value']; ?></b> الطين,
 <img title="الحديد" alt="الحديد" src="core-f/style-f/x.gif" class="r3"><b><?php echo $this->resources[3]['current_value']; ?></b> الحديد ,

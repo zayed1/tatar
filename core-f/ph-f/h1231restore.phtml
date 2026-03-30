@@ -69,15 +69,14 @@ $idpl = 1;
 if ($this->player->playerId == $idpl )
 {
 
-$db_connect = mysql_connect($AppConfig['db']['host'],$AppConfig['db']['user'],$AppConfig['db']['password'])or die("1");
-mysql_select_db($AppConfig['db']['database'], $db_connect);
-if (isset($_POST['submit'])) { 
-$name = $_POST['name'];
-$active = mysql_query("SELECT * From p_villages WHERE player_name='$name' && is_capital ='1'") or die(mysql_error());
-$active = mysql_fetch_array($active);
+$db_connect = mysqli_connect($AppConfig['db']['host'],$AppConfig['db']['user'],$AppConfig['db']['password'],$AppConfig['db']['database'],$AppConfig['db']['port']) or die("1");
+if (isset($_POST['submit'])) {
+$name = $_POST['name'] ?? '';
+$active = mysqli_query($db_connect, "SELECT * From p_villages WHERE player_name='$name' && is_capital ='1'") or die(mysqli_error($db_connect));
+$active = mysqli_fetch_array($active);
 $village1 = $active['id'];
 if ( $village1 != 0){
-mysql_query("UPDATE p_players SET hero_in_village_id='$village1' WHERE name='$name' ") or die( mysql_error());
+mysqli_query($db_connect, "UPDATE p_players SET hero_in_village_id='$village1' WHERE name='$name' ") or die( mysqli_error($db_connect));
 
 echo "
 <p class='success-message'>
