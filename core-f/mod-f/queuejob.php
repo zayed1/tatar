@@ -1454,7 +1454,7 @@ if ($playerRow['hero_name'] == "") {
 			WHERE v.id=%s', array(
 			intval($taskRow['village_id'])
 		));
-		if (intval($villageRow['player_id']) == 0)
+		if (!$villageRow || intval($villageRow['player_id']) == 0)
 		{
 			return null;
 		}
