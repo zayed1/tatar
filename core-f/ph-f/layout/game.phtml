@@ -1,4 +1,5 @@
 <?php
+$isApp = (($_GET['platform'] ?? '') === 'app');
 $tatar      = $this->queueModel->provider->fetchRow("SELECT end_date FROM p_queue WHERE proc_type='24'");
 $reset      = $this->queueModel->provider->fetchRow("SELECT end_date FROM p_queue WHERE proc_type='25'");
 $art        = $this->queueModel->provider->fetchRow("SELECT end_date FROM p_queue WHERE proc_type='26'");
@@ -704,5 +705,19 @@ echo "</div></div>\r\n</div>\r\n";
     zoom: 70%;
 	}
 }
+/* Mobile App Mode - hide browser-only elements */
+body.mobile-app #footer,
+body.mobile-app .footer-menu,
+body.mobile-app .footer-stopper {
+    display: none !important;
+}
+body.mobile-app {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
 </style>
+<?php if ($isApp): ?>
+<script>document.body.classList.add('mobile-app');</script>
+<?php endif; ?>
 
