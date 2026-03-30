@@ -84,6 +84,7 @@ export default function HomeScreen() {
         javaScriptEnabled={true}
         domStorageEnabled={true}
         allowsBackForwardNavigationGestures={true}
+        pullToRefreshEnabled={true}
         onLoadStart={() => setLoading(true)}
         onLoadEnd={() => setLoading(false)}
         onError={() => setError(true)}
