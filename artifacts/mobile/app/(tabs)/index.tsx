@@ -7,13 +7,18 @@ import {
   TouchableOpacity,
   Platform,
 } from "react-native";
-import { WebView } from "react-native-webview";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const GAME_URL = "https://tatar-production.up.railway.app";
 
+// Only import WebView on native platforms
+let WebView: any = null;
+if (Platform.OS !== "web") {
+  WebView = require("react-native-webview").WebView;
+}
+
 export default function HomeScreen() {
-  const webViewRef = useRef<WebView>(null);
+  const webViewRef = useRef(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const insets = useSafeAreaInsets();
@@ -49,19 +54,28 @@ export default function HomeScreen() {
     );
   }
 
-  // On web platform, use iframe instead of WebView
+  // On web platform (Replit simulator), use iframe
   if (Platform.OS === "web") {
     return (
       <View style={styles.container}>
+        {loading && (
+          <View style={styles.loadingOverlay}>
+            <Text style={styles.loadingTitle}>عودة التتار</Text>
+            <Text style={styles.loadingSubtitle}>جاري التحميل...</Text>
+            <ActivityIndicator size="large" color="#c0392b" />
+          </View>
+        )}
         <iframe
           src={GAME_URL + "?platform=app"}
           style={{ width: "100%", height: "100%", border: "none" }}
           title="عودة التتار"
+          onLoad={() => setLoading(false)}
         />
       </View>
     );
   }
 
+  // On native (iOS/Android), use WebView
   return (
     <View style={[styles.container, { paddingTop: insets.top }]}>
       <WebView
@@ -75,7 +89,7 @@ export default function HomeScreen() {
         onLoadStart={() => setLoading(true)}
         onLoadEnd={() => setLoading(false)}
         onError={() => setError(true)}
-        onHttpError={(e) => { if (e.nativeEvent.statusCode >= 500) setError(true); }}
+        onHttpError={(e: any) => { if (e.nativeEvent.statusCode >= 500) setError(true); }}
         mixedContentMode="compatibility"
         sharedCookiesEnabled={true}
         thirdPartyCookiesEnabled={true}
