@@ -705,16 +705,86 @@ echo "</div></div>\r\n</div>\r\n";
     zoom: 70%;
 	}
 }
-/* Mobile App Mode - hide browser-only elements */
+/* Mobile App Mode */
 body.mobile-app #footer,
 body.mobile-app .footer-menu,
-body.mobile-app .footer-stopper {
+body.mobile-app .footer-stopper,
+body.mobile-app #mfoot {
     display: none !important;
 }
 body.mobile-app {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     user-select: none;
+    zoom: 100% !important;
+    background-color: #e9e9e9 !important;
+}
+/* Mobile App - bigger touch targets */
+body.mobile-app a,
+body.mobile-app input[type="submit"],
+body.mobile-app input[type="image"],
+body.mobile-app button {
+    min-height: 36px;
+    min-width: 36px;
+}
+body.mobile-app #mtop a {
+    padding: 8px 4px;
+}
+/* Mobile App - better fonts */
+body.mobile-app {
+    font-size: 14px;
+    -webkit-text-size-adjust: 100%;
+}
+body.mobile-app #side_navi,
+body.mobile-app #side_info {
+    font-size: 13px;
+}
+body.mobile-app #side_navi a,
+body.mobile-app #side_info a {
+    padding: 8px 4px;
+    display: block;
+}
+/* Mobile App - navigation improvements */
+body.mobile-app #header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+}
+body.mobile-app #res {
+    position: sticky;
+    bottom: 0;
+    z-index: 50;
+}
+/* Mobile App - form inputs */
+body.mobile-app input.text,
+body.mobile-app textarea,
+body.mobile-app select {
+    font-size: 16px !important;
+    padding: 8px !important;
+    border-radius: 6px;
+}
+/* Mobile App - tables */
+body.mobile-app table {
+    font-size: 13px;
+}
+body.mobile-app .nav-mob {
+    padding: 6px 10px;
+}
+body.mobile-app .nav-mob a {
+    padding: 6px;
+}
+body.mobile-app .nav-mob img {
+    width: 28px !important;
+    height: 28px;
+}
+/* Mobile App - content area */
+body.mobile-app #content {
+    padding: 8px;
+}
+body.mobile-app .molvp-protection {
+    font-size: 12px;
+    padding: 4px 8px;
+    text-align: center;
 }
 </style>
 <?php if ($isApp): ?>
