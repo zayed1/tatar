@@ -26,6 +26,9 @@ export default function HomeScreen() {
   const injectedJS = `
     (function() {
       document.body.classList.add('mobile-app');
+      document.body.style.backgroundColor = '#e9e9e9';
+      document.documentElement.style.backgroundColor = '#e9e9e9';
+
       var meta = document.querySelector('meta[name="viewport"]');
       if (!meta) {
         meta = document.createElement('meta');
@@ -33,6 +36,8 @@ export default function HomeScreen() {
         document.head.appendChild(meta);
       }
       meta.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no';
+
+      // Remove target=_blank from links
       document.querySelectorAll('a[target="_blank"]').forEach(function(l) { l.removeAttribute('target'); });
     })();
     true;
@@ -58,13 +63,6 @@ export default function HomeScreen() {
   if (Platform.OS === "web") {
     return (
       <View style={styles.container}>
-        {loading && (
-          <View style={styles.loadingOverlay}>
-            <Text style={styles.loadingTitle}>عودة التتار</Text>
-            <Text style={styles.loadingSubtitle}>جاري التحميل...</Text>
-            <ActivityIndicator size="large" color="#c0392b" />
-          </View>
-        )}
         <iframe
           src={GAME_URL + "?platform=app"}
           style={{ width: "100%", height: "100%", border: "none" }}
@@ -77,11 +75,11 @@ export default function HomeScreen() {
 
   // On native (iOS/Android), use WebView
   return (
-    <View style={[styles.container, { paddingTop: insets.top }]}>
+    <View style={[styles.container, { paddingTop: insets.top, backgroundColor: "#e9e9e9" }]}>
       <WebView
         ref={webViewRef}
         source={{ uri: GAME_URL + "?platform=app" }}
-        style={styles.webview}
+        style={[styles.webview, { backgroundColor: "#e9e9e9" }]}
         injectedJavaScript={injectedJS}
         javaScriptEnabled={true}
         domStorageEnabled={true}
@@ -94,6 +92,12 @@ export default function HomeScreen() {
         sharedCookiesEnabled={true}
         thirdPartyCookiesEnabled={true}
         applicationNameForUserAgent="TatarWarApp/1.0"
+        // Persist cookies between sessions
+        incognito={false}
+        cacheEnabled={true}
+        // iOS specific
+        allowsInlineMediaPlayback={true}
+        bounces={false}
       />
       {loading && (
         <View style={styles.loadingOverlay}>
@@ -107,14 +111,14 @@ export default function HomeScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#0d0d1a" },
-  webview: { flex: 1, backgroundColor: "#0d0d1a" },
+  container: { flex: 1, backgroundColor: "#e9e9e9" },
+  webview: { flex: 1 },
   loadingOverlay: {
     position: "absolute", top: 0, left: 0, right: 0, bottom: 0,
-    justifyContent: "center", alignItems: "center", backgroundColor: "#0d0d1a",
+    justifyContent: "center", alignItems: "center", backgroundColor: "#e9e9e9",
   },
-  loadingTitle: { fontSize: 32, fontWeight: "900", color: "#fff", marginBottom: 8 },
-  loadingSubtitle: { fontSize: 16, color: "#9999aa", marginBottom: 24 },
+  loadingTitle: { fontSize: 32, fontWeight: "900", color: "#333", marginBottom: 8 },
+  loadingSubtitle: { fontSize: 16, color: "#666", marginBottom: 24 },
   errorContainer: {
     flex: 1, justifyContent: "center", alignItems: "center",
     backgroundColor: "#0d0d1a", padding: 40,
