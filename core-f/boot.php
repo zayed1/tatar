@@ -100,6 +100,7 @@ require( LIB_PATH."widget.php" );
 require( APP_PATH."metadata.php" );
 require( MODEL_PATH."base.php" );
 require( APP_PATH."mywidgets.php" );
+require( APP_PATH."cache.php" );
 set_time_limit( 0 );
 require( APP_PATH."ls-f/smartservs-ls-v7.php" );
 $cookie = $GLOBALS['cd']->getinstance( );

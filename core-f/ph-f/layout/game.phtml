@@ -794,6 +794,14 @@ body.mobile-app .molvp-protection {
 }
 </style>
 <?php if ($isApp): ?>
-<script>document.body.classList.add('mobile-app');</script>
+<script>
+document.body.classList.add('mobile-app');
+// Lazy load images below the fold
+document.addEventListener('DOMContentLoaded',function(){
+  document.querySelectorAll('#content img, #side_info img, #side_navi img').forEach(function(img){
+    img.loading='lazy';
+  });
+});
+</script>
 <?php endif; ?>
 

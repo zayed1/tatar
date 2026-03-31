@@ -488,6 +488,7 @@ $remaining_time_st = sprintf('%02d:%02d:%02d', $remaining_days_st, $remaining_ho
         <?php endif; ?>
 
         <form action="login" method="post" name="login">
+            <?php echo csrf_field(); ?>
             <table cellpadding="1" cellspacing="1" id="login_form">
                 <tbody>
                     <tr class="top">
