@@ -1,6 +1,7 @@
 RewriteEngine on
 
 RewriteRule ^terms$ terms.php [L]
+RewriteRule ^about$ about.php [L]
 RewriteRule ^new flashgallery.html
 RewriteRule ^adcp adcp.php
 RewriteRule ^picker ftd-style/picker.html
