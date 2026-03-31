@@ -3,6 +3,31 @@
    Statistics, Alliance, and general improvements
    ============================================= */
 
+/* --- Unified background color --- */
+body.v35 {
+    background-color: #f5f0e8 !important;
+}
+body.v35 .wrapper,
+body.v35 #mid,
+body.v35 #content,
+body.v35 #side_navi,
+body.v35 #side_info {
+    background-color: transparent;
+}
+body.v35 #content {
+    background: #fff;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+}
+body.v35 #side_navi,
+body.v35 #side_info {
+    background: #fff;
+    border-radius: 8px;
+    padding: 8px;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+}
+
 /* --- Text Menu (tabs) --- */
 #textmenu {
     display: flex;
