@@ -1,0 +1,272 @@
+/* =============================================
+   عودة التتار - Enhanced Game Pages CSS
+   Statistics, Alliance, and general improvements
+   ============================================= */
+
+/* --- Text Menu (tabs) --- */
+#textmenu {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    padding: 8px 0;
+    margin-bottom: 12px;
+    border-bottom: 2px solid #ddd;
+}
+#textmenu a {
+    padding: 8px 14px;
+    border-radius: 8px 8px 0 0;
+    font-weight: 600;
+    font-size: 12px;
+    color: #555;
+    background: #f0f0f0;
+    transition: all 0.2s;
+    text-decoration: none;
+    white-space: nowrap;
+}
+#textmenu a:hover {
+    background: #e0e0e0;
+    color: #333;
+    text-decoration: none;
+}
+#textmenu a.selected {
+    background: #c0392b;
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(192,57,43,0.3);
+}
+
+/* --- Data Tables --- */
+table.row_table_data,
+table#player,
+table#alliance,
+table.world {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    margin-bottom: 16px;
+}
+table.row_table_data thead,
+table#player thead,
+table#alliance thead,
+table.world thead {
+    background: linear-gradient(135deg, #8e1a0e, #c0392b);
+}
+table.row_table_data thead th,
+table.row_table_data thead td,
+table#player thead th,
+table#player thead td,
+table#alliance thead th,
+table#alliance thead td,
+table.world thead th,
+table.world thead td {
+    color: #fff !important;
+    font-weight: 700;
+    padding: 10px 12px;
+    font-size: 12px;
+    border: none;
+}
+table.row_table_data tbody tr,
+table#player tbody tr,
+table#alliance tbody tr,
+table.world tbody tr {
+    transition: background 0.2s;
+}
+table.row_table_data tbody tr:hover,
+table#player tbody tr:hover,
+table#alliance tbody tr:hover,
+table.world tbody tr:hover {
+    background: #f5f0e8 !important;
+}
+table.row_table_data tbody td,
+table#player tbody td,
+table#alliance tbody td,
+table.world tbody td {
+    padding: 8px 12px;
+    font-size: 12px;
+    border-bottom: 1px solid #eee;
+    vertical-align: middle;
+}
+table.row_table_data tbody tr:nth-child(even),
+table#player tbody tr:nth-child(even),
+table#alliance tbody tr:nth-child(even) {
+    background: #fafafa;
+}
+
+/* --- Statistics Page h1 --- */
+.statistics h1,
+.alliance h1 {
+    font-size: 20px;
+    font-weight: 800;
+    color: #333;
+    padding: 12px 0;
+    border-bottom: 3px solid #c0392b;
+    margin-bottom: 8px;
+}
+
+/* --- Player/Alliance rank info --- */
+table.row_table_data td.pla a,
+table#player td.pla a {
+    color: #c0392b;
+    font-weight: 600;
+    text-decoration: none;
+}
+table.row_table_data td.pla a:hover,
+table#player td.pla a:hover {
+    color: #e74c3c;
+    text-decoration: underline;
+}
+
+/* --- Alliance Page --- */
+.alliance #textmenu {
+    border-bottom-color: #c0392b;
+}
+
+/* Alliance description box */
+.alliance .desc,
+.alliance td.desc {
+    background: #faf8f5;
+    border-radius: 8px;
+    padding: 12px;
+    line-height: 1.8;
+    border: 1px solid #eee;
+}
+
+/* Alliance member list */
+.alliance table td img {
+    vertical-align: middle;
+}
+
+/* --- Search box --- */
+input[type="text"].text,
+input[type="number"].text {
+    padding: 8px 12px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 13px;
+    transition: border-color 0.2s;
+    font-family: inherit;
+}
+input[type="text"].text:focus,
+input[type="number"].text:focus {
+    border-color: #c0392b;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(192,57,43,0.1);
+}
+
+/* --- Submit Buttons --- */
+input[type="submit"],
+button[type="submit"] {
+    background: linear-gradient(135deg, #c0392b, #8e1a0e);
+    color: #fff;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+}
+input[type="submit"]:hover,
+button[type="submit"]:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(192,57,43,0.3);
+}
+
+/* --- Page navigation (next/prev) --- */
+.paginator,
+.navi {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    padding: 12px 0;
+}
+.paginator a,
+.navi a {
+    padding: 6px 12px;
+    border-radius: 6px;
+    background: #f0f0f0;
+    color: #555;
+    font-weight: 600;
+    font-size: 12px;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+.paginator a:hover,
+.navi a:hover {
+    background: #c0392b;
+    color: #fff;
+}
+
+/* --- Online status indicators --- */
+img.online1 { filter: hue-rotate(0deg) brightness(1.2); }
+img.online2 { filter: hue-rotate(60deg) brightness(1.1); }
+img.online3 { filter: hue-rotate(120deg); }
+img.online4 { filter: grayscale(50%); }
+img.online5 { filter: grayscale(100%); }
+
+/* --- Messages/Reports badge --- */
+.error_box,
+p.error_box {
+    background: #fef3f2;
+    border: 1px solid #fca5a5;
+    border-radius: 10px;
+    padding: 14px;
+    color: #991b1b;
+    margin: 10px 0;
+}
+
+/* --- Content area improvements --- */
+#content {
+    min-height: 400px;
+}
+#content h1 {
+    font-size: 20px;
+    font-weight: 800;
+}
+
+/* --- Forum / Chat textarea --- */
+textarea {
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    font-family: inherit;
+    font-size: 13px;
+    resize: vertical;
+    transition: border-color 0.2s;
+}
+textarea:focus {
+    border-color: #c0392b;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(192,57,43,0.1);
+}
+
+/* --- Mobile responsive for game tables --- */
+@media screen and (max-width: 768px) {
+    #textmenu {
+        gap: 2px;
+    }
+    #textmenu a {
+        padding: 6px 8px;
+        font-size: 11px;
+    }
+    table.row_table_data,
+    table#player,
+    table#alliance,
+    table.world {
+        font-size: 11px;
+    }
+    table.row_table_data thead th,
+    table.row_table_data thead td,
+    table#player thead th,
+    table#player thead td {
+        padding: 6px 8px;
+        font-size: 11px;
+    }
+    table.row_table_data tbody td,
+    table#player tbody td {
+        padding: 6px 8px;
+    }
+}

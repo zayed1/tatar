@@ -214,7 +214,7 @@ else
     echo "<s";
     echo "pan class=\"error\">";
     echo $this->errorText;
-    echo "</span>\r<div id=\"write_head\" class=\"msg_head\"></div>\r<div id=\"write_content\" class=\"msg_content\">\r\t<form method=\"post\" action=\"msg.php\" accept-charset=\"UTF-8\" name=\"msg\">\r\t\t<input type=\"hidden\" name=\"";
+    echo "</span>\r<div id=\"write_head\" class=\"msg_head\"></div>\r<div id=\"write_content\" class=\"msg_content\">\r\t<form method=\"post\" action=\"msg.php\" accept-charset=\"UTF-8\" name=\"msg\">\r\t\t".csrf_field()."\r\t\t<input type=\"hidden\" name=\"";
     echo $this->viewOnly ? "rm" : "sm";
     echo "\" value=\"\">\t\t\r\t\t<img src=\"core-f/style-f/x.gif\" id=\"label\" class=\"";
     echo $this->sendMail ? "send" : "read";

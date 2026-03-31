@@ -1,5 +1,16 @@
 <?php
 // Standalone installer for first-time setup on Railway
+
+// -----------------------------------------------------------------------
+// SECURITY GATE: This file is blocked by default in production.
+// To enable it temporarily, set the environment variable before running:
+//   export ALLOW_SETUP=true   (Linux/macOS shell or Railway/Docker env)
+// Remove or unset the variable again once setup is complete.
+// -----------------------------------------------------------------------
+if (getenv('ALLOW_SETUP') !== 'true') {
+    die('Access Denied');
+}
+
 error_reporting(E_ALL & ~E_WARNING & ~E_DEPRECATED & ~E_NOTICE);
 ini_set('display_errors', 1);
 ini_set('opcache.enable', 0);

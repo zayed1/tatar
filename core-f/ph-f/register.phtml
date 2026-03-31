@@ -37,6 +37,7 @@ if (!$this->success)
   <p><?php echo LANGUI_REG_T3; ?> الدليل <?php echo LANGUI_REG_T5; ?></p>
 
   <form method="post" action="<?php echo 'register?ref='.($_GET['ref'] ?? ''); ?>" />
+       <?php echo csrf_field(); ?>
        <table cellpadding="1" cellspacing="1" id="sign_input">
        <tbody>
             <tr class="top">
@@ -81,6 +82,7 @@ if (!$this->success)
   <p>لم تصلك رسالة التفعيل ؟ ادخل الاسم و كلمة المرور ليتم حذفها</p>
 
   <form method="post" action="register?p" />
+       <?php echo csrf_field(); ?>
        <table cellpadding="1" cellspacing="1" id="sign_input">
        <tbody>
             <tr class="top">

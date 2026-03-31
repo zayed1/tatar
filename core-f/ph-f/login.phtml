@@ -1,316 +1,658 @@
-<!DOCTYPE html>
-<html lang="ar">
-<head>
-
-
-
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-</head>
-<body>
 <?php
-
-
 if (isset($_GET['terms'])) {
 ?>
-<h1>قوانين اللعبة</h1>
-لعبة عودة التتار هى مجرد لعبه للترفيه وتسلية الوقت وليس لاثارة المشاكل بين الناس او الخلافات او الخروج عن الاداب العامه لنا كمسلمين 
-سوف يتم المحاسبه بكل حزم مع كل من يقوم بمخالفة الشروط الاتية:-</h5><p>
-<b>#</b> ممنوع نشر او الاشهار لاى مواقع اخرى من خلال موقعنا عن طريق ارسال الرسائل او الكتابه بالوصف ومن يقوم بذلك يتم حظره نهائيا<br>
-<b>#</b> من يقوم باستغلال خطا باللعبه لصالحه ضد اللاعبين وعدم تبليغ الاداره لحل المشكله يتم ايقاف اللاعب من فترة 72 ساعه الى ايقاف دائم على حسب الحالة<br>
-<h3>حقوق كل لاعب :-</h3>
-<b>#</b> للاعب الحق في الحصول على دعم مستمر والرد على مشاكله واستفسارته من خلال طاقم الاداة والرد على المشكله في مدة اقصاها 24 ساعه<br>
-<b>#</b> للاعب الحق في الحصول على تعويض ان لحقت به اضرار ناتجه عن اخطاء اللعبه<br>
-<h4>قوانين التعاملات المالية وشراء الذهب :-</h4>
-كما نعرف فانه في عودة التتار يوجد تعاملات مالية وهى شراء الراغب من اللاعبين للذهب الخاص باللعبة لمنحه المزيد من الصلاحيات باللعبة 
-وبما ان هناك تعاملات ماليه لابد من وجود قوانين تحكمها :-<p>
-<b>#</b> في حال شراء اللاعب الذهب ولم يصل اليه عليه مراسلة الادارة برقم العمليه الشرائية التى لم تصل اليه حتى يتم التاكد منها من خلال الادارة<br>
-<b>#</b> لا يحق للاعب بطلب ارجاع الاموال التى اشترى بها الذهب وقد وصل اليه الذهب بدون مشاكل او خلافات </h5>
-<p>
-يحق للادارة اللعبه بتغير هذه القوانين في اى وقت او الاضافه عليها وبمجرد تسجيلك في موقع عودة التتار سيكون هذا بمثابة الموافقه على هذه القوانين<p>
+<style>
+/* =============================================
+   Login Page — Terms / Rules View
+   ============================================= */
+.terms-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 40px 36px;
+    max-width: 800px;
+    margin: 0 auto;
+    box-shadow: var(--shadow);
+}
 
-ادارة اللعبه<br>
-<?php
-}else {
-?>
-<h1><img src="<?php echo $GLOBALS['AppConfig']['system']['linksite']; ?>x.gif" class="img_login" alt="تسجيل الدخول للعبه" /></h1>
-<div align="center">
-</a>
+.terms-card h1 {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--accent);
+    margin-bottom: 20px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+}
+
+.terms-card h3 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--primary-light);
+    margin: 20px 0 10px;
+}
+
+.terms-card h4 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text-bright);
+    margin: 18px 0 8px;
+}
+
+.terms-card p,
+.terms-card b {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    line-height: 1.85;
+}
+
+.terms-card b {
+    color: var(--accent);
+    font-weight: 700;
+    margin-left: 4px;
+}
+
+.terms-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 24px;
+    padding: 10px 20px;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: #fff;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    transition: all var(--transition);
+}
+
+.terms-back:hover {
+    background: linear-gradient(135deg, var(--primary-light), var(--primary));
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px var(--glow);
+}
+</style>
+
+<div class="terms-card">
+    <h1>&#x2696;&#xFE0F; قوانين اللعبة</h1>
+    <p>
+        لعبة عودة التتار هى مجرد لعبه للترفيه وتسلية الوقت وليس لاثارة المشاكل بين الناس او الخلافات او الخروج عن الاداب العامه لنا كمسلمين
+        سوف يتم المحاسبه بكل حزم مع كل من يقوم بمخالفة الشروط الاتية:
+    </p>
+    <p>
+        <b>#</b> ممنوع نشر او الاشهار لاى مواقع اخرى من خلال موقعنا عن طريق ارسال الرسائل او الكتابه بالوصف ومن يقوم بذلك يتم حظره نهائيا<br>
+        <b>#</b> من يقوم باستغلال خطا باللعبه لصالحه ضد اللاعبين وعدم تبليغ الاداره لحل المشكله يتم ايقاف اللاعب من فترة 72 ساعه الى ايقاف دائم على حسب الحالة
+    </p>
+    <h3>&#x1F6E1;&#xFE0F; حقوق كل لاعب</h3>
+    <p>
+        <b>#</b> للاعب الحق في الحصول على دعم مستمر والرد على مشاكله واستفسارته من خلال طاقم الاداة والرد على المشكله في مدة اقصاها 24 ساعه<br>
+        <b>#</b> للاعب الحق في الحصول على تعويض ان لحقت به اضرار ناتجه عن اخطاء اللعبه
+    </p>
+    <h4>&#x1F4B0; قوانين التعاملات المالية وشراء الذهب</h4>
+    <p>
+        كما نعرف فانه في عودة التتار يوجد تعاملات مالية وهى شراء الراغب من اللاعبين للذهب الخاص باللعبة لمنحه المزيد من الصلاحيات باللعبة
+        وبما ان هناك تعاملات ماليه لابد من وجود قوانين تحكمها:
+    </p>
+    <p>
+        <b>#</b> في حال شراء اللاعب الذهب ولم يصل اليه عليه مراسلة الادارة برقم العمليه الشرائية التى لم تصل اليه حتى يتم التاكد منها من خلال الادارة<br>
+        <b>#</b> لا يحق للاعب بطلب ارجاع الاموال التى اشترى بها الذهب وقد وصل اليه الذهب بدون مشاكل او خلافات
+    </p>
+    <p style="margin-top:16px; font-style:italic; color: var(--text-muted);">
+        يحق للادارة اللعبه بتغير هذه القوانين في اى وقت او الاضافه عليها وبمجرد تسجيلك في موقع عودة التتار سيكون هذا بمثابة الموافقه على هذه القوانين<br><br>
+        <strong style="color: var(--text-bright);">ادارة اللعبه</strong>
+    </p>
+    <a href="login.php" class="terms-back">&#x2190; العودة لتسجيل الدخول</a>
 </div>
- <h5><img class="img_u04" src="<?php echo $GLOBALS['AppConfig']['system']['linksite']; ?>x.gif" alt="التسجيل" /></h5>
-<p><?php echo LANGUI_INDX_T3; ?></p>
-<?php
 
-       
+<?php
+} else {
+?>
+<style>
+/* =============================================
+   Login Page — Modern Dark Card
+   ============================================= */
+
+/* Hidden legacy images */
+h1 .img_login,
+h5 .img_u04 {
+    display: none !important;
+}
+h1, h5 {
+    font-size: 0 !important;
+    margin: 0 !important;
+    line-height: 0 !important;
+    display: none !important;
+}
+
+/* Remove default <p> margin above form */
+#content > p:first-of-type {
+    display: none;
+}
+
+/* ---- Countdown Banner ---- */
+.login-countdown-banner {
+    background: linear-gradient(135deg, rgba(243,156,18,0.12), rgba(192,57,43,0.10));
+    border: 1px solid rgba(243,156,18,0.3);
+    border-radius: var(--radius);
+    padding: 14px 20px;
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1rem;
+    color: var(--text);
+}
+
+.login-countdown-banner span {
+    display: inline;
+}
+
+#timer1 {
+    color: var(--accent) !important;
+    font-weight: 800 !important;
+    font-size: 1.05rem !important;
+    text-shadow: 0 1px 8px rgba(243,156,18,0.4) !important;
+}
+
+/* ---- Login Card ---- */
+.login-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    max-width: 480px;
+    margin: 0 auto;
+}
+
+.login-card-header {
+    background: var(--bg-card-light);
+    border-bottom: 1px solid var(--border);
+    padding: 24px 28px 20px;
+    text-align: center;
+}
+
+.login-card-header h2 {
+    font-size: 1.45rem;
+    font-weight: 800;
+    color: var(--text-bright);
+    margin-bottom: 4px;
+}
+
+.login-card-header p {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin: 0;
+}
+
+.login-card-header .login-icon {
+    font-size: 2.4rem;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.login-card-body {
+    padding: 28px 28px 24px;
+}
+
+/* ---- Form Groups ---- */
+.lf-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 18px;
+}
+
+.lf-group label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+/* Override legacy <table> layout for the login form */
+table#login_form,
+table#login_form tbody,
+table#login_form tr,
+table#login_form th,
+table#login_form td {
+    display: block !important;
+    width: 100% !important;
+    border: none !important;
+    background: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+table#login_form tr.top,
+table#login_form tr.btm {
+    margin-bottom: 18px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 6px !important;
+}
+
+table#login_form th {
+    font-size: 0.9rem !important;
+    font-weight: 600 !important;
+    color: var(--text-muted) !important;
+}
+
+table#login_form td {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 4px !important;
+}
+
+table#login_form input.text {
+    width: 100% !important;
+    padding: 12px 16px !important;
+    background: var(--bg-dark) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 8px !important;
+    color: var(--text) !important;
+    font-family: 'Tajawal', Tahoma, Arial, sans-serif !important;
+    font-size: 1rem !important;
+    transition: border-color var(--transition), box-shadow var(--transition) !important;
+    direction: rtl !important;
+    -webkit-appearance: none !important;
+}
+
+table#login_form input.text:focus {
+    outline: none !important;
+    border-color: var(--primary) !important;
+    box-shadow: 0 0 0 3px var(--glow) !important;
+}
+
+table#login_form input.text::placeholder {
+    color: var(--text-muted) !important;
+    opacity: 0.6 !important;
+}
+
+/* Error spans */
+.error {
+    font-size: 0.82rem !important;
+    color: var(--primary-light) !important;
+    font-weight: 600 !important;
+}
+
+/* ---- Submit button (image button replacement) ---- */
+p.btn {
+    margin-top: 8px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+    align-items: stretch !important;
+}
+
+p.btn input#btn_login {
+    display: none !important; /* hide the legacy image button */
+}
+
+/* We add a visible submit button via the ::after pseudo on p.btn */
+p.btn::before {
+    content: 'تسجيل الدخول &#x27A4;';
+    display: block;
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Tajawal', Tahoma, Arial, sans-serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    cursor: pointer;
+    text-align: center;
+    transition: all var(--transition);
+    pointer-events: none; /* the actual <input> sits on top */
+}
+
+/* Real approach: wrap submit in styled label */
+.login-submit-btn {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Tajawal', Tahoma, Arial, sans-serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    cursor: pointer;
+    text-align: center;
+    transition: all var(--transition);
+    margin-top: 4px;
+    box-shadow: 0 4px 15px var(--glow);
+    letter-spacing: 0.02em;
+}
+
+.login-submit-btn:hover {
+    background: linear-gradient(135deg, var(--primary-light), var(--primary));
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px var(--glow);
+}
+
+/* ---- Stats table below form ---- */
+.login-stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.login-stat-box {
+    background: var(--bg-dark);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    text-align: center;
+}
+
+.login-stat-box .stat-num {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--accent);
+    display: block;
+}
+
+.login-stat-box .stat-lbl {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+/* ---- Server status table ---- */
+.login-server-status {
+    margin-top: 20px;
+    background: var(--bg-dark);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+}
+
+.login-server-status table,
+.login-server-status table tbody,
+.login-server-status table tr,
+.login-server-status table th,
+.login-server-status table td {
+    background: none !important;
+    border: none !important;
+    border-collapse: collapse !important;
+}
+
+.login-server-status table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+}
+
+.login-server-status tr {
+    border-bottom: 1px solid var(--border) !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+.login-server-status tr:last-child {
+    border-bottom: none !important;
+}
+
+.login-server-status th {
+    padding: 11px 14px !important;
+    font-size: 0.85rem !important;
+    font-weight: 600 !important;
+    color: var(--text-muted) !important;
+    width: 60% !important;
+    text-align: right !important;
+}
+
+.login-server-status td {
+    padding: 11px 14px !important;
+    font-size: 0.85rem !important;
+    color: var(--text) !important;
+    font-weight: 600 !important;
+    flex: 1 !important;
+    text-align: left !important;
+}
+
+.login-server-status td span { color: var(--accent) !important; }
+.login-server-status td font[color='red'],
+.login-server-status td span[style*="color: #ff0000"],
+.login-server-status td span[style*="color:#ff0000"] {
+    color: var(--primary-light) !important;
+    font-weight: 700 !important;
+}
+
+#timer2 { color: var(--accent) !important; font-weight: 700 !important; }
+
+/* ---- Register link at bottom ---- */
+.login-register-link {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+}
+
+.login-register-link a {
+    color: var(--accent);
+    font-weight: 700;
+    transition: color var(--transition);
+}
+
+.login-register-link a:hover {
+    color: var(--text-bright);
+}
+
+/* Mobile adjustments */
+@media screen and (max-width: 600px) {
+    .login-card-body { padding: 20px 18px 18px; }
+    .login-card-header { padding: 20px 18px 16px; }
+    .login-stats-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+}
+</style>
+
+<?php
 if (isset($_GET['C4'])) {
-echo date('Y/m/d H:i:s');
+    echo date('Y/m/d H:i:s');
 }
 $m = new QueueModel();
 $resultsb = $m->provider->fetchRow("SELECT end_date FROM p_queue WHERE id='3' and proc_type='57'");
 $end_datesb = $resultsb["end_date"] ?? null;
 
-       
 $fetchst = $m->provider->fetchRow("SELECT end_date FROM p_queue WHERE id='3' and proc_type='57'");
-// Fetch row as associative array
 $subtracted_date_st = $fetchst["end_date"] ?? null;
-       
 $subtracted_st = date('Y-m-d H:i:s', strtotime($subtracted_date_st ?? 'now'));
-
-// calculate the difference in seconds between the subtracted date and now
 $diff_in_seconds_st = strtotime($subtracted_date_st ?? 'now') - time();
-
-// if the difference is negative, get the absolute value
 $diff_in_seconds_st = abs($diff_in_seconds_st);
-
-// calculate the remaining days, hours, minutes and seconds
 $remaining_days_st = floor($diff_in_seconds_st / 86400);
 $remaining_hours_st = floor(($diff_in_seconds_st % 86400) / 3600);
 $remaining_minutes_st = floor(($diff_in_seconds_st % 3600) / 60);
-
-// format the remaining time as a string
 $remaining_time_st = sprintf('%02d:%02d:%02d', $remaining_days_st, $remaining_hours_st, $remaining_minutes_st);
-
-
-if ($end_datesb && strtotime($end_datesb) > time()) {
-    ?>
-    <center><span style="font-size:20px;">باقي على بدأ اللعب:</span>
-    <span id="timer1" style="font-size: 22px; color: orange; font-weight: bold; text-shadow: 1px 1px #000;"><?php 
-  echo "<b>$remaining_days_st</b> أيام و <b>$remaining_hours_st</b> ساعة و <b>$remaining_minutes_st</b> دقيقة</span></td>";
-      ?></span>
-    <?php
-}
 ?>
-  
-<form action="login" method="post" name="login">
-<table cellpadding="1" cellspacing="1" id="login_form">
-<tbody>
-<tr class="top"><th><?php echo LANGUI_INDX_T1; ?> :</th><td><input class="text" name="name" type="text" title="<?php echo LANGUI_INDX_T1;  ?>" value="<?php   echo $this->name; ?>"><span class="error"><?php echo $this->err[0]; ?></span></td></tr>
-<tr class="btm"><th><?php echo LANGUI_INDX_T2; ?> :</th><td><input class="text" name="password" type="password" title="<?php echo LANGUI_INDX_T2;  ?>" value="<?php   echo $this->password;  ?>" /><span class="error"><?php echo $this->err[1]; ?></span></td></tr>
-</tbody>
-</table>
-<p class="btn"><input id="btn_login" class="dynamic_img" type="image" alt="????" src="<?php echo $GLOBALS['AppConfig']['system']['linksite']; ?>x.gif" name="s1" value="anmelden">
-<span class="error"> <?php if ($this->error != "") { echo $this->error; } ?></span>
-</form>
 
-<div align="center">
-	</div>
+<div class="login-card">
+    <div class="login-card-header">
+        <span class="login-icon">&#x265B;</span>
+        <h2>تسجيل الدخول</h2>
+        <p><?php echo LANGUI_INDX_T3; ?></p>
+    </div>
 
-<table border="0" cellspacing="0" cellpadding="0">
+    <div class="login-card-body">
 
-<tbody><tr class="top">
-<th><strong>عدد اللاعبين:</strong></th>
-<td><?php echo $this->data['players_count']; ?></td>
-</tr>
-<tr>
-<th><strong>اللاعبون النشطون:</strong></th>
-<td><?php echo $this->data['active_players_count']; ?></td>
-</tr>
-</tbody></table>
-<br>
-<table border="0" cellspacing="0" cellpadding="0">
-<?php
+        <?php if ($end_datesb && strtotime($end_datesb) > time()): ?>
+        <div class="login-countdown-banner">
+            <span>&#x23F3; باقي على بدأ اللعب:</span>
+            <span id="timer1" style="font-size: 22px; color: orange; font-weight: bold; text-shadow: 1px 1px #000;">
+                <?php echo "<b>$remaining_days_st</b> أيام و <b>$remaining_hours_st</b> ساعة و <b>$remaining_minutes_st</b> دقيقة"; ?>
+            </span>
+        </div>
+        <?php endif; ?>
 
-$islamLover = new QueueModel();
-$reset = $islamLover->provider->fetchRow("SELECT end_date FROM p_queue WHERE proc_type='25'");
-$this->appConfig['system']['reset'] = date('Y/m/d H:i:s',strtotime($reset['end_date'] ?? 'now'));
+        <form action="login" method="post" name="login">
+            <?php echo csrf_field(); ?>
+            <table cellpadding="1" cellspacing="1" id="login_form">
+                <tbody>
+                    <tr class="top">
+                        <th><?php echo LANGUI_INDX_T1; ?> :</th>
+                        <td>
+                            <input class="text" name="name" type="text" title="<?php echo LANGUI_INDX_T1; ?>" value="<?php echo $this->name; ?>">
+                            <span class="error"><?php echo $this->err[0]; ?></span>
+                        </td>
+                    </tr>
+                    <tr class="btm">
+                        <th><?php echo LANGUI_INDX_T2; ?> :</th>
+                        <td>
+                            <input class="text" name="password" type="password" title="<?php echo LANGUI_INDX_T2; ?>" value="<?php echo $this->password; ?>" />
+                            <span class="error"><?php echo $this->err[1]; ?></span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
 
-$resultbs = $islamLover->provider->fetchRow("SELECT end_date FROM p_queue WHERE id='1' and proc_type='24'");
-// Fetch row as associative array
-$end_datebs = $resultbs["end_date"] ?? null;
+            <!-- Styled submit button that submits the form -->
+            <button type="submit" name="s1" value="anmelden" class="login-submit-btn">
+                تسجيل الدخول &#x27A4;
+            </button>
 
-$redseahost = $this->appConfig['system']['server_days'];
-// Subtract 10 days from the end date
-$subtracted_date = date('Y-m-d H:i:s', strtotime("-$redseahost days", strtotime($end_datebs)));
+            <!-- Hidden legacy image input kept for server-side name="s1" compatibility -->
+            <input id="btn_login" class="dynamic_img" type="image" alt="login" src="<?php echo $GLOBALS['AppConfig']['system']['linksite']; ?>x.gif" name="s1" value="anmelden" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;overflow:hidden;">
 
-// calculate the difference in seconds between the subtracted date and now
-$diff_in_seconds = strtotime($subtracted_date) - time();
+            <p style="margin-top:8px;">
+                <span class="error"><?php if ($this->error != "") { echo $this->error; } ?></span>
+            </p>
+        </form>
 
-// if the difference is negative, get the absolute value
-$diff_in_seconds = abs($diff_in_seconds);
+        <!-- Player stats -->
+        <?php
+        $islamLover = new QueueModel();
+        $reset = $islamLover->provider->fetchRow("SELECT end_date FROM p_queue WHERE proc_type='25'");
+        $this->appConfig['system']['reset'] = date('Y/m/d H:i:s', strtotime($reset['end_date'] ?? 'now'));
 
-// calculate the remaining days, hours, minutes and seconds
-$remaining_days = floor($diff_in_seconds / 86400);
-$remaining_hours = floor(($diff_in_seconds % 86400) / 3600);
-$remaining_minutes = floor(($diff_in_seconds % 3600) / 60);
+        $resultbs = $islamLover->provider->fetchRow("SELECT end_date FROM p_queue WHERE id='1' and proc_type='24'");
+        $end_datebs = $resultbs["end_date"] ?? null;
+        $redseahost = $this->appConfig['system']['server_days'];
+        $subtracted_date = date('Y-m-d H:i:s', strtotime("-$redseahost days", strtotime($end_datebs)));
+        $diff_in_seconds = strtotime($subtracted_date) - time();
+        $diff_in_seconds = abs($diff_in_seconds);
+        $remaining_days = floor($diff_in_seconds / 86400);
+        $remaining_hours = floor(($diff_in_seconds % 86400) / 3600);
+        $remaining_minutes = floor(($diff_in_seconds % 3600) / 60);
+        $remaining_time = sprintf('%02d:%02d:%02d', $remaining_days, $remaining_hours, $remaining_minutes);
 
-// format the remaining time as a string
-$remaining_time = sprintf('%02d:%02d:%02d', $remaining_days, $remaining_hours, $remaining_minutes);
+        $islamLover = new QueueModel();
+        $fetchtatar = $islamLover->provider->fetchRow("SELECT end_date FROM p_queue WHERE id='1' and proc_type='24'");
+        $fetchedtatar = $fetchtatar["end_date"] ?? null;
+        $subtracted_tatar = date('Y-m-d H:i:s', strtotime($fetchedtatar ?? 'now'));
+        $diff_in_tatar = strtotime($subtracted_tatar) - time();
+        $diff_in_tatar = abs($diff_in_tatar);
+        $remaining_days_t = floor($diff_in_tatar / 86400);
+        $remaining_hours_t = floor(($diff_in_tatar % 86400) / 3600);
+        $remaining_minutes_t = floor(($diff_in_tatar % 3600) / 60);
+        $remaining_time_t = sprintf('%02d:%02d:%02d', $remaining_days_t, $remaining_hours_t, $remaining_minutes_t);
 
+        $islamLover = new QueueModel();
+        $fetcharts = $islamLover->provider->fetchRow("SELECT end_date FROM p_queue WHERE id='2' and proc_type='26'");
+        $fetchedarts = $fetcharts["end_date"] ?? null;
+        $subtracted_arts = date('Y-m-d H:i:s', strtotime($fetchedarts ?? 'now'));
+        $diff_in_arts = strtotime($subtracted_arts) - time();
+        $diff_in_arts = abs($diff_in_arts);
+        $remaining_days_arts = floor($diff_in_arts / 86400);
+        $remaining_hours_arts = floor(($diff_in_arts % 86400) / 3600);
+        $remaining_minutes_arts = floor(($diff_in_arts % 3600) / 60);
+        $remaining_time_arts = sprintf('%02d:%02d:%02d', $remaining_days_arts, $remaining_hours_arts, $remaining_minutes_arts);
 
-$islamLover = new QueueModel();
-///// TATAR COUNTER
-$fetchtatar = $islamLover->provider->fetchRow("SELECT end_date FROM p_queue WHERE id='1' and proc_type='24'");
-// Fetch row as associative array
-$fetchedtatar = $fetchtatar["end_date"] ?? null;
+        $fetchreset = $islamLover->provider->fetchRow("SELECT end_date FROM p_queue WHERE proc_type='25'");
+        $fetchedreset = $fetchreset["end_date"] ?? null;
+        $subtracted_reset = date('Y-m-d H:i:s', strtotime($fetchedreset ?? 'now'));
+        $diff_in_reset = strtotime($subtracted_reset) - time();
+        $diff_in_reset = abs($diff_in_reset);
+        $remaining_days_reset = floor($diff_in_reset / 86400);
+        $remaining_hours_reset = floor(($diff_in_reset % 86400) / 3600);
+        $remaining_minutes_reset = floor(($diff_in_reset % 3600) / 60);
+        $remaining_time_reset = sprintf('%02d:%02d:%02d', $remaining_days_reset, $remaining_hours_reset, $remaining_minutes_reset);
 
-$subtracted_tatar = date('Y-m-d H:i:s', strtotime($fetchedtatar ?? 'now'));
+        $m = new QueueModel();
+        $updates = $m->provider->fetchRow("SELECT end_date FROM p_queue WHERE proc_type='57' and id='3'");
+        $updatesok = $updates['end_date'] ?? null;
+        $updatesreset = $m->provider->fetchRow("SELECT end_date FROM p_queue WHERE proc_type='25'");
+        $updatesokreset = $updatesreset['end_date'] ?? null;
 
-// calculate the difference in seconds between the subtracted date and now
-$diff_in_tatar = strtotime($subtracted_tatar) - time();
+        if ($updatesokreset != null) {
+            $m->provider->executeQuery2("UPDATE p_queue SET proc_type='57' WHERE id='3' and proc_type='26'");
+        }
+        ?>
 
-// if the difference is negative, get the absolute value
-$diff_in_tatar = abs($diff_in_tatar);
+        <div class="login-stats-grid">
+            <div class="login-stat-box">
+                <span class="stat-num"><?php echo $this->data['players_count']; ?></span>
+                <span class="stat-lbl">عدد اللاعبين</span>
+            </div>
+            <div class="login-stat-box">
+                <span class="stat-num"><?php echo $this->data['active_players_count']; ?></span>
+                <span class="stat-lbl">اللاعبون النشطون</span>
+            </div>
+        </div>
 
-// calculate the remaining days, hours, minutes and seconds
-$remaining_days_t = floor($diff_in_tatar / 86400);
-$remaining_hours_t = floor(($diff_in_tatar % 86400) / 3600);
-$remaining_minutes_t = floor(($diff_in_tatar % 3600) / 60);
+        <div class="login-server-status">
+            <table border="0" cellspacing="0" cellpadding="0">
+                <tbody>
+                <?php if (!empty($updatesreset['end_date'])): ?>
+                    <tr class="btm">
+                        <th><strong>بقى على إعادة السيرفر:</strong></th>
+                        <td><span id="timer2"><?php echo "<b>$remaining_days_reset</b> أيام و <b>$remaining_hours_reset</b> ساعة و <b>$remaining_minutes_reset</b> دقيقة"; ?></span></td>
+                    </tr>
+                <?php else: ?>
+                    <tr class="top">
+                        <th><strong>بدأ السيرفر منذ:</strong></th>
+                        <td>
+                            <span id="timer2">
+                            <?php
+                            if (!empty($resultbs['end_date'])) {
+                                if ($updates == NULL) {
+                                    echo "<b>$remaining_days</b> أيام و <b>$remaining_hours</b> ساعة و <b>$remaining_minutes</b> دقيقة";
+                                } else {
+                                    echo "<font color='red'><b>لم يبدأ السيرفر بعد</b></font>";
+                                }
+                            } else {
+                                echo "<font color='red'>الجولة محسومة تم نزول التتار</font>";
+                            }
+                            ?>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><strong>سيتم نزول التحف بعد:</strong></th>
+                        <?php if (strtotime($fetchedarts ?? 'now') > time()): ?>
+                            <td><span id="timer1"><?php echo "<b>$remaining_days_arts</b> أيام و <b>$remaining_hours_arts</b> ساعة و <b>$remaining_minutes_arts</b> دقيقة"; ?></span></td>
+                        <?php else: ?>
+                            <td><span style="color: #ff0000;">تم نزول التحف</span></td>
+                        <?php endif; ?>
+                    </tr>
+                    <tr class="btm">
+                        <th><strong>سيتم نزول التتار بعد:</strong></th>
+                        <?php if (strtotime($fetchedtatar ?? 'now') > time()): ?>
+                            <td><span id="timer1"><?php echo "<b>$remaining_days_t</b> أيام و <b>$remaining_hours_t</b> ساعة و <b>$remaining_minutes_t</b> دقيقة"; ?></span></td>
+                        <?php else: ?>
+                            <td><span style="color: #ff0000;">تم نزول التتار</span></td>
+                        <?php endif; ?>
+                    </tr>
+                    <tr>
+                        <th><strong><span style="color: #ff0000;">مدة السيرفر :</span></strong></th>
+                        <td><?php echo $GLOBALS['AppConfig']['system']['moda']; ?> يوم</td>
+                    </tr>
+                    <tr>
+                        <th><strong><span style="color: #ff0000;">سرعة السيرفر :</span></strong></th>
+                        <td>X<?php echo $GLOBALS['AppConfig']['Game']['speed']; ?></td>
+                    </tr>
+                <?php endif; ?>
+                </tbody>
+            </table>
+        </div>
 
-// format the remaining time as a string
-$remaining_time_t = sprintf('%02d:%02d:%02d', $remaining_days_t, $remaining_hours_t, $remaining_minutes_t);
-      
-       
-       
-       
-$islamLover = new QueueModel();
-///// ARTS COUNTER
-$fetcharts = $islamLover->provider->fetchRow("SELECT end_date FROM p_queue WHERE id='2' and proc_type='26'");
-// Fetch row as associative array
-$fetchedarts = $fetcharts["end_date"] ?? null;
+        <div class="login-register-link">
+            ليس لديك حساب؟ <a href="register.php">سجل الآن &#x27A4;</a>
+        </div>
 
-$subtracted_arts = date('Y-m-d H:i:s', strtotime($fetchedarts ?? 'now'));
+    </div><!-- .login-card-body -->
+</div><!-- .login-card -->
 
-// calculate the difference in seconds between the subtracted date and now
-$diff_in_arts = strtotime($subtracted_arts) - time();
-
-// if the difference is negative, get the absolute value
-$diff_in_arts = abs($diff_in_arts);
-
-// calculate the remaining days, hours, minutes and seconds
-$remaining_days_arts = floor($diff_in_arts / 86400);
-$remaining_hours_arts = floor(($diff_in_arts % 86400) / 3600);
-$remaining_minutes_arts = floor(($diff_in_arts % 3600) / 60);
-
-// format the remaining time as a string
-$remaining_time_arts = sprintf('%02d:%02d:%02d', $remaining_days_arts, $remaining_hours_arts, $remaining_minutes_arts);
-       
-///// RESET COUNTER
-$fetchreset = $islamLover->provider->fetchRow("SELECT end_date FROM p_queue WHERE proc_type='25'");
-// Fetch row as associative array
-$fetchedreset = $fetchreset["end_date"] ?? null;
-
-$subtracted_reset = date('Y-m-d H:i:s', strtotime($fetchedreset ?? 'now'));
-
-// calculate the difference in seconds between the subtracted date and now
-$diff_in_reset = strtotime($subtracted_reset) - time();
-
-// if the difference is negative, get the absolute value
-$diff_in_reset = abs($diff_in_reset);
-
-// calculate the remaining days, hours, minutes and seconds
-$remaining_days_reset = floor($diff_in_reset / 86400);
-$remaining_hours_reset = floor(($diff_in_reset % 86400) / 3600);
-$remaining_minutes_reset = floor(($diff_in_reset % 3600) / 60);
-
-// format the remaining time as a string
-$remaining_time_reset = sprintf('%02d:%02d:%02d', $remaining_days_reset, $remaining_hours_reset, $remaining_minutes_reset);
-       
-       
-       
-       
-       $m = new QueueModel();
-$updates =  $m->provider->fetchRow("SELECT end_date FROM p_queue WHERE proc_type='57' and id='3'");
-$updatesok = $updates['end_date'] ?? null;
-
-$updatesreset =  $m->provider->fetchRow("SELECT end_date FROM p_queue WHERE proc_type='25'");
-$updatesokreset = $updatesreset['end_date'] ?? null;
-       
-if ($updatesokreset != null){  
- $m->provider->executeQuery2("UPDATE p_queue SET proc_type='57' WHERE id='3' and proc_type='26'");
-}
-
-if (!empty($updatesreset['end_date'])) {
-?>
- <tbody><tr class="btm">
-        <th>
-            <strong>بقى على إعادة السيرفر:</strong>
-        </th>
-        <td><span id="timer2"><?php 
-  echo "<b>$remaining_days_reset</b> أيام و <b>$remaining_hours_reset</b> ساعة و <b>$remaining_minutes_reset</b> دقيقة</span></td>";
-?>
-  </tr>
-<?php
-}else {
-
-?>
-    <tbody><tr class="top">
-        <th>
-            <strong>بدأ السيرفر منذ:</strong>
-        </th>
-        <td><span id="timer2">
-          
-    <?php 
-  if (!empty($resultbs['end_date'])) {
-  if ($updates == NULL){
-  echo "<b>$remaining_days</b> أيام و <b>$remaining_hours</b> ساعة و <b>$remaining_minutes</b> دقيقة</span></td>";
-  
-  }
-  
-  else if ($updates != NULL){
-echo "<font color='red'><b>لم يبدأ السيرفر بعد</b></font></span></td>";
-  }
-  }
-  else
-{
-  echo "<font color='red'>الجولة محسومة تم نزول التتار</font></span></td>";									
-  }
-          ?>
-
-    </tr>
-    <tr >
-        <th>
-            <strong>سيتم نزول التحف بعد:</strong>
-        </th>
-<?php if (strtotime($fetchedarts ?? 'now') > time()) {
-?>        <td><span id="timer1">
-      
-      
-      <?php 
-                                 
-  echo "<b>$remaining_days_arts</b> أيام و <b>$remaining_hours_arts</b> ساعة و <b>$remaining_minutes_arts</b> دقيقة</span></td>";
-
-          } else {
-?>
-      <td><span style="color: #ff0000;">تم نزول التحف</span></td>
-      <?php
-}
-?>
-    </tr>
-<tr class="btm">
-        <th>
-            <strong>سيتم نزول التتار بعد:</strong>
-        </th>
-<?php if (strtotime($fetchedtatar ?? 'now') > time()) {
-?>       
-        <td><span id="timer1">
-<?php 
-  echo "<b>$remaining_days_t</b> أيام و <b>$remaining_hours_t</b> ساعة و <b>$remaining_minutes_t</b> دقيقة</span></td>";
-     
-} else {
-            
-?>
-          
-          <td><span style="color: #ff0000;">تم نزول التتار</span></td>
-          
-          <?php
-  }
-          ?>
-    </tr>
-
-	<table border="0" cellspacing="0" cellpadding="0">
-
-<tbody><tr class="top">
-<th><strong><span style="color: #ff0000;">مدة السيرفر :</span></strong></th>
-<td><?php echo $GLOBALS['AppConfig']['system']['moda']; ?> يوم</td>
-</tr>
-<tr>
-<th><strong><span style="color: #ff0000;">سرعة السيرفر :</span></strong></th>
-<td>X<?php echo $GLOBALS['AppConfig']['Game']['speed']; ?></td>
-</tr>
-</tbody></table>
 <?php } ?>
-</tbody></table>
-<?php } ?>
-</body>
-</html>
