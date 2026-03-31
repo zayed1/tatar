@@ -2,6 +2,7 @@
 
 require_once(MODEL_PATH . "report.php");
 require_once(MODEL_PATH . "mutex.php");
+require_once(MODEL_PATH . "notification.php");
 class QueueJobModel extends ModelBase
     {
         function deleteInactivePlayers ()
@@ -449,6 +450,8 @@ $num = $this->provider->fetchRow( "SELECT * FROM p_alliances WHERE id='%s'", arr
             case QS_BUILD_CREATEUPGRADE:
                 {
                 $customAction = $this->executeBuildingTask($taskRow);
+                $__nm = new NotificationModel();
+                $__nm->add($taskRow['player_id'], 'build', 'انتهى بناء/ترقية مبنى في قريتك', 'village2');
                 break;
                 }
             case QS_BUILD_DROP:
@@ -470,6 +473,8 @@ $num = $this->provider->fetchRow( "SELECT * FROM p_alliances WHERE id='%s'", arr
             case QS_TROOP_TRAINING:
                 {
                 $this->executeTroopTrainingTask($taskRow);
+                $__nm = new NotificationModel();
+                $__nm->add($taskRow['player_id'], 'troops', 'انتهى تدريب القوات', 'village2');
                 break;
                 }
             case QS_TROOP_TRAINING_HERO:
@@ -507,6 +512,15 @@ $num = $this->provider->fetchRow( "SELECT * FROM p_alliances WHERE id='%s'", arr
             case QS_CREATEVILLAGE:
                 {
                 $customAction = $this->executeWarTask($taskRow);
+                $__nm = new NotificationModel();
+                if ($taskRow['proc_type'] == QS_WAR_REINFORCE) {
+                    $__nm->add($taskRow['to_player_id'] ?? $taskRow['player_id'], 'reinforce', 'وصلت تعزيزات لقريتك', 'village1');
+                } else if ($taskRow['proc_type'] == QS_WAR_ATTACK || $taskRow['proc_type'] == QS_WAR_ATTACK_PLUNDER || $taskRow['proc_type'] == QS_WAR_ATTACK_SPY) {
+                    $__nm->add($taskRow['player_id'], 'attack', 'انتهت معركتك - تحقق من التقارير', 'report.php');
+                    if (!empty($taskRow['to_player_id'])) {
+                        $__nm->add($taskRow['to_player_id'], 'attack', 'تعرضت قريتك لهجوم!', 'report.php');
+                    }
+                }
                 break;
                 }
             case QS_LEAVEOASIS:
@@ -1407,6 +1421,8 @@ if ($playerRow['hero_name'] == "") {
                     {
                     $this->troopsUpgrade[$tid]['researches_done'] = 1;
                     }
+                $__nm = new NotificationModel();
+                $__nm->add($taskRow['player_id'], 'research', 'انتهى البحث في الأكاديمية', 'village2');
                 break;
                 }
             case QS_TROOP_UPGRADE_ATTACK:
