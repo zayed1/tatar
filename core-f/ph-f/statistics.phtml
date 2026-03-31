@@ -500,14 +500,18 @@ echo "</td><td class=\"vil\">";
 
              echo "<td>";
             if (!empty($this->dataList->row['last_ip'])) {
-$get_ip = file_get_contents("http://ip-api.com/json/".$this->dataList->row['last_ip']."?fields=countryCode");
+$get_ip = @file_get_contents("http://ip-api.com/json/".$this->dataList->row['last_ip']."?fields=countryCode");
+if ($get_ip) {
 $ex_1 = explode ('":"',$get_ip);
-$ex_2 = explode ('"}',$ex_1[1]);
-$code = $code ?? '';
+$ex_2 = isset($ex_1[1]) ? explode ('"}',$ex_1[1]) : [''];
+$code = $ex_2[0] ?? '';
+} else {
+$code = '';
+}
 }
 
-$i = "$code";getCountryFromIP($this->dataList->row['last_ip'] ?? ''); 
-if ($i != "Z0Z") {
+$i = $code ?? '';
+if ($i != '' && $i != "Z0Z") {
 ?>
 #<img title="<?php echo $i; ?>" src="http://cdn2.youripfast.com/static/country_flags/<?php echo strtolower($i); ?>.webp">
 <?php
