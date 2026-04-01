@@ -95,6 +95,27 @@ return;
 }
 $p = new Player();
 $this->player = $p->getInstance();
+
+// Auto-re-authenticate from cookies when session is lost (fixes mobile app logout on close)
+if ($this->player == NULL) {
+    $cookie = $GLOBALS['cd']->getinstance();
+    if (!empty($cookie->uname) && !empty($cookie->upwd)) {
+        $m = new IndexModel();
+        $loginResult = $m->getLoginResult($cookie->uname, $cookie->upwd, WebHelper::getclientip(), false);
+        if ($loginResult != NULL && !$loginResult['hasError']) {
+            $this->player             = new Player();
+            $this->player->playerId   = $loginResult['playerId'];
+            $this->player->isAgent    = $loginResult['data']['is_agent'];
+            $this->player->gameStatus = $loginResult['gameStatus'];
+            $this->player->actions    = $loginResult['data']['actions'];
+            $this->player->save();
+            if (session_status() === PHP_SESSION_NONE) { session_start(); }
+            $_SESSION['pwd'] = md5($cookie->upwd);
+            $_SESSION['is_rig'] = $cookie->uname;
+        }
+        $m->dispose();
+    }
+}
 }
 function getAssetVersion () {
 return '?' . $this->appConfig['page']['asset_version'];
