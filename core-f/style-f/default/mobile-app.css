@@ -1,10 +1,9 @@
 /* ===========================================
    Mobile App Styles
    Scoped to body.mobile-app only
-   Does NOT modify village map, world map, or resource fields structure
    =========================================== */
 
-/* ---- Base ---- */
+/* ============ BASE ============ */
 body.mobile-app {
     zoom: 1 !important;
     width: 100% !important;
@@ -18,7 +17,7 @@ body.mobile-app {
     font-size: 14px;
 }
 
-/* ---- Hide desktop-only elements ---- */
+/* ============ HIDE DESKTOP-ONLY ============ */
 body.mobile-app #side_navi,
 body.mobile-app #side_info,
 body.mobile-app div#footer,
@@ -32,15 +31,15 @@ body.mobile-app img#msfilter {
     display: none !important;
 }
 
-/* ---- Banner / Dynamic Header ---- */
+/* ============ BANNER ============ */
 body.mobile-app div#dynamic_header {
-    height: 55px !important;
+    height: 50px !important;
     background-size: cover !important;
     background-position: center center !important;
     overflow: hidden;
 }
 
-/* ---- Top Header ---- */
+/* ============ TOP HEADER & NAVIGATION ============ */
 body.mobile-app div#header {
     height: auto !important;
     position: sticky;
@@ -52,7 +51,11 @@ body.mobile-app div#header {
 }
 
 body.mobile-app div#mtop {
+    width: 100% !important;
     height: auto !important;
+    position: relative !important;
+    right: auto !important;
+    top: auto !important;
     display: flex !important;
     flex-wrap: nowrap;
     align-items: center;
@@ -60,18 +63,29 @@ body.mobile-app div#mtop {
     gap: 0;
     padding: 0 2px;
     direction: rtl;
+    box-sizing: border-box;
 }
 
-/* Navigation icon sizing */
+body.mobile-app div#mtop a#n1,
+body.mobile-app div#mtop a#n2,
+body.mobile-app div#mtop a#n3,
+body.mobile-app div#mtop a#n4,
+body.mobile-app div#mtop div#n5 {
+    float: none !important;
+    flex-shrink: 0;
+}
+
 body.mobile-app a#n1 img,
 body.mobile-app a#n2 img,
 body.mobile-app a#n3 img,
 body.mobile-app a#n4 img {
-    height: 50px !important;
+    height: 48px !important;
 }
 
 body.mobile-app div#n5 {
     height: auto !important;
+    display: flex !important;
+    align-items: center;
 }
 
 body.mobile-app div#n5 a {
@@ -81,10 +95,9 @@ body.mobile-app div#n5 a {
 
 body.mobile-app div#n5 img.l,
 body.mobile-app div#n5 img.r {
-    height: 50px !important;
+    height: 48px !important;
 }
 
-/* Gold button */
 body.mobile-app a.Plus.Gold {
     min-height: auto;
     min-width: auto;
@@ -94,14 +107,17 @@ body.mobile-app .Gold1 {
     font-size: 11px;
 }
 
-/* Notification bell */
+body.mobile-app .Gold2 {
+    font-size: 11px;
+}
+
 body.mobile-app #notif-bell {
     margin: 0 2px !important;
     min-height: auto;
     min-width: auto;
 }
 
-/* ---- Resource Bar ---- */
+/* ============ RESOURCE BAR ============ */
 body.mobile-app div#resWrap {
     display: block !important;
     width: 100% !important;
@@ -113,6 +129,7 @@ body.mobile-app div#resWrap {
 
 body.mobile-app div#res {
     position: relative !important;
+    top: auto !important;
     width: 100% !important;
     padding: 0;
 }
@@ -128,7 +145,7 @@ body.mobile-app div#res table td.res {
     padding: 1px 3px;
 }
 
-/* ---- Wrapper & Main Layout ---- */
+/* ============ WRAPPER & LAYOUT ============ */
 body.mobile-app div.wrapper {
     width: 100% !important;
     min-width: 0 !important;
@@ -144,7 +161,7 @@ body.mobile-app div#mid {
     background: #fff !important;
 }
 
-/* ---- Content Area ---- */
+/* ============ CONTENT AREA ============ */
 body.mobile-app div#content {
     float: none !important;
     width: 100% !important;
@@ -152,17 +169,15 @@ body.mobile-app div#content {
     min-height: auto !important;
     overflow-x: visible;
     overflow-y: visible;
-    padding: 4px 6px !important;
+    padding: 4px 0 !important;
     box-sizing: border-box;
     background: #fff;
 }
 
-/* All page types: fluid width */
+/* All page types: fluid */
 body.mobile-app div.village1,
-body.mobile-app div.village2,
 body.mobile-app div.village3,
 body.mobile-app div.village4,
-body.mobile-app div.map,
 body.mobile-app div.build,
 body.mobile-app div#build,
 body.mobile-app div.messages,
@@ -173,21 +188,22 @@ body.mobile-app div.profile,
 body.mobile-app div.player,
 body.mobile-app div.plus,
 body.mobile-app div.report,
+body.mobile-app div.reports,
 body.mobile-app div.support,
-body.mobile-app div.universal {
+body.mobile-app div.universal,
+body.mobile-app div.warsim {
     width: auto !important;
     max-width: 100% !important;
     box-sizing: border-box;
-    padding-left: 4px !important;
-    padding-right: 4px !important;
+    padding-left: 6px !important;
+    padding-right: 6px !important;
+    padding-top: 6px !important;
     overflow-x: auto;
 }
 
-/* ---- Village1 (Fields): Center map ---- */
-body.mobile-app div.village1 {
-    padding-top: 6px !important;
-}
-
+/* ============================================
+   VILLAGE1 (FIELDS) - keep map 300px, center it
+   ============================================ */
 body.mobile-app div.village1 h1 {
     font-size: 1.1rem;
     text-align: center;
@@ -198,6 +214,7 @@ body.mobile-app div.village1 h1 {
 body.mobile-app div.village1 div#village_map {
     margin: 0 auto;
     float: none !important;
+    /* Keep 300px width - resource positions are absolute inside it */
 }
 
 body.mobile-app div.village1 div#map_details {
@@ -208,10 +225,21 @@ body.mobile-app div.village1 div#map_details {
     box-sizing: border-box;
 }
 
-/* ---- Village2 (City): Center building map ---- */
+body.mobile-app div.village1 div#map_details table {
+    width: 100% !important;
+}
+
+/* ============================================
+   VILLAGE2 (CITY) - scale to fit screen
+   Building positions are absolute at 540px scale
+   Use CSS transform to scale down proportionally
+   ============================================ */
 body.mobile-app div.village2 {
-    padding-top: 6px !important;
-    overflow-x: auto;
+    width: auto !important;
+    max-width: 100% !important;
+    padding: 6px 0 !important;
+    overflow-x: visible !important;
+    overflow-y: visible !important;
 }
 
 body.mobile-app div.village2 h1 {
@@ -220,32 +248,281 @@ body.mobile-app div.village2 h1 {
 }
 
 body.mobile-app div.village2 div#village_map {
+    /* Scale 540px map to fit ~365px viewport */
+    transform: scale(0.68);
+    transform-origin: top center;
     margin: 0 auto;
+    /* Correct the space left by scaling */
+    margin-bottom: -145px;
 }
 
-/* ---- World Map ---- */
+body.mobile-app div.village2 img#lswitch {
+    right: auto !important;
+    left: 10px;
+}
+
+/* ============================================
+   WORLD MAP - scale to fit
+   ============================================ */
 body.mobile-app div.map {
-    padding-top: 6px !important;
-    overflow-x: auto;
+    width: auto !important;
+    max-width: 100% !important;
+    padding: 6px 0 !important;
+    overflow-x: visible !important;
+}
+
+body.mobile-app div.map div#map {
+    transform: scale(0.75);
+    transform-origin: top center;
+    margin: 0 auto;
+    margin-bottom: -90px;
 }
 
 body.mobile-app div.map div#map_details {
     float: none !important;
     width: auto !important;
-    margin: 6px 0 !important;
+    margin: 6px !important;
     padding: 6px !important;
     box-sizing: border-box;
 }
 
-/* ---- Build Page ---- */
+body.mobile-app div.map div#map_details table {
+    width: 100% !important;
+}
+
+body.mobile-app div.map div.cropfinder_icon {
+    position: relative !important;
+    right: auto !important;
+    text-align: center;
+    margin: 4px auto;
+}
+
+/* ============================================
+   BUILD PAGE
+   ============================================ */
 body.mobile-app div#build {
     width: auto !important;
     max-width: 100% !important;
-    padding: 6px 4px 0 !important;
+    padding: 6px !important;
     box-sizing: border-box;
 }
 
-/* ---- Protection Status ---- */
+body.mobile-app div#build table {
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+body.mobile-app div#build table.build_details td {
+    padding: 2px 4px;
+}
+
+body.mobile-app div#build table.build_details td.desc {
+    max-width: 200px;
+    word-wrap: break-word;
+}
+
+body.mobile-app div#build table#build_value {
+    width: auto !important;
+}
+
+body.mobile-app div#build table#build_value th {
+    padding-left: 10px !important;
+}
+
+/* ============================================
+   MESSAGES
+   ============================================ */
+body.mobile-app div.messages div.msg_head,
+body.mobile-app div.messages div.msg_content,
+body.mobile-app div.messages div.msg_content div#line,
+body.mobile-app div.messages div.msg_foot {
+    width: 100% !important;
+    box-sizing: border-box;
+}
+
+body.mobile-app div.messages div#read_content div#heading div {
+    width: auto !important;
+    max-width: 100%;
+}
+
+body.mobile-app div.messages div#read_content div#time {
+    float: none !important;
+    padding-left: 0 !important;
+    text-align: right;
+}
+
+body.mobile-app div.messages div#read_content div#message {
+    width: 100% !important;
+    margin-right: 0 !important;
+    padding: 6px !important;
+    box-sizing: border-box;
+    overflow-x: auto;
+}
+
+body.mobile-app div.messages #write_content div#heading input {
+    width: 100% !important;
+    box-sizing: border-box;
+}
+
+body.mobile-app div.messages #write_content textarea {
+    width: 100% !important;
+    margin-right: 0 !important;
+    box-sizing: border-box;
+    height: 200px;
+}
+
+body.mobile-app div.messages div#adressbook {
+    width: auto !important;
+    max-width: 95vw !important;
+    left: 2.5vw !important;
+    right: 2.5vw !important;
+    position: fixed !important;
+    top: 50% !important;
+    bottom: auto !important;
+    transform: translateY(-50%);
+    box-sizing: border-box;
+}
+
+body.mobile-app div.messages div#block {
+    width: 100% !important;
+    height: auto !important;
+    box-sizing: border-box;
+}
+
+body.mobile-app div.messages div#block textarea {
+    position: relative !important;
+    right: auto !important;
+    top: auto !important;
+    width: 100% !important;
+    box-sizing: border-box;
+}
+
+/* Message list table */
+body.mobile-app div.messages table {
+    width: 100% !important;
+}
+
+/* ============================================
+   REPORTS
+   ============================================ */
+body.mobile-app div.reports table,
+body.mobile-app div.report table {
+    width: 100% !important;
+}
+
+/* Battle report tables can overflow - allow scroll */
+body.mobile-app div.reports .report_details,
+body.mobile-app div.report .report_details {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* ============================================
+   STATISTICS
+   ============================================ */
+body.mobile-app div.statistics div.graph {
+    width: 100% !important;
+    padding-right: 10px !important;
+    box-sizing: border-box;
+    overflow-x: auto;
+}
+
+body.mobile-app div.statistics div.legende {
+    float: none !important;
+    margin: 6px 0;
+}
+
+body.mobile-app div.statistics table.top10 {
+    width: 100% !important;
+}
+
+body.mobile-app div.statistics table {
+    width: 100% !important;
+}
+
+/* Text menu / tabs */
+body.mobile-app #textmenu {
+    display: flex !important;
+    flex-wrap: wrap;
+    gap: 2px !important;
+    justify-content: center;
+}
+
+body.mobile-app #textmenu a {
+    padding: 5px 6px !important;
+    font-size: 11px !important;
+    white-space: nowrap;
+}
+
+/* ============================================
+   ALLIANCE
+   ============================================ */
+body.mobile-app div.alliance div.chatHeader {
+    width: 100% !important;
+    box-sizing: border-box;
+}
+
+body.mobile-app div.alliance span.roomselector,
+body.mobile-app div.alliance span.roomselectorActive {
+    width: auto !important;
+    max-width: 45%;
+    box-sizing: border-box;
+}
+
+body.mobile-app div.alliance div#box,
+body.mobile-app div.alliance table.dipl {
+    float: none !important;
+    width: 100% !important;
+}
+
+body.mobile-app div.alliance table.infos {
+    float: none !important;
+    width: 100% !important;
+    margin-top: 6px;
+}
+
+body.mobile-app div.alliance table {
+    width: 100% !important;
+}
+
+/* ============================================
+   FORUM
+   ============================================ */
+body.mobile-app div.forum table {
+    width: 100% !important;
+}
+
+body.mobile-app div.forum table td,
+body.mobile-app div.forum table th {
+    padding: 2px 4px;
+}
+
+body.mobile-app div.forum table td.ico {
+    width: 24px !important;
+    padding: 3px !important;
+}
+
+body.mobile-app div.forum table td.cou {
+    width: 40px !important;
+}
+
+/* ============================================
+   PROFILE / PLAYER
+   ============================================ */
+body.mobile-app div.player table {
+    width: 100% !important;
+}
+
+/* ============================================
+   PLUS (PREMIUM)
+   ============================================ */
+body.mobile-app div.plus table {
+    width: 100% !important;
+}
+
+/* ============================================
+   PROTECTION STATUS
+   ============================================ */
 body.mobile-app .molvp-protection {
     position: relative !important;
     top: auto !important;
@@ -286,14 +563,12 @@ body.mobile-app .molvp-protection2 {
     height: auto !important;
 }
 
-/* ---- Tables ---- */
+/* ============================================
+   GLOBAL TABLES
+   ============================================ */
 body.mobile-app table {
     max-width: 100%;
     font-size: 13px;
-}
-
-body.mobile-app div.statistics table.top10 {
-    width: 100% !important;
 }
 
 body.mobile-app table.row_table_data,
@@ -304,7 +579,9 @@ body.mobile-app table.world {
     font-size: 12px;
 }
 
-/* ---- Forms ---- */
+/* ============================================
+   FORMS & INPUTS
+   ============================================ */
 body.mobile-app input[type="text"],
 body.mobile-app input[type="password"],
 body.mobile-app input[type="number"],
@@ -317,18 +594,9 @@ body.mobile-app textarea {
     box-sizing: border-box;
 }
 
-/* ---- Text Menu (tabs) ---- */
-body.mobile-app #textmenu {
-    flex-wrap: wrap;
-    gap: 2px !important;
-}
-
-body.mobile-app #textmenu a {
-    padding: 5px 6px !important;
-    font-size: 11px !important;
-}
-
-/* ---- Popups ---- */
+/* ============================================
+   POPUPS / MODALS
+   ============================================ */
 body.mobile-app div.popup3 {
     right: 5px !important;
     left: 5px !important;
@@ -336,14 +604,17 @@ body.mobile-app div.popup3 {
     max-width: 95vw;
 }
 
-/* ---- XP Bar ---- */
+/* ============================================
+   XP BAR
+   ============================================ */
 body.mobile-app .InBar.xPh {
     margin-right: 0 !important;
+    width: auto;
 }
 
-/* ===========================================
-   Bottom Navigation Bar
-   =========================================== */
+/* ============================================
+   BOTTOM NAVIGATION BAR
+   ============================================ */
 body.mobile-app .nav-mob {
     position: fixed !important;
     bottom: 0 !important;
@@ -399,7 +670,7 @@ body.mobile-app .nav-mob .nav-mob-item span {
     white-space: nowrap;
 }
 
-/* Hide desktop nav-mob (it only shows inside body for app) */
+/* Hide nav-mob on desktop */
 @media screen and (min-width: 901px) {
     .nav-mob {
         display: none !important;
