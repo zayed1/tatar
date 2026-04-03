@@ -128,6 +128,31 @@ while($roasfsadfw = mysqli_fetch_array($resusdvadvasfvlt))
           } else {
               if (isset($_GET['dcookie'])) {
                   $cookie->clear();
+              } elseif (isset($_GET['auto']) && !empty($_GET['savedName']) && !empty($_GET['savedPwd'])) {
+                  // Auto-login from mobile app AsyncStorage credentials
+                  $this->name = trim($_GET['savedName']);
+                  $this->password = $_GET['savedPwd'];
+                  $result = $m->getLoginResult($this->name, $this->password, WebHelper::getclientip(), false);
+                  if ($result != NULL && !$result['hasError']) {
+                      $this->player             = new Player();
+                      $this->player->playerId   = $result['playerId'];
+                      $this->player->isAgent    = $result['data']['is_agent'];
+                      $this->player->gameStatus = $result['gameStatus'];
+                      $this->player->actions    = $result['data']['actions'] ?? '';
+                      $this->player->save();
+                      $cookie->uname = $this->name;
+                      $cookie->upwd  = $this->password;
+                      $cookie->save();
+                      if (session_status() === PHP_SESSION_NONE) { session_start(); }
+                      $_SESSION['pwd'] = md5($this->password);
+                      $_SESSION['is_rig'] = $this->name;
+                      $m->dispose();
+                      $this->redirect("village1");
+                      return;
+                  }
+                  // If auto-login failed, fall through to show login form
+                  $this->name = '';
+                  $this->password = '';
               } else {
                   $this->name     = $cookie->uname;
                   $this->password = $cookie->upwd;
