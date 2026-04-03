@@ -6,36 +6,6 @@ $art        = $this->queueModel->provider->fetchRow("SELECT end_date FROM p_queu
 $berq_player = $this->queueModel->provider->fetchRow("SELECT player_name FROM p_villages WHERE id='100'");
 
 ?>
- <!-- icon menu mobile -->
-
-                <div class="nav-mob">
-                    <a href="village1" class="nav-mob-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>الحقول</span></a>
-                    <a href="village2" class="nav-mob-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg><span>المدينة</span></a>
-                    <a href="map" class="nav-mob-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg><span>الخريطة</span></a>
-                    <a href="report.php" class="nav-mob-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg><span>التقارير</span></a>
-                    <a href="msg" class="nav-mob-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg><span>الرسائل</span></a>
-                </div>
-<script   src="https://pilot.paylink.sa/assets/js/paylink.js"></script>
-                <!-- menu -->
-                        <div class="molvp-protection">    
-                <?php
-                 echo "<p>";
-                                $postfix = 0 < $this->dataGame['protection_remain_sec'] ? "" : "d";
-                if ($postfix == "d") {
-                echo "";
-                }else {
-                echo "ستنتهي حمايتك في ";
-                echo "<b><span id=\"timer1\">";
-                echo WebHelper::secondsToString($this->dataGame['protection_remain_sec']);
-                echo "</span></b>";
-                echo "</a> ساعه";
-                }
-                
-                
-                ?>
-                </div>  
-                
-                
 <html>
 <head>
 <!--<meta http-equiv="refresh" content="200">-->
@@ -72,6 +42,13 @@ $berq_player = $this->queueModel->provider->fetchRow("SELECT player_name FROM p_
 <?php endif; ?>
 <div class="wrapper">
 <img src="<?php echo $GLOBALS['AppConfig']['system']['linksite']; ?>x.gif" id="msfilter" alt="" />
+<?php if ($isApp): ?>
+<?php
+$postfix_prot = 0 < $this->dataGame['protection_remain_sec'] ? "" : "d";
+if ($postfix_prot != "d") { ?>
+<div class="molvp-protection"><p>ستنتهي حمايتك في <b><span id="timer1"><?php echo WebHelper::secondsToString($this->dataGame['protection_remain_sec']); ?></span></b> ساعه</p></div>
+<?php } ?>
+<?php endif; ?>
 <div id="dynamic_header"></div>
 <div id="header">
 <div id="mtop">
@@ -782,106 +759,23 @@ setInterval(function(){
 },30000);
 </script>
 
+<?php if ($isApp): ?>
+<div class="nav-mob">
+<a href="village1" class="nav-mob-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>الحقول</span></a>
+<a href="village2" class="nav-mob-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg><span>المدينة</span></a>
+<a href="map" class="nav-mob-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg><span>الخريطة</span></a>
+<a href="report.php" class="nav-mob-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg><span>التقارير</span></a>
+<a href="msg" class="nav-mob-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg><span>الرسائل</span></a>
+</div>
+<?php endif; ?>
 </body>
 
 <script type="text/javascript">init();<?php echo ($this->player!= NULL&&!$this->player->isSpy&&$this->data['guide_quiz']==GUIDE_QUIZ_NOTSTARTED)?"showTask();":'';?></script>
 <style>
-	@media screen and (max-width: 900px){
-	body {
+@media screen and (max-width: 900px){
+  body:not(.mobile-app) {
     zoom: 70%;
-	}
-}
-/* Mobile App Mode */
-body.mobile-app #footer,
-body.mobile-app .footer-menu,
-body.mobile-app .footer-stopper,
-body.mobile-app #mfoot {
-    display: none !important;
-}
-body.mobile-app {
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    user-select: none;
-    zoom: 100% !important;
-    background-color: #f5f0e8 !important;
-}
-/* Mobile App - bigger touch targets */
-body.mobile-app a,
-body.mobile-app input[type="submit"],
-body.mobile-app input[type="image"],
-body.mobile-app button {
-    min-height: 36px;
-    min-width: 36px;
-}
-body.mobile-app #mtop a {
-    padding: 8px 4px;
-}
-/* Mobile App - better fonts */
-body.mobile-app {
-    font-size: 14px;
-    -webkit-text-size-adjust: 100%;
-}
-body.mobile-app #side_navi,
-body.mobile-app #side_info {
-    font-size: 13px;
-}
-body.mobile-app #side_navi a,
-body.mobile-app #side_info a {
-    padding: 8px 4px;
-    display: block;
-}
-/* Mobile App - navigation improvements */
-body.mobile-app #header {
-    position: sticky;
-    top: 0;
-    z-index: 50;
-}
-body.mobile-app #res {
-    position: sticky;
-    bottom: 0;
-    z-index: 50;
-}
-/* Mobile App - form inputs */
-body.mobile-app input.text,
-body.mobile-app textarea,
-body.mobile-app select {
-    font-size: 16px !important;
-    padding: 8px !important;
-    border-radius: 6px;
-}
-/* Mobile App - tables */
-body.mobile-app table {
-    font-size: 13px;
-}
-body.mobile-app .nav-mob {
-    padding: 6px 10px;
-}
-body.mobile-app .nav-mob a {
-    padding: 6px;
-}
-body.mobile-app .nav-mob img {
-    width: 28px !important;
-    height: 28px;
-}
-/* Mobile App - content area */
-body.mobile-app #content {
-    padding: 8px;
-}
-body.mobile-app .molvp-protection {
-    font-size: 12px;
-    padding: 4px 8px;
-    text-align: center;
+  }
 }
 </style>
-<?php if ($isApp): ?>
-<script>
-document.body.classList.add('mobile-app');
-// Lazy load images below the fold
-document.addEventListener('DOMContentLoaded',function(){
-  document.querySelectorAll('#content img, #side_info img, #side_navi img').forEach(function(img){
-    img.loading='lazy';
-  });
-});
-</script>
-<?php endif; ?>
 

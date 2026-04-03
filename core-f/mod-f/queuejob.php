@@ -394,6 +394,9 @@ $num = $this->provider->fetchRow( "SELECT * FROM p_alliances WHERE id='%s'", arr
                 while ($resultnew->next())
                     {
 					$medals = $resultnew->row['medals'];
+					$medals_week_1 = 0;
+					$medals_week_2 = 0;
+					$medals_week_3 = 0;
 					for($i = 1; $i <= 3; $i++){
 					$medals_week_1 += substr_count($medals, $indexnew.":".$i.":".($week));
 					$medals_week_2 += substr_count($medals, $indexnew.":".$i.":".($week-1));
