@@ -1,10 +1,10 @@
 /* ===========================================
-   Mobile App Styles - عودة التتار
-   Applied only inside mobile app (body.mobile-app)
-   Does NOT affect: village map, world map, resource fields structure
+   Mobile App Styles
+   Scoped to body.mobile-app only
+   Does NOT modify village map, world map, or resource fields structure
    =========================================== */
 
-/* --- Base: Remove desktop zoom, use fluid layout --- */
+/* ---- Base ---- */
 body.mobile-app {
     zoom: 1 !important;
     width: 100% !important;
@@ -12,34 +12,70 @@ body.mobile-app {
     -webkit-text-size-adjust: 100%;
     margin: 0;
     padding: 0;
+    padding-bottom: 62px !important;
+    -webkit-overflow-scrolling: touch;
 }
 
-/* --- Header: Compact top navigation --- */
+/* ---- Hide desktop-only elements ---- */
+body.mobile-app #side_navi,
+body.mobile-app #side_info,
+body.mobile-app div#footer,
+body.mobile-app div#stime,
+body.mobile-app img.time_of_day,
+body.mobile-app img.day,
+body.mobile-app img#msfilter {
+    display: none !important;
+}
+
+/* ---- Banner / Dynamic Header: Compact ---- */
+body.mobile-app div#dynamic_header {
+    height: 60px !important;
+    background-size: cover !important;
+    background-position: center !important;
+}
+
+/* ---- Top Header: Navigation icons ---- */
 body.mobile-app div#header {
-    height: auto;
+    height: auto !important;
     position: sticky;
     top: 0;
     z-index: 200;
-    background: #e3d5a2;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    background-size: cover;
+    background-position: center;
 }
 
 body.mobile-app div#mtop {
+    height: auto !important;
     display: flex !important;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     align-items: center;
     justify-content: center;
-    gap: 2px;
-    padding: 4px 6px;
+    gap: 0;
+    padding: 2px 4px;
+    overflow-x: auto;
     direction: rtl;
 }
 
-body.mobile-app div#mtop a,
-body.mobile-app div#mtop div#n5 {
+body.mobile-app div#mtop a#n1,
+body.mobile-app div#mtop a#n2,
+body.mobile-app div#mtop a#n3,
+body.mobile-app div#mtop a#n4 {
     flex-shrink: 0;
 }
 
-/* --- Resource Bar: Scrollable on small screens --- */
+body.mobile-app a#n1 img,
+body.mobile-app a#n2 img,
+body.mobile-app a#n3 img,
+body.mobile-app a#n4 img,
+body.mobile-app div#n5 {
+    height: 50px !important;
+}
+
+body.mobile-app div#n5 {
+    flex-shrink: 0;
+}
+
+/* ---- Resource Bar ---- */
 body.mobile-app div#resWrap {
     display: block !important;
     width: 100% !important;
@@ -52,7 +88,7 @@ body.mobile-app div#resWrap {
 body.mobile-app div#res {
     position: relative !important;
     width: 100% !important;
-    padding: 0 4px;
+    padding: 0;
 }
 
 body.mobile-app div#res table {
@@ -63,10 +99,10 @@ body.mobile-app div#res table {
 
 body.mobile-app div#res table td.res {
     font-size: 11px;
-    padding: 2px 4px;
+    padding: 1px 3px;
 }
 
-/* --- Main Layout: Full width content --- */
+/* ---- Wrapper & Main Layout ---- */
 body.mobile-app div.wrapper {
     width: 100% !important;
     min-width: 0 !important;
@@ -77,35 +113,22 @@ body.mobile-app div#mid {
     width: 100% !important;
     padding: 0 !important;
     margin: 0 !important;
-    display: flex;
-    flex-direction: column;
+    background-image: none !important;
 }
 
-/* Hide sidebars in mobile app */
-body.mobile-app #side_navi {
-    display: none !important;
-}
-
-body.mobile-app #side_info {
-    display: none !important;
-}
-
-body.mobile-app div#footer {
-    display: none !important;
-}
-
-/* --- Content Area: Fluid width --- */
+/* ---- Content Area: Fluid ---- */
 body.mobile-app div#content {
     float: none !important;
     width: 100% !important;
     max-width: 100% !important;
     min-height: auto !important;
-    overflow-x: auto;
+    overflow-x: visible;
+    overflow-y: visible;
     padding: 0 !important;
     box-sizing: border-box;
 }
 
-/* Make all content page types fluid */
+/* All page types: fluid width */
 body.mobile-app div.village1,
 body.mobile-app div.village2,
 body.mobile-app div.village3,
@@ -122,62 +145,78 @@ body.mobile-app div.player,
 body.mobile-app div.plus,
 body.mobile-app div.report,
 body.mobile-app div.support,
-body.mobile-app div.login,
-body.mobile-app div.signup,
 body.mobile-app div.universal {
-    width: 100% !important;
+    width: auto !important;
     max-width: 100% !important;
     box-sizing: border-box;
-    padding-left: 8px !important;
-    padding-right: 8px !important;
+    padding-left: 6px !important;
+    padding-right: 6px !important;
+    overflow-x: auto;
 }
 
-/* --- Mobile Bottom Navigation Bar --- */
-body.mobile-app .nav-mob {
-    position: fixed !important;
-    bottom: 0 !important;
-    top: auto !important;
-    left: 0 !important;
-    right: 0 !important;
+/* ---- Village1 (Fields): Center the map ---- */
+body.mobile-app div.village1 {
+    padding-top: 8px !important;
+}
+
+body.mobile-app div.village1 h1 {
+    font-size: 1.1rem;
+    text-align: center;
+    right: auto !important;
+    margin: 4px 0;
+}
+
+body.mobile-app div.village1 div#village_map {
+    margin: 0 auto;
     float: none !important;
-    z-index: 999 !important;
-    background: linear-gradient(to top, #1a1a2e, #16213e);
-    display: flex !important;
-    justify-content: space-around;
-    align-items: center;
-    padding: 8px 4px;
-    padding-bottom: max(8px, env(safe-area-inset-bottom));
-    box-shadow: 0 -2px 10px rgba(0,0,0,0.3);
-    border-top: 1px solid rgba(255,255,255,0.1);
 }
 
-body.mobile-app .nav-mob a {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    border-radius: 10px;
-    transition: background 0.2s;
+body.mobile-app div.village1 div#map_details {
+    float: none !important;
+    width: auto !important;
+    margin: 8px 0;
+    padding: 6px !important;
+    box-sizing: border-box;
 }
 
-body.mobile-app .nav-mob a:active {
-    background: rgba(255,255,255,0.15);
+/* ---- Village2 (City): Center building map ---- */
+body.mobile-app div.village2 {
+    padding-top: 8px !important;
+    overflow-x: auto;
 }
 
-body.mobile-app .nav-mob a img {
-    width: 24px !important;
-    height: 24px;
-    filter: brightness(0) invert(1);
-    opacity: 0.85;
+body.mobile-app div.village2 h1 {
+    text-align: center;
+    font-size: 1.1rem;
 }
 
-/* Add bottom padding to body so content doesn't hide behind nav */
-body.mobile-app {
-    padding-bottom: 65px !important;
+body.mobile-app div.village2 div#village_map {
+    margin: 0 auto;
 }
 
-/* --- Protection Status Bar --- */
+/* ---- World Map: Keep structure ---- */
+body.mobile-app div.map {
+    padding-top: 8px !important;
+    overflow-x: auto;
+}
+
+body.mobile-app div.map div#map_details {
+    float: none !important;
+    width: auto !important;
+    margin: 8px 0 !important;
+    padding: 6px !important;
+    box-sizing: border-box;
+}
+
+/* ---- Build Page ---- */
+body.mobile-app div#build {
+    width: auto !important;
+    max-width: 100% !important;
+    padding: 8px 6px 0 !important;
+    box-sizing: border-box;
+}
+
+/* ---- Protection Status ---- */
 body.mobile-app .molvp-protection {
     position: relative !important;
     top: auto !important;
@@ -185,16 +224,40 @@ body.mobile-app .molvp-protection {
     float: none !important;
     width: 100%;
     text-align: center;
-    background: rgba(0,0,0,0.6) !important;
+    background: rgba(0,0,0,0.55) !important;
     color: #fff;
     font-size: 12px;
-    padding: 6px 10px;
+    padding: 5px 8px;
     box-sizing: border-box;
     height: auto !important;
     z-index: 150;
 }
 
-/* --- Tables: Responsive --- */
+body.mobile-app .molvp-dve {
+    position: relative !important;
+    bottom: auto !important;
+    left: auto !important;
+    float: none !important;
+    text-align: center;
+    width: 100%;
+    padding: 4px 8px;
+    box-sizing: border-box;
+    height: auto !important;
+}
+
+body.mobile-app .molvp-protection2 {
+    position: relative !important;
+    left: auto !important;
+    float: none !important;
+    width: 100%;
+    text-align: center;
+    margin-top: 4px !important;
+    padding: 4px 8px !important;
+    box-sizing: border-box;
+    height: auto !important;
+}
+
+/* ---- Tables ---- */
 body.mobile-app table {
     max-width: 100%;
 }
@@ -212,149 +275,29 @@ body.mobile-app table.world {
 }
 
 body.mobile-app table.row_table_data thead th,
-body.mobile-app table#player thead th,
-body.mobile-app table#alliance thead th {
-    padding: 6px 4px;
+body.mobile-app table#player thead th {
+    padding: 5px 4px;
     font-size: 11px;
 }
 
 body.mobile-app table.row_table_data tbody td,
-body.mobile-app table#player tbody td,
-body.mobile-app table#alliance tbody td {
-    padding: 6px 4px;
+body.mobile-app table#player tbody td {
+    padding: 5px 4px;
 }
 
-/* --- Village List Table --- */
-body.mobile-app table#vlist {
-    width: 100%;
-}
-
-/* --- Forms & Inputs --- */
+/* ---- Forms ---- */
 body.mobile-app input[type="text"],
 body.mobile-app input[type="password"],
 body.mobile-app input[type="number"],
 body.mobile-app input[type="email"],
 body.mobile-app select,
 body.mobile-app textarea {
-    font-size: 16px !important; /* Prevents iOS zoom on focus */
+    font-size: 16px !important;
     max-width: 100%;
     box-sizing: border-box;
 }
 
-/* --- Village View (village1): Keep map structure, improve surrounding --- */
-body.mobile-app div.village1 {
-    padding-top: 10px !important;
-}
-
-body.mobile-app div.village1 h1 {
-    font-size: 1.2rem;
-    text-align: center;
-    right: auto !important;
-    margin: 5px 0;
-}
-
-body.mobile-app div.village1 div#village_map {
-    margin: 0 auto;
-    float: none !important;
-    display: block;
-}
-
-body.mobile-app div.village1 div#map_details {
-    float: none !important;
-    width: 100% !important;
-    margin: 10px 0;
-    padding: 8px !important;
-    box-sizing: border-box;
-}
-
-/* --- City View (village2): Keep building positions, center map --- */
-body.mobile-app div.village2 {
-    padding-top: 10px !important;
-}
-
-body.mobile-app div.village2 div#village_map {
-    margin: 0 auto;
-    overflow: visible;
-}
-
-body.mobile-app div.village2 h1 {
-    text-align: center;
-}
-
-/* --- World Map: Keep map structure, adjust container --- */
-body.mobile-app div.map {
-    padding-top: 10px !important;
-}
-
-body.mobile-app div.map div#map {
-    margin: 0 auto;
-    zoom: 1 !important;
-}
-
-body.mobile-app div.map div#map_details {
-    float: none !important;
-    width: 100% !important;
-    margin: 10px 0 !important;
-    padding: 8px !important;
-    box-sizing: border-box;
-}
-
-body.mobile-app div.map div.cropfinder_icon {
-    right: auto !important;
-    position: relative !important;
-    margin: 5px auto;
-    display: block;
-    text-align: center;
-}
-
-/* --- Build Page --- */
-body.mobile-app div#build {
-    width: 100% !important;
-    padding: 10px 8px 0 !important;
-    box-sizing: border-box;
-}
-
-/* --- Messages & Reports --- */
-body.mobile-app div.messages,
-body.mobile-app div.report {
-    padding-top: 10px !important;
-}
-
-body.mobile-app div.messages table,
-body.mobile-app div.report table {
-    width: 100% !important;
-}
-
-/* --- Popups --- */
-body.mobile-app div.popup3 {
-    right: 5px !important;
-    left: 5px !important;
-    width: auto !important;
-    max-width: 95vw;
-}
-
-/* --- Experience/Progress Bar --- */
-body.mobile-app .InBar.xPh {
-    margin-right: 0 !important;
-    width: 100%;
-    justify-content: center;
-}
-
-/* --- Gold Button --- */
-body.mobile-app a.Plus.Gold {
-    margin: 0 2px;
-}
-
-body.mobile-app .Gold1 {
-    font-size: 11px;
-}
-
-/* --- Notification Bell --- */
-body.mobile-app #notif-bell {
-    margin: 0 4px !important;
-}
-
-/* --- Text Menu (Statistics tabs) --- */
+/* ---- Text Menu (Statistics/tabs) ---- */
 body.mobile-app #textmenu {
     flex-wrap: wrap;
     gap: 2px !important;
@@ -365,67 +308,82 @@ body.mobile-app #textmenu a {
     font-size: 11px !important;
 }
 
-/* --- Day/Night indicator --- */
-body.mobile-app img.day,
-body.mobile-app img.time_of_day {
-    display: none !important;
+/* ---- Popups ---- */
+body.mobile-app div.popup3 {
+    right: 5px !important;
+    left: 5px !important;
+    width: auto !important;
+    max-width: 95vw;
 }
 
-/* --- Server time --- */
-body.mobile-app div#stime {
-    display: none !important;
+/* ---- Gold display ---- */
+body.mobile-app .Gold1 {
+    font-size: 11px;
 }
 
-/* --- Scrollable content for overflowing areas --- */
-body.mobile-app .overflow-scroll {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
+/* ---- XP Bar ---- */
+body.mobile-app .InBar.xPh {
+    margin-right: 0 !important;
 }
 
-/* --- Defense value display --- */
-body.mobile-app .molvp-dve {
-    position: relative !important;
-    bottom: auto !important;
-    left: auto !important;
+/* ===========================================
+   Bottom Navigation Bar
+   =========================================== */
+body.mobile-app .nav-mob {
+    position: fixed !important;
+    bottom: 0 !important;
+    top: auto !important;
+    left: 0 !important;
+    right: 0 !important;
     float: none !important;
-    text-align: center;
-    width: 100%;
-    padding: 6px 10px;
-    box-sizing: border-box;
+    z-index: 9999 !important;
+    background: #1b1b2f;
+    display: flex !important;
+    justify-content: space-around;
+    align-items: stretch;
+    padding: 0;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    box-shadow: 0 -1px 8px rgba(0,0,0,0.35);
+    border-top: 1px solid rgba(255,255,255,0.08);
+    height: 56px;
 }
 
-body.mobile-app .molvp-protection2 {
-    position: relative !important;
-    left: auto !important;
-    float: none !important;
-    width: 100%;
-    text-align: center;
-    margin-top: 5px !important;
-    padding: 5px 10px !important;
-    box-sizing: border-box;
-}
-
-/* --- Improve touch targets --- */
-body.mobile-app a {
-    min-height: 28px;
-    display: inline-flex;
+body.mobile-app .nav-mob .nav-mob-item {
+    display: flex !important;
+    flex-direction: column;
     align-items: center;
-}
-
-body.mobile-app #side_navi a,
-body.mobile-app table a,
-body.mobile-app div#content a {
+    justify-content: center;
+    flex: 1;
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    font-size: 10px;
+    gap: 3px;
+    padding: 6px 0;
+    transition: color 0.15s;
     min-height: auto;
-    display: inline;
+    border-radius: 0;
+    position: relative;
 }
 
-/* --- Smooth scrolling --- */
-body.mobile-app {
-    -webkit-overflow-scrolling: touch;
-    scroll-behavior: smooth;
+body.mobile-app .nav-mob .nav-mob-item:active {
+    color: #fff;
+    background: rgba(255,255,255,0.08);
 }
 
-/* --- Hide desktop-only elements in app --- */
-body.mobile-app img#msfilter {
-    display: none;
+body.mobile-app .nav-mob .nav-mob-item svg {
+    width: 22px;
+    height: 22px;
+    stroke: currentColor;
+    flex-shrink: 0;
+}
+
+body.mobile-app .nav-mob .nav-mob-item span {
+    font-family: 'Tajawal', 'Arial', sans-serif;
+    line-height: 1;
+    white-space: nowrap;
+}
+
+/* Hide old-style mobile nav images (legacy) */
+body.mobile-app .nav-mob a img.img-fluid {
+    display: none !important;
 }

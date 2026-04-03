@@ -100,14 +100,15 @@ $this->player = $p->getInstance();
 if ($this->player == NULL) {
     $cookie = $GLOBALS['cd']->getinstance();
     if (!empty($cookie->uname) && !empty($cookie->upwd)) {
+        require_once(MODEL_PATH.'index.php');
         $m = new IndexModel();
         $loginResult = $m->getLoginResult($cookie->uname, $cookie->upwd, WebHelper::getclientip(), false);
         if ($loginResult != NULL && !$loginResult['hasError']) {
             $this->player             = new Player();
             $this->player->playerId   = $loginResult['playerId'];
-            $this->player->isAgent    = $loginResult['data']['is_agent'];
+            $this->player->isAgent    = $loginResult['data']['is_agent'] ?? 0;
             $this->player->gameStatus = $loginResult['gameStatus'];
-            $this->player->actions    = $loginResult['data']['actions'];
+            $this->player->actions    = $loginResult['data']['actions'] ?? '';
             $this->player->save();
             if (session_status() === PHP_SESSION_NONE) { session_start(); }
             $_SESSION['pwd'] = md5($cookie->upwd);
