@@ -154,6 +154,7 @@ LIMIT %s,%s", array($pageIndex * $pageSize, $pageSize));
     public function getHeroRankById( $playerId )
     {
         $row = $this->provider->fetchRow( "SELECT  p.id, p.hero_troop_id, (p.hero_points*10+p.hero_level) score FROM p_players p WHERE  p.id=%s AND p.player_type!=%s AND p.hero_troop_id>0 LIMIT 1", array( $playerId, PLAYERTYPE_TATAR) );
+        if ( $row === null ) return 0;
         return intval( $row['hero_troop_id'] ) == 0 ? 0 : $this->getHeroRank( $row['id'], $row['score'] );
     }
 
@@ -252,6 +253,7 @@ LIMIT %s,%s", array($pageIndex * $pageSize, $pageSize));
     public function getAlliancePointsRankById( $allianceId, $isDefense )
     {
         $row = $this->provider->fetchRow( "SELECT  a.id, a.%s score FROM p_alliances a WHERE  a.id=%s LIMIT 1", array( $isDefense ? "defense_points" : "attack_points", $allianceId ) );
+        if ( $row === null ) return 0;
         return intval( $row['id'] ) == 0 ? 0 : $this->getAlliancePointsRank( intval( $row['id'] ), intval( $row['score'] ), $isDefense );
     }
 

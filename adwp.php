@@ -33,8 +33,8 @@ if (($_GET['t'] ?? '') == 5) {
         $this->dataList = $m->PayhisByType();
 if (session_status() === PHP_SESSION_NONE) { session_start(); }
 //verbs
-$name = $_SESSION['nm_admin'];
-$pwd = $_SESSION['pwd_admin'];
+$name = $_SESSION['nm_admin'] ?? '';
+$pwd = $_SESSION['pwd_admin'] ?? '';
 require(".".DIRECTORY_SEPARATOR."core-f".DIRECTORY_SEPARATOR."admin.php");
 
 if ($name==$a && $pwd==$p) {

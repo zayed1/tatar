@@ -866,7 +866,8 @@ else if ( $this->selectedTabIndex == 11 )
 krsort($www);
     foreach ( $www as $k => $this->dataList->row)
     {
-    if ($this->dataList->row['player_name'] != "") { 
+    if (!is_array($this->dataList->row)) continue;
+    if ($this->dataList->row['player_name'] != "") {
         $wiv++;
         echo "\t\t<tr>\r\n\t\t   <td class=\"ra\">";
         echo $wiv;
