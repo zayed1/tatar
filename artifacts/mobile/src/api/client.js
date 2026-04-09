@@ -25,17 +25,14 @@ export async function clearAuth() {
 }
 
 export async function apiLogin(name, password) {
-  const url = `${BASE_URL}/api/login.php`;
-  console.log('[API] Login:', url);
-  const res = await fetch(url, {
+  const res = await fetch(`${BASE_URL}/api/login.php`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ name, password }),
   });
   const text = await res.text();
-  console.log('[API] Login response:', res.status, text.substring(0, 200));
   let json;
-  try { json = JSON.parse(text); } catch (e) { throw new Error('Server returned invalid JSON: ' + text.substring(0, 100)); }
+  try { json = JSON.parse(text); } catch (e) { throw new Error('Server error: ' + text.substring(0, 100)); }
   if (!json.ok) throw new Error(json.error || 'Login failed');
   return json.data;
 }
@@ -43,15 +40,13 @@ export async function apiLogin(name, password) {
 async function authFetch(url, options = {}) {
   const token = await getToken();
   if (!token) throw new Error('Not authenticated');
-  console.log('[API] Fetch:', url);
   const res = await fetch(url, {
     ...options,
     headers: { Authorization: `Bearer ${token}`, ...options.headers },
   });
   const text = await res.text();
-  console.log('[API] Response:', res.status, text.substring(0, 200));
   let json;
-  try { json = JSON.parse(text); } catch (e) { throw new Error('Server returned invalid JSON: ' + text.substring(0, 100)); }
+  try { json = JSON.parse(text); } catch (e) { throw new Error('Server error: ' + text.substring(0, 100)); }
   if (!json.ok) throw new Error(json.error || 'Request failed');
   return json.data;
 }
