@@ -23,6 +23,9 @@ RUN chown -R www-data:www-data /var/www/html \
 # Allow .htaccess overrides
 RUN sed -i 's/AllowOverride None/AllowOverride All/g' /etc/apache2/apache2.conf
 
+# Suppress ServerName warning
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
+
 # Remove cPanel-specific PHP directives from .htaccess
 RUN sed -i '/<IfModule php5_module>/,/<\/IfModule>/d' /var/www/html/.htaccess \
     && sed -i '/<IfModule lsapi_module>/,/<\/IfModule>/d' /var/www/html/.htaccess \
