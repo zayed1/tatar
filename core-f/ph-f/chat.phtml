@@ -205,26 +205,20 @@ echo 'ript>
 ';
 $storCtat = array( );
 
-                        $colors = ["#84674e",'#0b91b2','#6ebe22','#a93eab','#3559b0']; 
+                        $colors = ["#84674e",'#0b91b2','#6ebe22','#a93eab','#3559b0'];
 while ( $this->chats->next( ) )
 {
     $redseahost = $this->Filter->FilterWords( $this->chats->row['text'] );
+    $uid = $this->chats->row['userid'];
+    $color = !empty($uid) ? $colors[$uid % 5] : '#333';
     $storCtat[$this->chats->row['ID']] = array(
         date( "H:i", $this->chats->row['date'] ),
         $this->chats->row['username'],
         $redseahost,
-        $this->chats->row['userid']
+        $uid,
+        $this->chats->row['ID'],
+        $color
     );
-
-                        $storCtat[$this->chats->row['ID']] = array(date( "H:i", $this->chats->row['date'] ),$this->chats->row['username'],$redseahost,$this->chats->row['userid'],$this->chats->row['ID']);
-                        if(!empty($this->chats->row['userid'])){
-
-                        $storCtat[$this->chats->row['ID']] = array(date( "H:i", $this->chats->row['date'] ),$this->chats->row['username'],$redseahost,$this->chats->row['userid'],$this->chats->row['ID'],$colors[$this->chats->row['userid']%5]);
-                        }
-if(!empty($this->chats->row['userid'])){
-
-                        $storCtat[$this->chats->row['ID']] = array(date( "H:i", $this->chats->row['date'] ),$this->chats->row['username'],$redseahost,$this->chats->row['userid'],$colors[$this->chats->row['userid']%5]);
-                        }
 }
 ksort( $storCtat );
 foreach ( $storCtat as $ChatLine )
