@@ -160,19 +160,19 @@ echo "<br><p><a href=\"index.php\">";echo LANGUI_GAME_MENU1;echo "</a>";
 if($this->player != NULL){echo "
 <a href=\"#\" onclick=\"return showManual(0,0);\">";echo LANGUI_GAME_MENU2;echo "</a>
 <a href=\"profile.php\">"; echo LANGUI_GAME_MENU3;echo "</a>";
-echo '<a href="msg?uid=1"><b><font style="color:blue">الدعم</b></a></font>';
-echo '<a href="chat.php"><font style="color:black">الشات</a></font>';
-                          echo '<a href="def.php"><font style="color:red">التحديات</a></font>';						  
+echo '<a href="msg?uid=1"><b>الدعم</b></a>';
+echo '<a href="chat.php">الشات</a>';
+echo '<a href="def.php">التحديات</a>';						  
 echo "<a href=\"logout.php\">"; echo LANGUI_GAME_MENU4; echo "</a>
 </p>
 <p>";
 if ( $this->data['active_plus_account']){
 }
 if ( $this->data['player_type'] == PLAYERTYPE_ADMIN ){
-echo '<a href="admin"><b><font style="color:red">لوحة التحكم</b></a></font>';
-echo '<a href="mextract.php"><b><font style="color:blue">إميلات اللاعييين</b></a></font>';
-echo '<a href="copsys.php"><b><font style="color:orange">إنشاء كوبونات</b></a></font>';
-echo '<a href="h1231restore.php"><b><font style="color:Tomato">إرجاع البطل</b></a></font>';
+echo '<a href="admin"><b>لوحة التحكم</b></a>';
+echo '<a href="mextract.php"><b>إميلات اللاعييين</b></a>';
+echo '<a href="copsys.php"><b>إنشاء كوبونات</b></a>';
+echo '<a href="h1231restore.php"><b>إرجاع البطل</b></a>';
 ?>
 <p>
 </p>
