@@ -2,12 +2,11 @@
   "expo": {
     "name": "عودة التتار",
     "slug": "tatar-war",
-    "version": "1.0.0",
+    "version": "2.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "tatarwar",
     "userInterfaceStyle": "dark",
-    "newArchEnabled": true,
     "splash": {
       "image": "./assets/images/splash-icon.png",
       "resizeMode": "contain",
@@ -28,20 +27,6 @@
     },
     "web": {
       "favicon": "./assets/images/icon.png"
-    },
-    "plugins": [
-      [
-        "expo-router",
-        {
-          "origin": "https://replit.com/"
-        }
-      ],
-      "expo-font",
-      "expo-web-browser"
-    ],
-    "experiments": {
-      "typedRoutes": true,
-      "reactCompiler": true
     }
   }
 }
