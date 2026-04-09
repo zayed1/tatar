@@ -46,14 +46,14 @@ $playerId = intval($player['id']);
 mysqli_query($db, "UPDATE p_players SET last_ip='$ip', last_login_date=NOW() WHERE id=$playerId");
 
 // Get villages
-$vResult = mysqli_query($db, "SELECT id, village_name, x, y, is_capital FROM p_villages WHERE player_id=$playerId ORDER BY is_capital DESC, id ASC");
+$vResult = mysqli_query($db, "SELECT id, village_name, rel_x, rel_y, is_capital FROM p_villages WHERE player_id=$playerId ORDER BY is_capital DESC, id ASC");
 $villages = [];
 while ($v = mysqli_fetch_assoc($vResult)) {
     $villages[] = [
         'id' => intval($v['id']),
         'name' => $v['village_name'],
-        'x' => intval($v['x']),
-        'y' => intval($v['y']),
+        'x' => intval($v['rel_x']),
+        'y' => intval($v['rel_y']),
         'is_capital' => intval($v['is_capital'])
     ];
 }
