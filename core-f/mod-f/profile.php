@@ -212,9 +212,8 @@ public function getwarAllianceId( $allianceId )
         while ( $i < $c )
         {
             list( $vid, $x, $y, $vname ) = explode( " ", $villages_id_arr[$i], 4 );
-           // if ( $vid == $selected_village_id )
-           // {
-                $vname = htmlspecialchars($data['village_name'][$i]);
+                $newVname = is_array($data['village_name'] ?? null) ? ($data['village_name'][$i] ?? $vname) : $vname;
+                $vname = htmlspecialchars($newVname);
                 $villages_id_arr[$i] = $vid." ".$x." ".$y." ".$vname;
         $village_name = htmlspecialchars(trim( $data['village_name'][$i] ));
         if ( $village_name != "" )

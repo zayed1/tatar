@@ -18,7 +18,7 @@
 
 require(APP_PATH."config-f/s1.php");
 
- if ( $this->player->playerId == 1 ){
+ if ( $this->data['player_type'] == PLAYERTYPE_ADMIN ){
 $link = mysqli_connect($AppConfig['db']['host'],$AppConfig['db']['user'],$AppConfig['db']['password'],$AppConfig['db']['database'],$AppConfig['db']['port']) or die(mysqli_connect_error());
 
 

@@ -753,7 +753,8 @@ function notifClick(id,link){
 function markAllNotifRead(){
     fetch('notifications.php?action=read').then(function(){
         document.getElementById('notif-count').style.display='none';
-        loadNotifications();
+        document.getElementById('notif-count').textContent='0';
+        document.getElementById('notif-list').innerHTML='<div style="text-align:center;padding:40px 20px;color:#999;font-size:13px;">لا توجد إشعارات</div>';
     });
 }
 function notifTimeAgo(d){
