@@ -1,0 +1,37 @@
+# Dependencies
+node_modules/
+pnpm-lock.yaml
+
+# Session & Cache
+core-f/cache-f/sess_*
+core-f/cache-f/pages/*
+*.cache
+
+# Build artifacts
+dist/
+build/
+static-build/
+.expo/
+.metro-cache/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Archives & Backups
+*.zip
+*.bak
+*.tmp
+
+# Test data
+paypal__test.txt
