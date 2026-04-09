@@ -262,12 +262,6 @@ $Att_a = $tatarzx->provider->fetchScalar( "SELECT  `id`,`attack_points`,`name` F
             border-color: var(--border) !important;
         }
 
-        /* Override inline font color tags for sidebar links */
-        #side_navi font[color="black"] {
-            color: var(--text-muted) !important;
-        }
-
-        #side_navi font[color="orange"],
         #side_navi strong {
             color: var(--accent) !important;
         }
@@ -446,14 +440,14 @@ $Att_a = $tatarzx->provider->fetchScalar( "SELECT  `id`,`attack_points`,`name` F
             <a id="logo" href="#"><img src="core-f/style-f/x.gif" alt="<?php echo LANGUI_FORM_GNAME; ?>" /></a>
             <p>
                 <?php if ($this->contentCssClass == "login"): ?>
-                    <a href="index.php"><font style="color: black">الصفحة الرئيسية</font></a>
-                    <a href="manual.php"><font style="color: black">دليل اللعبة</font></a>
-                    <a href="login?terms"><font style="color: black">قوانين اللعبة</font></a>
-                    <a href="register.php"><font style="color: orange"><strong>سجل الأن</strong></font></a>
+                    <a href="index.php">الصفحة الرئيسية</a>
+                    <a href="manual.php">دليل اللعبة</a>
+                    <a href="login?terms">قوانين اللعبة</a>
+                    <a href="register.php"><strong>سجل الأن</strong></a>
                 <?php else: ?>
-                    <a href="index.php"><font style="color: black">الصفحة الرئيسية</font></a>
-                    <a href="manual.php"><font style="color: black">دليل اللعبة</font></a>
-                    <a href="login?terms"><font style="color: black">قوانين اللعبة</font></a>
+                    <a href="index.php">الصفحة الرئيسية</a>
+                    <a href="manual.php">دليل اللعبة</a>
+                    <a href="login?terms">قوانين اللعبة</a>
                     <a href="login.php"><strong>دخول</strong></a>
                 <?php endif; ?>
             </p>

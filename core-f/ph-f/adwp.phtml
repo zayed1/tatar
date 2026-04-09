@@ -230,6 +230,8 @@ if ( $this->selectedTabIndex == 5 )
         </thead>
 <?php
 $found = false;
+$ag = 0;
+$am = 0;
 while ($this->dataList->next()) {
 $m = new Payhis();
 $playerName = $this->dataList->row['usernam'];

@@ -473,7 +473,7 @@ $tatarzx->provider->executeQuery2("UPDATE p_villages SET player_name='".$nam."' 
             {
             if ($this->selectedTabIndex == 2)
                 {
-				echo $_POST['actions1'];
+				echo $_POST['actions1'] ?? '';
                 if ((isset($_GET['aid']) && 0 < intval($_GET['aid'])))
                     {
                     $aid = intval($_GET['aid']);
