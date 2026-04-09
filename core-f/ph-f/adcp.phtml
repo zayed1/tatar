@@ -206,8 +206,8 @@ echo '<span class="error">تم تطبيق العقوبه</span>';
 <input type="image" value="" name="s2" id="btn_save" class="dynamic_img" src="core-f/style-f/x.gif">                        
 </center></p>
 </form>
-<?php } if ( $this->errorTable != NULL ) { ?>
-<p class="error"><?php echo $this->errorTable;?></p>
+<?php } if ( ($this->errorTable ?? null) != NULL ) { ?>
+<p class="error"><?php echo ($this->errorTable ?? null);?></p>
 <?php
 }
 } if (        $this->selectedTabIndex == 1 ) { ?>
@@ -229,8 +229,8 @@ echo '<span class="error">تم تطبيق العقوبه</span>';
 <input type="image" value="" name="s1" id="btn_search" class="dynamic_img" src="core-f/style-f/x.gif">                        
 </center></p>
 </form>
-<?php if ( $this->errorTable != NULL ) { ?>
-<p class="error"><?php echo $this->errorTable;?></p>
+<?php if ( ($this->errorTable ?? null) != NULL ) { ?>
+<p class="error"><?php echo ($this->errorTable ?? null);?></p>
 <?php } if ( $this->isPost() && !isset( $_GET['v'] ) )
    {?>
 <table class="rate_details lang_rtl lang_ar" cellpadding="1" cellspacing="1">
@@ -389,7 +389,7 @@ if (!$found)
 </center></p>
 </form>
 <?php
- } if ( $this->errorTable != NULL ) {
+ } if ( ($this->errorTable ?? null) != NULL ) {
 }
 }
 } if (        $this->selectedTabIndex == 2 ) { 
@@ -414,7 +414,7 @@ $this->summarylist = $m->GetGsummaryData ();
 </tr>
 <tr>
                 <td><?php echo LANGUI_ADCP_T55; ?></td>
-                <td><input class="text" type="text" name="Mongols_players_count" maxlength="20" value="<?php echo $this->summarylist['Mongols_players_count']; ?>"></td>
+                <td><input class="text" type="text" name="Mongols_players_count" maxlength="20" value="<?php echo $this->summarylist['Mongols_players_count'] ?? ''; ?>"></td>
 </tr>
 <tr>
                 <td><?php echo LANGUI_ADCP_T56; ?></td>
@@ -439,8 +439,8 @@ $this->summarylist = $m->GetGsummaryData ();
 </center></p>
 </form>
 <?php
-if ( $this->errorTable != NULL ) { ?>
-<p class="error"><?php echo $this->errorTable;?></p>
+if ( ($this->errorTable ?? null) != NULL ) { ?>
+<p class="error"><?php echo ($this->errorTable ?? null);?></p>
 <?php
 }
 } if (        $this->selectedTabIndex == 6 ) { ?>
@@ -471,8 +471,8 @@ if ( $this->errorTable != NULL ) { ?>
 </center></p>
 </form>
 <?php
-if ( $this->errorTable != NULL ) { ?>
-<p class="error"><?php echo $this->errorTable;?></p>
+if ( ($this->errorTable ?? null) != NULL ) { ?>
+<p class="error"><?php echo ($this->errorTable ?? null);?></p>
 <?php
 }
 } if (        $this->selectedTabIndex == 7 ) {
@@ -507,8 +507,8 @@ $time = ceil(($this->summarylist['truce_time'] - time())/60/60);
 </center></p>
 </form>
 <?php
-if ( $this->errorTable != NULL ) { ?>
-<p class="error"><? echo $this->errorTable;?></p>
+if ( ($this->errorTable ?? null) != NULL ) { ?>
+<p class="error"><? echo ($this->errorTable ?? null);?></p>
 <?php
 }
 } if (        $this->selectedTabIndex == 8 ) {
