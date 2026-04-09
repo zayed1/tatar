@@ -10,8 +10,8 @@ const MENU_SECTIONS = [
     items: [
       { label: '👤 البروفايل', screen: 'Profile' },
       { label: '📊 الإحصائيات', screen: 'Statistics' },
-      { label: '💬 الشات', path: 'chat.php' },
-      { label: '🤝 التحالف', path: 'alliance' },
+      { label: '💬 الشات', screen: 'Chat' },
+      { label: '🤝 التحالف', screen: 'Alliance' },
       { label: '⚔️ التحديات', path: 'def.php' },
       { label: '🏪 السوق', path: 'build.php?bid=17' },
     ],

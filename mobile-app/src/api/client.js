@@ -103,3 +103,34 @@ export async function apiGetProfile(uid) {
 export async function apiGetStats(tab = 'players', page = 0) {
   return authFetch(`${BASE_URL}/api/statistics.php?tab=${tab}&page=${page}&limit=20`);
 }
+
+// Chat
+export async function apiChatGet() {
+  return authFetch(`${BASE_URL}/api/chat.php?action=get`);
+}
+
+export async function apiChatSend(text) {
+  return authFetch(`${BASE_URL}/api/chat.php?action=send`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ text }),
+  });
+}
+
+export async function apiAllianceChatGet() {
+  return authFetch(`${BASE_URL}/api/chat.php?action=alliance`);
+}
+
+export async function apiAllianceChatSend(text) {
+  return authFetch(`${BASE_URL}/api/chat.php?action=alliance_send`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ text }),
+  });
+}
+
+// Alliance
+export async function apiGetAlliance(id) {
+  const param = id ? `&id=${id}` : '';
+  return authFetch(`${BASE_URL}/api/alliance.php?action=info${param}`);
+}
