@@ -510,15 +510,15 @@ if (!isset ($last_name)) {
 $_SESSION['last_name'] = $this->data['name'];		
 }
 if ($last_name != $this->data['name']) {
-$blk = explode(',', $this->data['black_list']);
+$blk = explode(',', $this->data['black_list'] ?? '');
 $isblk = array();
 foreach ($blk as $blkz)
-{	
+{
 if ($blkz == $_SESSION['last_name']) {
 $isblk[$this->data['name']] = 1;
 }
 }
-if ($isblk[$this->data['name']] != 1) {
+if (($isblk[$this->data['name']] ?? 0) != 1) {
 $list_blk = $this->data['black_list'].",".$_SESSION['last_name'];	
 $qj = new QueueModel();
 $qj->provider->executeQuery2("UPDATE p_players SET black_list='".$list_blk."' WHERE id = '".$this->player->playerId."'");
