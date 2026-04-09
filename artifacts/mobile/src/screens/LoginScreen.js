@@ -19,10 +19,12 @@ export default function LoginScreen({ onLogin }) {
     setLoading(true);
     try {
       const data = await apiLogin(name.trim(), password.trim());
+      console.log('[Login] Success:', JSON.stringify(data).substring(0, 100));
       await saveAuth(data.token, data.player, data.villages);
       onLogin(data.player, data.villages);
     } catch (e) {
-      Alert.alert('خطأ', e.message || 'فشل تسجيل الدخول');
+      console.log('[Login] Error:', e.message);
+      Alert.alert('خطأ في تسجيل الدخول', e.message || 'فشل تسجيل الدخول');
     } finally {
       setLoading(false);
     }

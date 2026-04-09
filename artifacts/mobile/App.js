@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import {
-  SafeAreaView, StatusBar, StyleSheet, View, Text, AppState,
+  SafeAreaView, StatusBar, StyleSheet, View, Text, AppState, Alert,
 } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -121,10 +121,13 @@ export default function App() {
       const data = await apiGetData();
       setGameData(data);
     } catch (e) {
-      // Token expired
+      console.log('[App] fetchData error:', e.message);
       if (e.message === 'Invalid token' || e.message === 'Unauthorized') {
         await clearAuth();
         setAuthenticated(false);
+      } else {
+        // Show error in development - remove later
+        Alert.alert('خطأ في جلب البيانات', e.message);
       }
     }
   }, []);
