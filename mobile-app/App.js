@@ -1,310 +1,209 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import {
-  SafeAreaView,
-  StatusBar,
-  StyleSheet,
-  View,
-  ActivityIndicator,
-  Text,
-  TouchableOpacity,
-  BackHandler,
-  Platform,
-  AppState,
+  SafeAreaView, StatusBar, StyleSheet, View, Text, AppState,
 } from 'react-native';
-import { WebView } from 'react-native-webview';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-const GAME_URL = 'https://tatar-production.up.railway.app';
-const AUTH_STORAGE_KEY = '@tatar_auth';
+import { getToken, getStoredAuth, apiGetData, clearAuth } from './src/api/client';
+import ResourceBar from './src/components/ResourceBar';
+import LoginScreen from './src/screens/LoginScreen';
+import FieldsScreen from './src/screens/FieldsScreen';
+import CityScreen from './src/screens/CityScreen';
+import MapScreen from './src/screens/MapScreen';
+import MoreScreen from './src/screens/MoreScreen';
+import WebPageScreen from './src/screens/WebPageScreen';
+
+const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
+
+const TAB_ICONS = {
+  Fields: '🏕️',
+  City: '🏰',
+  Map: '🗺️',
+  Reports: '📋',
+  More: '☰',
+};
+
+function TabIcon({ name, focused }) {
+  return (
+    <Text style={{ fontSize: focused ? 22 : 20, opacity: focused ? 1 : 0.5 }}>
+      {TAB_ICONS[name]}
+    </Text>
+  );
+}
+
+function GameTabs({ gameData, onLogout }) {
+  return (
+    <Tab.Navigator
+      screenOptions={({ route }) => ({
+        headerShown: false,
+        tabBarIcon: ({ focused }) => <TabIcon name={route.name} focused={focused} />,
+        tabBarActiveTintColor: '#ffd700',
+        tabBarInactiveTintColor: '#888',
+        tabBarStyle: styles.tabBar,
+        tabBarLabelStyle: styles.tabLabel,
+      })}
+      initialRouteName="Fields"
+    >
+      <Tab.Screen name="Fields" component={FieldsScreen} options={{ tabBarLabel: 'الحقول' }} />
+      <Tab.Screen name="City" component={CityScreen} options={{ tabBarLabel: 'المدينة' }} />
+      <Tab.Screen name="Map" component={MapScreen} options={{ tabBarLabel: 'الخريطة' }} />
+      <Tab.Screen
+        name="More"
+        options={{ tabBarLabel: 'المزيد' }}
+      >
+        {(props) => <MoreScreen {...props} onLogout={onLogout} />}
+      </Tab.Screen>
+    </Tab.Navigator>
+  );
+}
 
 export default function App() {
-  const webViewRef = useRef(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
-  const [canGoBack, setCanGoBack] = useState(false);
-  const [initialUrl, setInitialUrl] = useState(null);
+  const [authenticated, setAuthenticated] = useState(null); // null = loading
+  const [player, setPlayer] = useState(null);
+  const [gameData, setGameData] = useState(null);
   const appState = useRef(AppState.currentState);
+  const refreshInterval = useRef(null);
 
-  // Load saved auth on app start
+  // Check stored auth on start
   useEffect(() => {
-    AsyncStorage.getItem(AUTH_STORAGE_KEY).then((saved) => {
-      if (saved) {
-        const { uname, upwd } = JSON.parse(saved);
-        // Build auto-login URL with credentials
-        setInitialUrl(
-          GAME_URL + '/login.php?platform=app&auto=1&savedName=' +
-          encodeURIComponent(uname) + '&savedPwd=' + encodeURIComponent(upwd)
-        );
-      } else {
-        setInitialUrl(GAME_URL + '?platform=app');
-      }
-    }).catch(() => {
-      setInitialUrl(GAME_URL + '?platform=app');
-    });
-  }, []);
-
-  // Android back button
-  useEffect(() => {
-    if (Platform.OS === 'android') {
-      const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
-        if (canGoBack && webViewRef.current) {
-          webViewRef.current.goBack();
-          return true;
-        }
-        return false;
-      });
-      return () => backHandler.remove();
-    }
-  }, [canGoBack]);
-
-  // Save cookies to disk when app goes to background (Android)
-  useEffect(() => {
-    const subscription = AppState.addEventListener('change', (nextAppState) => {
-      if (appState.current.match(/active/) && nextAppState.match(/inactive|background/)) {
-        // Flush cookies when going to background
-        if (Platform.OS === 'android' && webViewRef.current) {
-          webViewRef.current.injectJavaScript(`
-            if (window.CookieManager) { window.CookieManager.flush(); }
-            true;
-          `);
+    (async () => {
+      const token = await getToken();
+      if (token) {
+        const stored = await getStoredAuth();
+        if (stored) {
+          setPlayer(stored.player);
+          setAuthenticated(true);
+          return;
         }
       }
-      appState.current = nextAppState;
-    });
-    return () => subscription.remove();
-  }, []);
-
-  // JS injected into WebView
-  const injectedJS = `
-    (function() {
-      document.body.classList.add('mobile-app');
-
-      if (!document.querySelector('meta[name="viewport"]')) {
-        var meta = document.createElement('meta');
-        meta.name = 'viewport';
-        meta.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no';
-        document.head.appendChild(meta);
-      }
-
-      document.addEventListener('gesturestart', function(e) { e.preventDefault(); });
-
-      document.querySelectorAll('a[target="_blank"]').forEach(function(link) {
-        link.removeAttribute('target');
-      });
-
-      // Intercept successful login to save credentials
-      (function watchLogin() {
-        var forms = document.querySelectorAll('form');
-        forms.forEach(function(form) {
-          form.addEventListener('submit', function() {
-            var nameInput = form.querySelector('input[name="name"]');
-            var pwdInput = form.querySelector('input[name="password"]');
-            if (nameInput && pwdInput && nameInput.value && pwdInput.value) {
-              window.ReactNativeWebView.postMessage(JSON.stringify({
-                type: 'login',
-                uname: nameInput.value,
-                upwd: pwdInput.value
-              }));
-            }
-          });
-        });
-      })();
-
-      // Check if user is logged in (not on login page)
-      if (!window.location.pathname.match(/login|logout|signup/)) {
-        // Try to read game cookie and send to native
-        try {
-          var cookies = document.cookie;
-          if (cookies) {
-            window.ReactNativeWebView.postMessage(JSON.stringify({
-              type: 'cookies_available',
-              cookies: cookies
-            }));
-          }
-        } catch(e) {}
-      }
-
-      // If on logout page, clear saved auth
-      if (window.location.pathname.match(/logout/)) {
-        window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'logout' }));
-      }
+      setAuthenticated(false);
     })();
-    true;
-  `;
-
-  // Handle messages from WebView
-  const onMessage = useCallback((event) => {
-    try {
-      const data = JSON.parse(event.nativeEvent.data);
-      if (data.type === 'login' && data.uname && data.upwd) {
-        AsyncStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify({
-          uname: data.uname,
-          upwd: data.upwd
-        }));
-      } else if (data.type === 'logout') {
-        AsyncStorage.removeItem(AUTH_STORAGE_KEY);
-      }
-    } catch (e) {}
   }, []);
 
-  const renderLoading = () => (
-    <View style={styles.loadingContainer}>
-      <Text style={styles.loadingTitle}>عودة التتار</Text>
-      <Text style={styles.loadingSubtitle}>جاري التحميل...</Text>
-      <ActivityIndicator size="large" color="#c0392b" style={styles.spinner} />
-    </View>
-  );
+  // Refresh game data periodically
+  const fetchData = useCallback(async () => {
+    try {
+      const data = await apiGetData();
+      setGameData(data);
+    } catch (e) {
+      // Token expired
+      if (e.message === 'Invalid token' || e.message === 'Unauthorized') {
+        await clearAuth();
+        setAuthenticated(false);
+      }
+    }
+  }, []);
 
-  if (error) {
+  useEffect(() => {
+    if (!authenticated) return;
+    fetchData();
+    refreshInterval.current = setInterval(fetchData, 30000); // every 30s
+    return () => clearInterval(refreshInterval.current);
+  }, [authenticated, fetchData]);
+
+  // Pause refresh when app is in background
+  useEffect(() => {
+    const sub = AppState.addEventListener('change', (next) => {
+      if (next === 'active' && authenticated) fetchData();
+      appState.current = next;
+    });
+    return () => sub.remove();
+  }, [authenticated, fetchData]);
+
+  const handleLogin = (playerData, villages) => {
+    setPlayer(playerData);
+    setAuthenticated(true);
+  };
+
+  const handleLogout = () => {
+    setGameData(null);
+    setPlayer(null);
+    setAuthenticated(false);
+    clearInterval(refreshInterval.current);
+  };
+
+  // Loading state
+  if (authenticated === null) {
     return (
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView style={styles.loadingContainer}>
         <StatusBar barStyle="light-content" backgroundColor="#0d0d1a" />
-        <View style={styles.errorContainer}>
-          <Text style={styles.errorIcon}>⚔️</Text>
-          <Text style={styles.errorTitle}>لا يوجد اتصال</Text>
-          <Text style={styles.errorText}>تأكد من اتصالك بالإنترنت وحاول مرة أخرى</Text>
-          <TouchableOpacity
-            style={styles.retryButton}
-            onPress={() => { setError(false); setLoading(true); }}
-          >
-            <Text style={styles.retryText}>إعادة المحاولة</Text>
-          </TouchableOpacity>
-        </View>
+        <Text style={styles.loadingTitle}>⚔️ عودة التتار</Text>
+        <Text style={styles.loadingSubtitle}>جاري التحميل...</Text>
       </SafeAreaView>
     );
   }
 
-  // Wait for initial URL to be determined
-  if (!initialUrl) {
+  // Login screen
+  if (!authenticated) {
     return (
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView style={styles.loginContainer}>
         <StatusBar barStyle="light-content" backgroundColor="#0d0d1a" />
-        {renderLoading()}
+        <LoginScreen onLogin={handleLogin} />
       </SafeAreaView>
     );
   }
 
+  // Main game
   return (
-    <SafeAreaView style={styles.container}>
-      <StatusBar barStyle="light-content" backgroundColor="#0d0d1a" />
-
-      <WebView
-        ref={webViewRef}
-        source={{ uri: initialUrl }}
-        style={styles.webview}
-        injectedJavaScript={injectedJS}
-        javaScriptEnabled={true}
-        domStorageEnabled={true}
-        startInLoadingState={true}
-        renderLoading={renderLoading}
-        allowsBackForwardNavigationGestures={true}
-        pullToRefreshEnabled={true}
-        onNavigationStateChange={(navState) => {
-          setCanGoBack(navState.canGoBack);
-        }}
-        onLoadStart={() => setLoading(true)}
-        onLoadEnd={() => setLoading(false)}
-        onError={() => setError(true)}
-        onHttpError={(syntheticEvent) => {
-          const { nativeEvent } = syntheticEvent;
-          if (nativeEvent.statusCode >= 500) {
-            setError(true);
-          }
-        }}
-        onMessage={onMessage}
-        mixedContentMode="compatibility"
-        allowsInlineMediaPlayback={true}
-        mediaPlaybackRequiresUserAction={false}
-        // Cookie persistence
-        sharedCookiesEnabled={true}
-        thirdPartyCookiesEnabled={true}
-        incognito={false}
-        cacheEnabled={true}
-        // iOS: bounce disabled
-        bounces={false}
-        // User Agent
-        applicationNameForUserAgent="TatarWarApp/1.0"
+    <SafeAreaView style={styles.gameContainer}>
+      <StatusBar barStyle="light-content" backgroundColor="#3a2a1c" />
+      <ResourceBar
+        resources={gameData?.resources}
+        gold={gameData?.gold}
       />
-
-      {loading && (
-        <View style={styles.loadingOverlay}>
-          {renderLoading()}
-        </View>
-      )}
+      <NavigationContainer>
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="Tabs">
+            {(props) => <GameTabs {...props} gameData={gameData} onLogout={handleLogout} />}
+          </Stack.Screen>
+          <Stack.Screen
+            name="WebPage"
+            component={WebPageScreen}
+            options={{ headerShown: true, headerTitle: '', headerBackTitle: 'رجوع' }}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#0d0d1a',
-  },
-  webview: {
-    flex: 1,
-    backgroundColor: '#e9e9e9',
-  },
   loadingContainer: {
-    position: 'absolute',
-    top: 0, left: 0, right: 0, bottom: 0,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#0d0d1a',
-  },
-  loadingOverlay: {
-    position: 'absolute',
-    top: 0, left: 0, right: 0, bottom: 0,
+    flex: 1,
     backgroundColor: '#0d0d1a',
     justifyContent: 'center',
     alignItems: 'center',
   },
   loadingTitle: {
-    fontSize: 32,
+    fontSize: 28,
     fontWeight: '900',
-    color: '#ffffff',
+    color: '#ffd700',
     marginBottom: 8,
   },
   loadingSubtitle: {
-    fontSize: 16,
-    color: '#9999aa',
-    marginBottom: 24,
+    fontSize: 14,
+    color: '#888',
   },
-  spinner: {
-    marginTop: 10,
-  },
-  errorContainer: {
+  loginContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: '#0d0d1a',
-    padding: 40,
   },
-  errorIcon: {
-    fontSize: 60,
-    marginBottom: 20,
+  gameContainer: {
+    flex: 1,
+    backgroundColor: '#3a2a1c',
   },
-  errorTitle: {
-    fontSize: 24,
-    fontWeight: '800',
-    color: '#ffffff',
-    marginBottom: 12,
+  tabBar: {
+    backgroundColor: '#1b1b2f',
+    borderTopWidth: 1,
+    borderTopColor: 'rgba(255,255,255,0.06)',
+    height: 56,
+    paddingBottom: 4,
   },
-  errorText: {
-    fontSize: 16,
-    color: '#9999aa',
-    textAlign: 'center',
-    marginBottom: 30,
-    lineHeight: 24,
-  },
-  retryButton: {
-    backgroundColor: '#c0392b',
-    paddingHorizontal: 40,
-    paddingVertical: 14,
-    borderRadius: 10,
-  },
-  retryText: {
-    color: '#ffffff',
-    fontSize: 16,
+  tabLabel: {
+    fontSize: 10,
     fontWeight: '700',
   },
 });
