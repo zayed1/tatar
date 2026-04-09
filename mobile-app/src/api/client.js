@@ -35,13 +35,60 @@ export async function apiLogin(name, password) {
   return json.data;
 }
 
-export async function apiGetData() {
+async function authFetch(url, options = {}) {
   const token = await getToken();
   if (!token) throw new Error('Not authenticated');
-  const res = await fetch(`${BASE_URL}/api/data.php`, {
-    headers: { Authorization: `Bearer ${token}` },
+  const res = await fetch(url, {
+    ...options,
+    headers: { Authorization: `Bearer ${token}`, ...options.headers },
   });
   const json = await res.json();
-  if (!json.ok) throw new Error(json.error || 'Failed to load data');
+  if (!json.ok) throw new Error(json.error || 'Request failed');
   return json.data;
+}
+
+export async function apiGetData() {
+  return authFetch(`${BASE_URL}/api/data.php`);
+}
+
+// Messages
+export async function apiGetMessages(folder = 'inbox', page = 0) {
+  return authFetch(`${BASE_URL}/api/messages.php?action=${folder}&page=${page}&limit=30`);
+}
+
+export async function apiReadMessage(id) {
+  return authFetch(`${BASE_URL}/api/messages.php?action=read&id=${id}`);
+}
+
+export async function apiSendMessage(to, title, body) {
+  return authFetch(`${BASE_URL}/api/messages.php?action=send`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ to, title, body }),
+  });
+}
+
+export async function apiDeleteMessage(id) {
+  return authFetch(`${BASE_URL}/api/messages.php?action=delete`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ id }),
+  });
+}
+
+// Reports
+export async function apiGetReports(cat = 0, page = 0) {
+  return authFetch(`${BASE_URL}/api/reports.php?action=list&cat=${cat}&page=${page}&limit=20`);
+}
+
+export async function apiReadReport(id) {
+  return authFetch(`${BASE_URL}/api/reports.php?action=read&id=${id}`);
+}
+
+export async function apiDeleteReport(id) {
+  return authFetch(`${BASE_URL}/api/reports.php?action=delete`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ id }),
+  });
 }

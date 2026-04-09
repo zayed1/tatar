@@ -12,6 +12,8 @@ import LoginScreen from './src/screens/LoginScreen';
 import FieldsScreen from './src/screens/FieldsScreen';
 import CityScreen from './src/screens/CityScreen';
 import MapScreen from './src/screens/MapScreen';
+import MessagesScreen from './src/screens/MessagesScreen';
+import ReportsScreen from './src/screens/ReportsScreen';
 import MoreScreen from './src/screens/MoreScreen';
 import WebPageScreen from './src/screens/WebPageScreen';
 
@@ -22,6 +24,7 @@ const TAB_ICONS = {
   Fields: '🏕️',
   City: '🏰',
   Map: '🗺️',
+  Messages: '✉️',
   Reports: '📋',
   More: '☰',
 };
@@ -35,6 +38,9 @@ function TabIcon({ name, focused }) {
 }
 
 function GameTabs({ gameData, onLogout }) {
+  const msgBadge = gameData?.new_messages || 0;
+  const rptBadge = gameData?.new_reports || 0;
+
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -50,6 +56,24 @@ function GameTabs({ gameData, onLogout }) {
       <Tab.Screen name="Fields" component={FieldsScreen} options={{ tabBarLabel: 'الحقول' }} />
       <Tab.Screen name="City" component={CityScreen} options={{ tabBarLabel: 'المدينة' }} />
       <Tab.Screen name="Map" component={MapScreen} options={{ tabBarLabel: 'الخريطة' }} />
+      <Tab.Screen
+        name="Messages"
+        component={MessagesScreen}
+        options={{
+          tabBarLabel: 'الرسائل',
+          tabBarBadge: msgBadge > 0 ? msgBadge : undefined,
+          tabBarBadgeStyle: { backgroundColor: '#c0392b', fontSize: 10 },
+        }}
+      />
+      <Tab.Screen
+        name="Reports"
+        component={ReportsScreen}
+        options={{
+          tabBarLabel: 'التقارير',
+          tabBarBadge: rptBadge > 0 ? rptBadge : undefined,
+          tabBarBadgeStyle: { backgroundColor: '#c0392b', fontSize: 10 },
+        }}
+      />
       <Tab.Screen
         name="More"
         options={{ tabBarLabel: 'المزيد' }}
