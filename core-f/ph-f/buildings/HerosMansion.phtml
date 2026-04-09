@@ -345,15 +345,19 @@ $gmy = new QueueModel();
 $gmyy = $gmy->provider->fetchRow("SELECT plus_oases FROM p_villages WHERE id=".$this->data['selected_village_id']);
 $kk += $gmyy['plus_oases'];
 
+echo 'عدد الواحات التي يمكنك احتلالها حاليا هي <b>'.$kk.'</b><br><br>';
+
+$plusOasesCost = intval($GLOBALS['AppConfig']['Game']['plusoases'] ?? 0);
+if ($plusOasesCost > 0) {
 $u = "build.php?id=" . $this->buildingIndex . "&t=2&addnumos";
-	echo 'عدد الواحات التي يمكنك احتلالها حاليا هي <b>'.$kk.'</b><br><br>
-  من هنا يمكنك اضافه المزيد من الواحات لتزيد من انتاج قريتك بشكل كبير جدا <br><br>
-تستطيع شراء واحة جديدة مقابل '.$GLOBALS['AppConfig']['Game']['plusoases'].' <img src="core-f/style-f/default/img/a/gold.gif"><br><br>';
+echo 'من هنا يمكنك اضافه المزيد من الواحات لتزيد من انتاج قريتك بشكل كبير جدا <br><br>
+تستطيع شراء واحة جديدة مقابل '.$plusOasesCost.' <img src="core-f/style-f/default/img/a/gold.gif"><br><br>';
 
 if ( $kk >= $GLOBALS['AppConfig']['Game']['plusoases_count']){
 echo '<p class="none">لا يمكنك احتلال واحات اكثر</p>';
 }else{
 echo '<a href="'.$u.'">شراء واحه جديده</a>';
+}
 }
 }
 

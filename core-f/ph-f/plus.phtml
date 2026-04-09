@@ -580,8 +580,10 @@ if ($this->page == 0) {
 	  
   
     
+       $JC_8_cost_check = intval($GLOBALS['AppConfig']['Game']['8_cost'] ?? 0);
+       if ($JC_8_cost_check > 0) {
        $protection   = $GLOBALS['AppConfig']['Game']['protection'] - $GLOBALS['AppConfig']['Game']['numpro'];
-      $uid = $this->player->playerId; 
+      $uid = $this->player->playerId;
                $up3= $this->queueModel->provider->fetchScalar('SELECT up3 FROM p_players WHERE id ="'.$this->player->playerId.'"');
       $gold_num = $this->queueModel->provider->fetchScalar('SELECT gold_num FROM p_players WHERE id ="'.$this->player->playerId.'"');
 
@@ -628,6 +630,7 @@ if ($this->page == 0) {
  <tr>
                         <td colspan="5" class="empty"></td>
                 </tr>
+<?php } // end 8_cost protection check ?>
 <tr>
                         <td class="man"><a href="#" onclick="return showManual(5,11);"><img class="help" src="core-f/style-f/x.gif" alt="" title=""></a></td>
                         <td class="desc">
