@@ -21,8 +21,8 @@ const MENU_SECTIONS = [
   {
     title: 'الحساب',
     items: [
-      { label: '⭐ بلاس', path: 'plus.php?t=2' },
-      { label: '💎 شراء ذهب', path: 'payment.php' },
+      { label: '⭐ بلاس', screen: 'Plus' },
+      { label: '💎 شراء ذهب', screen: 'GoldShop' },
       { label: '🎁 الهدية اليومية', path: 'gift?get' },
     ],
   },

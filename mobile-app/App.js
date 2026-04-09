@@ -21,6 +21,8 @@ import ChatScreen from './src/screens/ChatScreen';
 import AllianceScreen from './src/screens/AllianceScreen';
 import BuildingsScreen from './src/screens/BuildingsScreen';
 import TroopsScreen from './src/screens/TroopsScreen';
+import PlusScreen from './src/screens/PlusScreen';
+import GoldShopScreen from './src/screens/GoldShopScreen';
 import WebPageScreen from './src/screens/WebPageScreen';
 
 const Tab = createBottomTabNavigator();
@@ -218,6 +220,16 @@ export default function App() {
             name="Troops"
             component={TroopsScreen}
             options={{ headerShown: true, headerTitle: 'القوات', headerBackTitle: 'رجوع' }}
+          />
+          <Stack.Screen
+            name="Plus"
+            component={PlusScreen}
+            options={{ headerShown: true, headerTitle: 'بلاس', headerBackTitle: 'رجوع' }}
+          />
+          <Stack.Screen
+            name="GoldShop"
+            component={GoldShopScreen}
+            options={{ headerShown: true, headerTitle: 'متجر الذهب', headerBackTitle: 'رجوع' }}
           />
           <Stack.Screen
             name="WebPage"

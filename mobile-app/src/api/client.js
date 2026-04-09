@@ -135,6 +135,15 @@ export async function apiGetAlliance(id) {
   return authFetch(`${BASE_URL}/api/alliance.php?action=info${param}`);
 }
 
+// Plus & Gold Shop
+export async function apiGetPlusStatus() {
+  return authFetch(`${BASE_URL}/api/plus.php?action=status`);
+}
+
+export async function apiGetGoldPackages() {
+  return authFetch(`${BASE_URL}/api/plus.php?action=packages`);
+}
+
 // Buildings & Troops
 export async function apiGetBuildings(vid) {
   const param = vid ? `&vid=${vid}` : '';
