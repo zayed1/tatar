@@ -973,7 +973,7 @@ $point = 0;
 
         $h = intval( $medalData['BBCode'] ) + intval( $week ) * 10 + ( intval( $rank ) - 1 );
 
-        $is[$h] = ($is[$h] ?? 0) + 1;
+        $is[$h] = intval($is[$h] ?? 0) + 1;
 
         if ($is[$h] == 1) {
 

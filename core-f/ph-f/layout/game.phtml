@@ -26,7 +26,21 @@ $berq_player = $this->queueModel->provider->fetchRow("SELECT player_name FROM p_
 <script type="text/javascript">function confirmDl () { return confirm ("هل انت متأكد من ازالة الحمايه ؟"); }</script>
 <link rel="shortcut icon" href="core-f/style-f/fic.gif" type="image/x-icon" />
 <link href="core-f/style-f/default/game-enhance.css" rel="stylesheet" type="text/css" />
-<link href="core-f/style-f/default/mobile-app.css" rel="stylesheet" type="text/css" />
+<link href="core-f/style-f/default/mobile-app.css?v=<?php echo time(); ?>" rel="stylesheet" type="text/css" />
+<?php if ($isApp): ?>
+<style>
+body.mobile-app{zoom:1!important;overflow-x:hidden;padding-bottom:60px!important;background:#f2efe6!important}
+body.mobile-app div#dynamic_header,body.mobile-app #side_navi,body.mobile-app #side_info,body.mobile-app div#footer,body.mobile-app #mfoot,body.mobile-app .footer-menu,body.mobile-app .footer-stopper,body.mobile-app div#stime,body.mobile-app img.time_of_day{display:none!important}
+body.mobile-app div.wrapper{width:100%!important;min-width:0!important;background:#f2efe6!important;background-image:none!important}
+body.mobile-app div#header{height:auto!important;position:sticky;top:0;z-index:200;background:linear-gradient(180deg,#4a3728,#3a2a1c)!important;background-image:none!important;box-shadow:0 2px 8px rgba(0,0,0,.3)}
+body.mobile-app div#mtop{width:100%!important;height:auto!important;position:relative!important;right:auto!important;top:auto!important;display:flex!important;flex-wrap:nowrap;align-items:center;justify-content:center;padding:4px 6px;gap:2px;direction:rtl}
+body.mobile-app a#n1 img,body.mobile-app a#n2 img,body.mobile-app a#n3 img,body.mobile-app a#n4 img{height:40px!important;width:48px!important;background-size:auto 80px!important;background-position:center -14px!important}
+body.mobile-app div#mid{float:none!important;width:100%!important;padding:0!important;margin:0!important;background-image:none!important}
+body.mobile-app div#content{float:none!important;width:100%!important;max-width:100%!important;margin-top:0!important}
+body.mobile-app div#resWrap{display:block!important;width:100%!important;right:auto!important;margin-right:0!important;background:#3a2a1c;padding:2px 0}
+body.mobile-app div#res{position:relative!important;top:auto!important;width:100%!important}
+</style>
+<?php endif; ?>
 <script type="text/javascript">var d3l=<?php echo $this->appConfig['system']['lang'] == "ar" ? "180" : "-600";?></script>
 <title><?php echo $this->appConfig['page'][$this->appConfig['system']['lang']."_title"];?></title>
 <?php if ($this->contentCssClass != 'messages' && $this->contentCssClass != 'forum' && $this->contentCssClass != 'build') { ?>
