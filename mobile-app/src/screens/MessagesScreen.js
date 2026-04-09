@@ -117,12 +117,12 @@ export default function MessagesScreen() {
     return (
       <View style={styles.container}>
         <View style={styles.detailHeader}>
-          <TouchableOpacity onPress={() => setSelectedMsg(null)}>
-            <Text style={styles.backButton}>→ رجوع</Text>
+          <TouchableOpacity onPress={() => setSelectedMsg(null)} style={styles.backTouchable}>
+            <Text style={styles.backButton}>رجوع ←</Text>
           </TouchableOpacity>
           <View style={styles.detailActions}>
             <TouchableOpacity onPress={handleReply} style={styles.actionBtn}>
-              <Text style={styles.actionBtnText}>↩ رد</Text>
+              <Text style={styles.actionBtnText}>رد ↩</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => handleDelete(selectedMsg.id)} style={[styles.actionBtn, styles.deleteBtn]}>
               <Text style={styles.actionBtnText}>🗑</Text>
@@ -204,7 +204,8 @@ export default function MessagesScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#f2efe6' },
+  container: { flex: 1, backgroundColor: '#f2efe6', paddingBottom: 60 },
+  backTouchable: { minWidth: 60, minHeight: 44, justifyContent: 'center' },
   tabBar: { flexDirection: 'row-reverse', backgroundColor: '#fff', borderBottomWidth: 1, borderBottomColor: '#eee' },
   tab: { flex: 1, paddingVertical: 12, alignItems: 'center' },
   tabActive: { borderBottomWidth: 3, borderBottomColor: '#c0392b' },
@@ -215,7 +216,7 @@ const styles = StyleSheet.create({
   msgContent: { flex: 1, alignItems: 'flex-end' },
   msgName: { fontSize: 13, color: '#c0392b', marginBottom: 2 },
   msgTitle: { fontSize: 14, color: '#333' },
-  msgDate: { fontSize: 11, color: '#999', marginRight: 10 },
+  msgDate: { fontSize: 11, color: '#999', marginLeft: 10 },
   bold: { fontWeight: '800' },
   empty: { textAlign: 'center', color: '#999', marginTop: 40, fontSize: 14 },
   // Detail

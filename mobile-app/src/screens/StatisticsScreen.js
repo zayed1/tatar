@@ -162,7 +162,7 @@ export default function StatisticsScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#f2efe6' },
+  container: { flex: 1, backgroundColor: '#f2efe6', paddingBottom: 60 },
   tabBar: { backgroundColor: '#fff', borderBottomWidth: 1, borderBottomColor: '#eee', maxHeight: 50 },
   tabBarContent: { paddingHorizontal: 8, alignItems: 'center', gap: 6, flexDirection: 'row-reverse' },
   tabChip: { paddingHorizontal: 14, paddingVertical: 8, borderRadius: 20, backgroundColor: '#f0f0f0' },

@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
     borderWidth: 1, borderColor: '#eee',
   },
   featureDisabled: { opacity: 0.5 },
-  featureIcon: { fontSize: 24, marginLeft: 10 },
+  featureIcon: { fontSize: 24, marginRight: 10 },
   featureInfo: { flex: 1, alignItems: 'flex-end' },
   featureName: { fontSize: 14, fontWeight: '700', color: '#333' },
   featureDuration: { fontSize: 11, color: '#888' },

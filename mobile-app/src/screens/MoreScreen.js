@@ -63,7 +63,7 @@ export default function MoreScreen({ navigation, onLogout }) {
               onPress={() => openPage(item)}
             >
               <Text style={styles.menuLabel}>{item.label}</Text>
-              <Text style={styles.arrow}>‹</Text>
+              <Text style={styles.arrow}>›</Text>
             </TouchableOpacity>
           ))}
         </View>

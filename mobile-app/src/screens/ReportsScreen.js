@@ -98,8 +98,8 @@ export default function ReportsScreen() {
     return (
       <View style={styles.container}>
         <View style={styles.detailHeader}>
-          <TouchableOpacity onPress={() => setSelectedReport(null)}>
-            <Text style={styles.backButton}>→ رجوع</Text>
+          <TouchableOpacity onPress={() => setSelectedReport(null)} style={styles.backTouchable}>
+            <Text style={styles.backButton}>رجوع ←</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => handleDelete(selectedReport.id)} style={styles.deleteBtnHeader}>
             <Text style={styles.deleteBtnText}>🗑</Text>
@@ -191,7 +191,8 @@ export default function ReportsScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#f2efe6' },
+  container: { flex: 1, backgroundColor: '#f2efe6', paddingBottom: 60 },
+  backTouchable: { minWidth: 60, minHeight: 44, justifyContent: 'center' },
   catBar: { backgroundColor: '#fff', borderBottomWidth: 1, borderBottomColor: '#eee', maxHeight: 50 },
   catBarContent: { paddingHorizontal: 8, alignItems: 'center', gap: 6, flexDirection: 'row-reverse' },
   catChip: { paddingHorizontal: 12, paddingVertical: 8, borderRadius: 20, backgroundColor: '#f0f0f0' },

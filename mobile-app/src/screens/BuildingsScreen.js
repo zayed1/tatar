@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
   queueTime: { fontSize: 13, color: '#c0392b', fontWeight: '700' },
   list: { paddingHorizontal: 10, paddingBottom: 20 },
   buildingRow: { flexDirection: 'row-reverse', alignItems: 'center', backgroundColor: '#fff', borderRadius: 10, padding: 12, marginTop: 6, borderWidth: 1, borderColor: '#eee' },
-  buildingIcon: { fontSize: 24, marginLeft: 10 },
+  buildingIcon: { fontSize: 24, marginRight: 10 },
   buildingInfo: { flex: 1, alignItems: 'flex-end' },
   buildingName: { fontSize: 14, fontWeight: '700', color: '#333' },
   buildingSlot: { fontSize: 11, color: '#aaa' },

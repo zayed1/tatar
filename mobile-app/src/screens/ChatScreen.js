@@ -128,7 +128,7 @@ export default function ChatScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#f2efe6' },
+  container: { flex: 1, backgroundColor: '#f2efe6', paddingBottom: 60 },
   tabBar: { flexDirection: 'row-reverse', backgroundColor: '#fff', borderBottomWidth: 1, borderBottomColor: '#eee' },
   tab: { flex: 1, paddingVertical: 12, alignItems: 'center' },
   tabActive: { borderBottomWidth: 3, borderBottomColor: '#c0392b' },

@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
   queueTime: { fontSize: 13, color: '#c0392b', fontWeight: '700' },
   list: { paddingHorizontal: 10, paddingBottom: 20 },
   troopRow: { flexDirection: 'row-reverse', alignItems: 'center', backgroundColor: '#fff', borderRadius: 10, padding: 12, marginTop: 6, borderWidth: 1, borderColor: '#eee' },
-  troopIcon: { fontSize: 22, marginLeft: 10 },
+  troopIcon: { fontSize: 22, marginRight: 10 },
   troopInfo: { flex: 1, alignItems: 'flex-end' },
   troopName: { fontSize: 14, fontWeight: '700', color: '#333' },
   troopLocked: { color: '#aaa' },
