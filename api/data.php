@@ -9,8 +9,9 @@ $db = getDb();
 // Get player data with resources
 $pResult = mysqli_query($db, "
     SELECT p.gold_num, p.new_mail_count, p.new_report_count,
-           p.selected_village_id, p.active_plus_account, p.crop_consumption,
+           p.selected_village_id, p.active_plus_account,
            v.resources, v.village_name, v.id as vid,
+           v.crop_consumption,
            TIME_TO_SEC(TIMEDIFF(NOW(), v.last_update_date)) as elapsed
     FROM p_players p
     LEFT JOIN p_villages v ON v.id = p.selected_village_id
@@ -19,7 +20,6 @@ $pResult = mysqli_query($db, "
 $row = mysqli_fetch_assoc($pResult);
 
 if (!$row) {
-    mysqli_close($db);
     jsonError('Player not found', 404);
 }
 
@@ -65,8 +65,6 @@ while ($v = mysqli_fetch_assoc($vResult)) {
         'is_capital' => intval($v['is_capital'])
     ];
 }
-
-mysqli_close($db);
 
 jsonSuccess([
     'gold' => intval($row['gold_num']),
