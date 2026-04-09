@@ -778,6 +778,8 @@ define( "payments_sawa_test9", base64_decode("2KrZhSDYp9ix2LPYp9mEINi32YTYqNmDIN
 
 
 
+  define("payments_paylink_period", "فورا");
+  define("payments_paylink_description", "الدفع عبر بطاقة Visa أو Mastercard أو مدى");
   define("payments_paypal_period", "فورا");
   define("payments_paypal_description", "الدفع عبر Paypal سهل و سريع");
   define("payments_onecard_period", "فورا");

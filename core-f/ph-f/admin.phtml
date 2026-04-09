@@ -8,7 +8,7 @@
 </head>
 <body>
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) { session_start(); }
 //verbs 
 $name = $_SESSION['nm_admin'] ?? '';
 $pwd = $_SESSION['pwd_admin'] ?? '';
