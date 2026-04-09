@@ -1,7 +1,7 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { StyleSheet, View, ActivityIndicator } from 'react-native';
 import { WebView } from 'react-native-webview';
-import { API_BASE } from '../api/client';
+import { API_BASE, getToken } from '../api/client';
 
 // CSS injected to strip ALL web chrome and make content fill the screen
 const INJECT_JS = `
@@ -115,7 +115,27 @@ true;
 
 export default function GameWebView({ path, onNavigate }) {
   const webViewRef = useRef(null);
-  const uri = `${API_BASE}/${path}?platform=app`;
+  const [uri, setUri] = useState(null);
+
+  // Use session endpoint to establish PHP cookies, then redirect to game page
+  useEffect(() => {
+    (async () => {
+      const token = await getToken();
+      if (token) {
+        setUri(`${API_BASE}/api/session.php?token=${encodeURIComponent(token)}&redirect=${encodeURIComponent(path)}`);
+      } else {
+        setUri(`${API_BASE}/${path}?platform=app`);
+      }
+    })();
+  }, [path]);
+
+  if (!uri) {
+    return (
+      <View style={styles.loading}>
+        <ActivityIndicator size="large" color="#c0392b" />
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
