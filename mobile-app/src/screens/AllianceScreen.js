@@ -52,7 +52,7 @@ export default function AllianceScreen({ navigation }) {
         <Text style={styles.allianceName}>[{data.name}]</Text>
         {data.full_name ? <Text style={styles.fullName}>{data.full_name}</Text> : null}
         <Text style={styles.rankText}>المرتبة #{data.rank}</Text>
-        <Text style={styles.membersText}>{data.members_count}/{data.max_members} أعضاء</Text>
+        <Text style={styles.membersText}>{data.members_count || 0}/{data.max_members || 0} أعضاء</Text>
       </View>
 
       {/* Stats */}
@@ -73,7 +73,7 @@ export default function AllianceScreen({ navigation }) {
 
       {/* Members */}
       <View style={styles.card}>
-        <Text style={styles.cardTitle}>👥 الأعضاء ({data.members.length})</Text>
+        <Text style={styles.cardTitle}>👥 الأعضاء ({data.members?.length || 0})</Text>
         {data.members.map((m) => (
           <TouchableOpacity
             key={m.id}
@@ -96,7 +96,7 @@ export default function AllianceScreen({ navigation }) {
       </View>
 
       {/* Diplomacy */}
-      {(data.contracts.length > 0 || data.wars.length > 0) && (
+      {(data.contracts?.length > 0 || data.wars?.length > 0) && (
         <View style={styles.card}>
           <Text style={styles.cardTitle}>🤝 الدبلوماسية</Text>
           {data.contracts.map((c) => (

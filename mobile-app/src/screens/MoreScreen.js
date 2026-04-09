@@ -58,7 +58,7 @@ export default function MoreScreen({ navigation, onLogout }) {
           <Text style={styles.sectionTitle}>{section.title}</Text>
           {section.items.map((item) => (
             <TouchableOpacity
-              key={item.path}
+              key={item.path || item.screen}
               style={styles.menuItem}
               onPress={() => openPage(item)}
             >

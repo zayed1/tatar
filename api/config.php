@@ -16,7 +16,7 @@ define('API_SECRET', 'tatar_api_2026_secret_key');
 require_once(dirname(__FILE__) . '/../core-f/config-f/s1.php');
 
 function getDb() {
-    global $AppConfig;
+    global $AppConfig, $_apiDb;
     $port = isset($AppConfig['db']['port']) ? intval($AppConfig['db']['port']) : 3306;
     $conn = mysqli_connect(
         $AppConfig['db']['host'],
@@ -29,6 +29,7 @@ function getDb() {
         jsonError('Database connection failed', 500);
     }
     mysqli_set_charset($conn, 'utf8mb4');
+    $_apiDb = $conn;
     return $conn;
 }
 
@@ -74,12 +75,22 @@ function requireAuth() {
     return $player;
 }
 
+function closeDb() {
+    global $_apiDb;
+    if (isset($_apiDb) && $_apiDb) {
+        mysqli_close($_apiDb);
+        $_apiDb = null;
+    }
+}
+
 function jsonSuccess($data) {
+    closeDb();
     echo json_encode(['ok' => true, 'data' => $data], JSON_UNESCAPED_UNICODE);
     exit;
 }
 
 function jsonError($message, $code = 400) {
+    closeDb();
     http_response_code($code);
     echo json_encode(['ok' => false, 'error' => $message], JSON_UNESCAPED_UNICODE);
     exit;

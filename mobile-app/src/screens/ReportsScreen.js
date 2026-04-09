@@ -61,7 +61,7 @@ export default function ReportsScreen() {
     setSelectedReport(null);
     setReports([]);
     fetchReports(0);
-  }, [cat]);
+  }, [cat, fetchReports]);
 
   const handleRefresh = () => {
     setRefreshing(true);

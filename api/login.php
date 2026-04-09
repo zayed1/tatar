@@ -41,7 +41,7 @@ if ($player['is_blocked']) {
 }
 
 // Update last login
-$ip = $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0';
+$ip = mysqli_real_escape_string($db, $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0');
 $playerId = intval($player['id']);
 mysqli_query($db, "UPDATE p_players SET last_ip='$ip', last_login_date=NOW() WHERE id=$playerId");
 

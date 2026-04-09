@@ -48,7 +48,7 @@ export default function MessagesScreen() {
       setMessages([]);
       fetchMessages(0);
     }
-  }, [tab]);
+  }, [tab, fetchMessages]);
 
   const handleRefresh = () => {
     setRefreshing(true);

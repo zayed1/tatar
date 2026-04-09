@@ -121,7 +121,7 @@ export default function StatisticsScreen({ navigation }) {
   useEffect(() => {
     setItems([]);
     fetchStats(0);
-  }, [tab]);
+  }, [tab, fetchStats]);
 
   const openProfile = (uid) => {
     navigation.navigate('WebPage', { path: `profile?uid=${uid}` });

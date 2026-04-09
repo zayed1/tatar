@@ -109,8 +109,8 @@ if ($method === 'POST') {
         $fromResult = mysqli_query($db, "SELECT name FROM p_players WHERE id = $playerId");
         $fromPlayer = mysqli_fetch_assoc($fromResult);
 
-        $safeTitle = mysqli_real_escape_string($db, htmlspecialchars($title));
-        $safeBody = mysqli_real_escape_string($db, htmlspecialchars($body));
+        $safeTitle = mysqli_real_escape_string($db, $title);
+        $safeBody = mysqli_real_escape_string($db, $body);
         $fromName = mysqli_real_escape_string($db, $fromPlayer['name']);
         $toId = intval($toPlayer['id']);
 

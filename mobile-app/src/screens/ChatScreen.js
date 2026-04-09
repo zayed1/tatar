@@ -3,6 +3,7 @@ import {
   View, Text, FlatList, TextInput, TouchableOpacity,
   StyleSheet, KeyboardAvoidingView, Platform,
 } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { apiChatGet, apiChatSend, apiAllianceChatGet, apiAllianceChatSend } from '../api/client';
 
 const TABS = [
@@ -41,8 +42,6 @@ export default function ChatScreen() {
   }, [tab]);
 
   useEffect(() => {
-    // Get player ID from stored auth
-    const AsyncStorage = require('@react-native-async-storage/async-storage').default;
     AsyncStorage.getItem('@tatar_auth').then((auth) => {
       if (auth) {
         const { player } = JSON.parse(auth);
