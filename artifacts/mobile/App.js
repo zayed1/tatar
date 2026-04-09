@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import {
-  SafeAreaView, StatusBar, StyleSheet, View, Text, AppState, Alert,
+  SafeAreaView, StatusBar, StyleSheet, View, Text, AppState,
 } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -93,7 +93,7 @@ function GameTabs({ gameData, onLogout }) {
 }
 
 export default function App() {
-  const [authenticated, setAuthenticated] = useState(null); // null = loading
+  const [authenticated, setAuthenticated] = useState(null);
   const [player, setPlayer] = useState(null);
   const [gameData, setGameData] = useState(null);
   const appState = useRef(AppState.currentState);
@@ -102,18 +102,15 @@ export default function App() {
   // Check stored auth on start
   useEffect(() => {
     (async () => {
-
       const token = await getToken();
       if (token) {
         const stored = await getStoredAuth();
         if (stored) {
-
           setPlayer(stored.player);
           setAuthenticated(true);
           return;
         }
       }
-
       setAuthenticated(false);
     })();
   }, []);
@@ -121,14 +118,10 @@ export default function App() {
   // Refresh game data periodically
   const fetchData = useCallback(async () => {
     try {
-
       const data = await apiGetData();
-
       setGameData(data);
     } catch (e) {
-
       if (e.message === 'Invalid token' || e.message === 'Unauthorized') {
-
         await clearAuth();
         setAuthenticated(false);
       }
@@ -138,11 +131,10 @@ export default function App() {
   useEffect(() => {
     if (!authenticated) return;
     fetchData();
-    refreshInterval.current = setInterval(fetchData, 30000); // every 30s
+    refreshInterval.current = setInterval(fetchData, 30000);
     return () => clearInterval(refreshInterval.current);
   }, [authenticated, fetchData]);
 
-  // Pause refresh when app is in background
   useEffect(() => {
     const sub = AppState.addEventListener('change', (next) => {
       if (next === 'active' && authenticated) fetchData();
@@ -151,8 +143,7 @@ export default function App() {
     return () => sub.remove();
   }, [authenticated, fetchData]);
 
-  const handleLogin = (playerData, villages) => {
-
+  const handleLogin = (playerData) => {
     setPlayer(playerData);
     setAuthenticated(true);
   };
@@ -164,7 +155,6 @@ export default function App() {
     clearInterval(refreshInterval.current);
   };
 
-  // Loading state
   if (authenticated === null) {
     return (
       <SafeAreaView style={styles.loadingContainer}>
@@ -175,7 +165,6 @@ export default function App() {
     );
   }
 
-  // Login screen
   if (!authenticated) {
     return (
       <SafeAreaView style={styles.loginContainer}>
@@ -185,7 +174,6 @@ export default function App() {
     );
   }
 
-  // Main game
   return (
     <SafeAreaView style={styles.gameContainer}>
       <StatusBar barStyle="dark-content" backgroundColor="#e8dcc8" />
@@ -198,51 +186,24 @@ export default function App() {
           <Stack.Screen name="Tabs">
             {(props) => <GameTabs {...props} gameData={gameData} onLogout={handleLogout} />}
           </Stack.Screen>
-          <Stack.Screen
-            name="Profile"
-            component={ProfileScreen}
-            options={{ headerShown: true, headerTitle: 'البروفايل', headerBackTitle: 'رجوع' }}
-          />
-          <Stack.Screen
-            name="Statistics"
-            component={StatisticsScreen}
-            options={{ headerShown: true, headerTitle: 'الإحصائيات', headerBackTitle: 'رجوع' }}
-          />
-          <Stack.Screen
-            name="Chat"
-            component={ChatScreen}
-            options={{ headerShown: true, headerTitle: 'الشات', headerBackTitle: 'رجوع' }}
-          />
-          <Stack.Screen
-            name="Alliance"
-            component={AllianceScreen}
-            options={{ headerShown: true, headerTitle: 'التحالف', headerBackTitle: 'رجوع' }}
-          />
-          <Stack.Screen
-            name="Buildings"
-            component={BuildingsScreen}
-            options={{ headerShown: true, headerTitle: 'المباني', headerBackTitle: 'رجوع' }}
-          />
-          <Stack.Screen
-            name="Troops"
-            component={TroopsScreen}
-            options={{ headerShown: true, headerTitle: 'القوات', headerBackTitle: 'رجوع' }}
-          />
-          <Stack.Screen
-            name="Plus"
-            component={PlusScreen}
-            options={{ headerShown: true, headerTitle: 'بلاس', headerBackTitle: 'رجوع' }}
-          />
-          <Stack.Screen
-            name="GoldShop"
-            component={GoldShopScreen}
-            options={{ headerShown: true, headerTitle: 'متجر الذهب', headerBackTitle: 'رجوع' }}
-          />
-          <Stack.Screen
-            name="WebPage"
-            component={WebPageScreen}
-            options={{ headerShown: true, headerTitle: '', headerBackTitle: 'رجوع' }}
-          />
+          <Stack.Screen name="Profile" component={ProfileScreen}
+            options={{ headerShown: true, headerTitle: 'البروفايل', headerBackTitle: 'رجوع' }} />
+          <Stack.Screen name="Statistics" component={StatisticsScreen}
+            options={{ headerShown: true, headerTitle: 'الإحصائيات', headerBackTitle: 'رجوع' }} />
+          <Stack.Screen name="Chat" component={ChatScreen}
+            options={{ headerShown: true, headerTitle: 'الشات', headerBackTitle: 'رجوع' }} />
+          <Stack.Screen name="Alliance" component={AllianceScreen}
+            options={{ headerShown: true, headerTitle: 'التحالف', headerBackTitle: 'رجوع' }} />
+          <Stack.Screen name="Buildings" component={BuildingsScreen}
+            options={{ headerShown: true, headerTitle: 'المباني', headerBackTitle: 'رجوع' }} />
+          <Stack.Screen name="Troops" component={TroopsScreen}
+            options={{ headerShown: true, headerTitle: 'القوات', headerBackTitle: 'رجوع' }} />
+          <Stack.Screen name="Plus" component={PlusScreen}
+            options={{ headerShown: true, headerTitle: 'بلاس', headerBackTitle: 'رجوع' }} />
+          <Stack.Screen name="GoldShop" component={GoldShopScreen}
+            options={{ headerShown: true, headerTitle: 'متجر الذهب', headerBackTitle: 'رجوع' }} />
+          <Stack.Screen name="WebPage" component={WebPageScreen}
+            options={{ headerShown: true, headerTitle: '', headerBackTitle: 'رجوع' }} />
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaView>

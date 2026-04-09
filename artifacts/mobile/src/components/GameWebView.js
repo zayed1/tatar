@@ -143,7 +143,7 @@ export default function GameWebView({ path, onNavigate }) {
         ref={webViewRef}
         source={{ uri }}
         style={styles.webview}
-        injectedJavaScript={INJECT_JS}
+        injectedJavaScriptBeforeContentLoaded={INJECT_JS}
         javaScriptEnabled={true}
         domStorageEnabled={true}
         startInLoadingState={true}
