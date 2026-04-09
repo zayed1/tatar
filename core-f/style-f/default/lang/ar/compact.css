@@ -12288,10 +12288,10 @@ div#footer ul.menu li.copyright {
     div#res {
         padding-right: none
     }
-    div#mtop {
+    body:not(.mobile-app) div#mtop {
         display: contents
     }
-    div#resWrap {
+    body:not(.mobile-app) div#resWrap {
         right: 0;
         margin-right: 0;
         display: contents
@@ -12299,7 +12299,7 @@ div#footer ul.menu li.copyright {
 }
 
 @media screen and (max-width:900px) {
-    body {
+    body:not(.mobile-app) {
         zoom: 75%
     }
     #side_navi {
@@ -12341,15 +12341,15 @@ div#footer ul.menu li.copyright {
     div#res {
         padding-right: none
     }
-    div#mtop {
+    body:not(.mobile-app) div#mtop {
         display: contents
     }
-    div#resWrap {
+    body:not(.mobile-app) div#resWrap {
         right: 0;
         margin-right: 0;
         display: contents
     }
-    .nav-mob {
+    body:not(.mobile-app) .nav-mob {
         position: absolute;
         z-index: 100;
         float: left;
@@ -12385,7 +12385,7 @@ div#footer ul.menu li.copyright {
     div#village_map {
         right: -25px
     }
-    .molvp-protection {
+    body:not(.mobile-app) .molvp-protection {
         position: absolute;
         display: block;
         z-index: 100;
@@ -12397,7 +12397,7 @@ div#footer ul.menu li.copyright {
         height: 41px;
         font-weight: 700
     }
-    .InBar.xPh {
+    body:not(.mobile-app) .InBar.xPh {
         display: flex;
         margin-right: 57px
     }
@@ -12414,7 +12414,7 @@ div#footer ul.menu li.copyright {
         top: 413px;
         right: 407px
     }
-    .molvp-dve {
+    body:not(.mobile-app) .molvp-dve {
         position: fixed;
         display: block;
         float: right;
@@ -12427,7 +12427,7 @@ div#footer ul.menu li.copyright {
         z-index: 10;
         padding: 14px 21px 0 0
     }
-    .molvp-protection2 {
+    body:not(.mobile-app) .molvp-protection2 {
         z-index: 104;
         float: right;
         left: 44%;

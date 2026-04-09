@@ -669,9 +669,43 @@ body.mobile-app div.forum table td.cou {
 /* ============================
    18. PROFILE / PLAYER / PLUS
    ============================ */
+body.mobile-app div.profile table,
 body.mobile-app div.player table,
 body.mobile-app div.plus table {
     width: 100% !important;
+}
+
+body.mobile-app div.profile table.account {
+    width: 100% !important;
+}
+
+body.mobile-app div.profile table.account th,
+body.mobile-app div.profile table.account td {
+    padding: 5px 6px;
+    word-break: break-word;
+}
+
+body.mobile-app div.profile table.sitter {
+    width: 100% !important;
+}
+
+/* ============================
+   18b. CHAT PAGE
+   ============================ */
+body.mobile-app div.chat {
+    width: auto !important;
+    max-width: 100% !important;
+    padding: 8px !important;
+}
+
+body.mobile-app div.chat textarea {
+    width: 100% !important;
+    box-sizing: border-box;
+}
+
+body.mobile-app div.chat div#box {
+    width: 100% !important;
+    overflow-x: auto;
 }
 
 /* ============================
