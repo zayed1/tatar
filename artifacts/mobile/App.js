@@ -96,21 +96,29 @@ export default function App() {
   const [authenticated, setAuthenticated] = useState(null); // null = loading
   const [player, setPlayer] = useState(null);
   const [gameData, setGameData] = useState(null);
+  const [debugLog, setDebugLog] = useState('Starting...');
   const appState = useRef(AppState.currentState);
   const refreshInterval = useRef(null);
+
+  const log = (msg) => {
+    setDebugLog(prev => msg + '\n' + (prev || '').substring(0, 300));
+  };
 
   // Check stored auth on start
   useEffect(() => {
     (async () => {
+      log('Checking stored auth...');
       const token = await getToken();
       if (token) {
         const stored = await getStoredAuth();
         if (stored) {
+          log('Found stored auth: ' + stored.player?.name);
           setPlayer(stored.player);
           setAuthenticated(true);
           return;
         }
       }
+      log('No stored auth, showing login');
       setAuthenticated(false);
     })();
   }, []);
@@ -118,16 +126,16 @@ export default function App() {
   // Refresh game data periodically
   const fetchData = useCallback(async () => {
     try {
+      log('Fetching game data...');
       const data = await apiGetData();
+      log('Game data OK: gold=' + data?.gold);
       setGameData(data);
     } catch (e) {
-      console.log('[App] fetchData error:', e.message);
+      log('fetchData ERROR: ' + e.message);
       if (e.message === 'Invalid token' || e.message === 'Unauthorized') {
+        log('Token invalid, logging out');
         await clearAuth();
         setAuthenticated(false);
-      } else {
-        // Show error in development - remove later
-        Alert.alert('خطأ في جلب البيانات', e.message);
       }
     }
   }, []);
@@ -149,6 +157,7 @@ export default function App() {
   }, [authenticated, fetchData]);
 
   const handleLogin = (playerData, villages) => {
+    log('LOGIN OK: ' + playerData?.name + ', setting authenticated=true');
     setPlayer(playerData);
     setAuthenticated(true);
   };
@@ -160,6 +169,12 @@ export default function App() {
     clearInterval(refreshInterval.current);
   };
 
+  const DebugBar = () => (
+    <View style={{backgroundColor:'#000',padding:6,maxHeight:80}}>
+      <Text style={{color:'#0f0',fontSize:9,fontFamily:'monospace'}}>{debugLog}</Text>
+    </View>
+  );
+
   // Loading state
   if (authenticated === null) {
     return (
@@ -167,6 +182,7 @@ export default function App() {
         <StatusBar barStyle="light-content" backgroundColor="#0d0d1a" />
         <Text style={styles.loadingTitle}>⚔️ عودة التتار</Text>
         <Text style={styles.loadingSubtitle}>جاري التحميل...</Text>
+        <DebugBar />
       </SafeAreaView>
     );
   }
@@ -176,6 +192,7 @@ export default function App() {
     return (
       <SafeAreaView style={styles.loginContainer}>
         <StatusBar barStyle="light-content" backgroundColor="#0d0d1a" />
+        <DebugBar />
         <LoginScreen onLogin={handleLogin} />
       </SafeAreaView>
     );
