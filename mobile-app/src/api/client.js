@@ -92,3 +92,14 @@ export async function apiDeleteReport(id) {
     body: JSON.stringify({ id }),
   });
 }
+
+// Profile
+export async function apiGetProfile(uid) {
+  const param = uid ? `&uid=${uid}` : '';
+  return authFetch(`${BASE_URL}/api/profile.php?action=view${param}`);
+}
+
+// Statistics
+export async function apiGetStats(tab = 'players', page = 0) {
+  return authFetch(`${BASE_URL}/api/statistics.php?tab=${tab}&page=${page}&limit=20`);
+}

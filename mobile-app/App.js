@@ -15,6 +15,8 @@ import MapScreen from './src/screens/MapScreen';
 import MessagesScreen from './src/screens/MessagesScreen';
 import ReportsScreen from './src/screens/ReportsScreen';
 import MoreScreen from './src/screens/MoreScreen';
+import ProfileScreen from './src/screens/ProfileScreen';
+import StatisticsScreen from './src/screens/StatisticsScreen';
 import WebPageScreen from './src/screens/WebPageScreen';
 
 const Tab = createBottomTabNavigator();
@@ -183,6 +185,16 @@ export default function App() {
           <Stack.Screen name="Tabs">
             {(props) => <GameTabs {...props} gameData={gameData} onLogout={handleLogout} />}
           </Stack.Screen>
+          <Stack.Screen
+            name="Profile"
+            component={ProfileScreen}
+            options={{ headerShown: true, headerTitle: 'البروفايل', headerBackTitle: 'رجوع' }}
+          />
+          <Stack.Screen
+            name="Statistics"
+            component={StatisticsScreen}
+            options={{ headerShown: true, headerTitle: 'الإحصائيات', headerBackTitle: 'رجوع' }}
+          />
           <Stack.Screen
             name="WebPage"
             component={WebPageScreen}

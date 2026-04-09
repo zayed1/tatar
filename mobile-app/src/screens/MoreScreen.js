@@ -8,8 +8,9 @@ const MENU_SECTIONS = [
   {
     title: 'اللعبة',
     items: [
+      { label: '👤 البروفايل', screen: 'Profile' },
+      { label: '📊 الإحصائيات', screen: 'Statistics' },
       { label: '💬 الشات', path: 'chat.php' },
-      { label: '📊 الإحصائيات', path: 'statistics' },
       { label: '🤝 التحالف', path: 'alliance' },
       { label: '⚔️ التحديات', path: 'def.php' },
       { label: '🏪 السوق', path: 'build.php?bid=17' },
@@ -18,7 +19,6 @@ const MENU_SECTIONS = [
   {
     title: 'الحساب',
     items: [
-      { label: '👤 البروفايل', path: 'profile.php' },
       { label: '⭐ بلاس', path: 'plus.php?t=2' },
       { label: '💎 شراء ذهب', path: 'payment.php' },
       { label: '🎁 الهدية اليومية', path: 'gift?get' },
@@ -41,8 +41,12 @@ export default function MoreScreen({ navigation, onLogout }) {
     ]);
   };
 
-  const openPage = (path) => {
-    navigation.navigate('WebPage', { path, title: '' });
+  const openPage = (item) => {
+    if (item.screen) {
+      navigation.navigate(item.screen);
+    } else {
+      navigation.navigate('WebPage', { path: item.path, title: '' });
+    }
   };
 
   return (
@@ -54,7 +58,7 @@ export default function MoreScreen({ navigation, onLogout }) {
             <TouchableOpacity
               key={item.path}
               style={styles.menuItem}
-              onPress={() => openPage(item.path)}
+              onPress={() => openPage(item)}
             >
               <Text style={styles.menuLabel}>{item.label}</Text>
               <Text style={styles.arrow}>‹</Text>
