@@ -2353,9 +2353,13 @@ $mq->provider->executeQuery2($query2);
         if ($troopLevel >= 20) {
             return '';
         }
-        
-        if ($this->data['gold_num'] > $this->appConfig['Game']['dev_troop_to_20']) {
-            $return_k = '<a href="build?id=' . $this->buildingIndex . '&' . $url . '" title="التحديث للمستوى ' . $buildLevel . ' بالكامل مقابل ' . $this->appConfig['Game']['dev_troop_to_20'] . ' ذهبة  مرة واحدة">' . $this->appConfig['Game']['dev_troop_to_20'] . '  <img src="' . $GLOBALS['AppConfig']['system']['linksite'] . 'x.gif" class="gold"></a>';
+
+        $devGold = intval($this->appConfig['Game']['dev_troop_to_20'] ?? 0);
+        if ($devGold <= 0) {
+            return '';
+        }
+        if ($this->data['gold_num'] > $devGold) {
+            $return_k = '<a href="build?id=' . $this->buildingIndex . '&' . $url . '" title="التحديث للمستوى ' . $buildLevel . ' بالكامل مقابل ' . $devGold . ' ذهبة  مرة واحدة">' . $devGold . '  <img src="' . $GLOBALS['AppConfig']['system']['linksite'] . 'x.gif" class="gold"></a>';
         } else {
             $return_k = '<span class="none">ليس لديك ذهب كافي</span>';
         }
