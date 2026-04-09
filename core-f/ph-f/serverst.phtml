@@ -148,7 +148,7 @@ echo "</td>\n";
 echo "<a href=\"profile.php?uid=".$this->Meber->row['id']."\">".$this->Meber->row['name']."</a>\n";
 echo "</td>\n";
     echo "\r\n\t\t\t<td class=\"nam\">";
-    echo htmlspecialchars( $this->Meber->row['last_login_date'] );
+    echo htmlspecialchars( $this->Meber->row['last_login_date'] ?? '' );
 echo "</td>\n";
     echo "\r\n\t\t\t<td class=\"nam\">";
                                 if ( $this->Meber->row['gold_num'] > 1 ) {
@@ -299,12 +299,12 @@ echo '<br><br><span class="error">'.$this->error.'</span>';
 }
 if ( $this->selectedTabIndex == 7 )
 {
-$vo = $this->voting;
+$vo = $this->voting ?? '';
 $explode = explode('|',$vo);
-$answer = explode(',',$explode[1]);
-$results = explode(',',$explode[2]);
-$answercont = count(explode(',',$explode[1]));
-$max = max($results);
+$answer = explode(',', $explode[1] ?? '');
+$results = explode(',', $explode[2] ?? '0');
+$answercont = count($answer);
+$max = !empty($results) ? max($results) : 0;
 ?>
 <table cellpadding="1" cellspacing="1" id="overviews">
 <thead>
@@ -313,9 +313,9 @@ $max = max($results);
 </thead>
 <tbody>
 <tr><td><center><b><span style="color:#008000; font-size:11px;"><? echo $explode[0]; ?></span></b></center></td>
-<? for($i = 0; $i < $answercont; $i++){ ?>
-<td><span style="font-size:11px;"><center><? echo $answer[$i]; ?><br><? if($max == $results[$i]){ echo '<b>'; } echo $results[$i]; if($max == $results[$i]){ echo '</b>'; } ?></b></center></span></td>
-<? $allvo += $results[$i]; } ?>
+<? $allvo = 0; for($i = 0; $i < $answercont; $i++){ ?>
+<td><span style="font-size:11px;"><center><? echo $answer[$i] ?? ''; ?><br><? if(($max ?? 0) == ($results[$i] ?? 0)){ echo '<b>'; } echo $results[$i] ?? 0; if(($max ?? 0) == ($results[$i] ?? 0)){ echo '</b>'; } ?></b></center></span></td>
+<? $allvo += intval($results[$i] ?? 0); } ?>
 </tr>
 </tbody>
 </table>
@@ -439,7 +439,7 @@ if ( $this->selectedTabIndex == 8 )
 <p class="btn"><input type="image" value="" name="s1" id="btn_save" class="dynamic_img" src="core-f/style-f/x.gif" alt="حفظ"></p>
 </form>
 <?
-if($this->found){
+if($this->found ?? false){
 echo '<table cellpadding="1" cellspacing="1" id="overview" class="row_table_data"><thead>';
 echo '<tr><th colspan="1">الملفات التي تم زيارتها</th></tr>';
 echo '</thead><tbody>';

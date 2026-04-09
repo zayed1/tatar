@@ -19,8 +19,8 @@ class GPage  extends securegamepage
     {
         parent::__construct();
         $this->viewFile = "serverst.phtml";
-        if ($_GET['t'] == 4 or $_GET['t'] == 2) { $this->contentCssClass = "plus";}
-        else if ($_GET['t'] == 7) { $this->contentCssClass = "forum";}
+        if (($_GET['t'] ?? '') == 4 or ($_GET['t'] ?? '') == 2) { $this->contentCssClass = "plus";}
+        else if (($_GET['t'] ?? '') == 7) { $this->contentCssClass = "forum";}
 		else { $this->contentCssClass = "messages"; }
     }
 
@@ -36,8 +36,8 @@ class GPage  extends securegamepage
         $payhistotal = $mpay->getTotalMoney();
 		if (session_status() === PHP_SESSION_NONE) { session_start(); }
 //verbs
-$name = $_SESSION['nm_admin'];
-$pwd = $_SESSION['pwd_admin'];
+$name = $_SESSION['nm_admin'] ?? '';
+$pwd = $_SESSION['pwd_admin'] ?? '';
 require(".".DIRECTORY_SEPARATOR."core-f".DIRECTORY_SEPARATOR."admin.php");
 
 if ($name==$a && $pwd==$p) {
@@ -163,7 +163,7 @@ if ($name==$a && $pwd==$p) {
 		$this->pageIndex = isset( $_GET['p'] ) && is_numeric( $_GET['p'] ) ? intval( $_GET['p'] ) : 0;
 		$rowsCount = $m->getMeberCount( );
 		$this->pageCount = 0 < $rowsCount ? ceil( $rowsCount / $this->pageSize ) : 1;
-		$this->Meber = $m->GetMeber( $this->pageIndex, $this->pageSize, $this->GoldNumMeber );
+		$this->Meber = $m->GetMeber( $this->pageIndex, $this->pageSize );
 		$m->dispose( );
 		}
     }
