@@ -1,5 +1,8 @@
 <?php
-// API Configuration
+// API Configuration - suppress display errors to keep JSON clean
+error_reporting(E_ALL & ~E_DEPRECATED & ~E_NOTICE & ~E_WARNING);
+ini_set('display_errors', '0');
+
 header('Content-Type: application/json; charset=utf-8');
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
@@ -11,6 +14,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 }
 
 define('API_SECRET', 'tatar_api_2026_secret_key');
+
+// Catch fatal errors and return JSON
+set_exception_handler(function($e) {
+    http_response_code(500);
+    echo json_encode(['ok' => false, 'error' => $e->getMessage()], JSON_UNESCAPED_UNICODE);
+    exit;
+});
+register_shutdown_function(function() {
+    $error = error_get_last();
+    if ($error && in_array($error['type'], [E_ERROR, E_PARSE, E_CORE_ERROR, E_COMPILE_ERROR])) {
+        http_response_code(500);
+        echo json_encode(['ok' => false, 'error' => $error['message']], JSON_UNESCAPED_UNICODE);
+    }
+});
 
 // Load app config
 require_once(dirname(__FILE__) . '/../core-f/config-f/s1.php');
