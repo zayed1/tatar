@@ -144,10 +144,10 @@ if ($this->selectedTabIndex == 4)
             $this->receiver = (strip_tags(trim($_POST['an'] ?? '')));
             $this->subject  = ($filter->FilterWords(strip_tags(trim($_POST['be'] ?? ''))));
             $this->body     = (strip_tags(trim($_POST['message'] ?? '')));
+            $time =  $this->data['blocked_time'] ?? 0;
             $timeout =  date('Y/n/d  - h:i:s',$time);
-            $hi = $this->data['blocked_time'];
+            $hi = $this->data['blocked_time'] ?? 0;
             $p = $this->data['total_people_count'];
-            $time =  $this->data['blocked_time'];
             $cont = trim($m->getwarAllianceId($_POST['an'] ?? ''));
             if ($cont != '')
                 {
@@ -174,7 +174,7 @@ require_once LIB_PATH . 'badwords.php';
                 $m->dispose();
             }
             else 
-if ($this->data['msg_blocked'] == 1) {
+if (($this->data['msg_blocked'] ?? 0) == 1) {
                 $this->showList         = FALSE;
                 $this->selectedTabIndex = 1;
                 $this->errorText        = "".MSG_PHP3."<p></p>";
