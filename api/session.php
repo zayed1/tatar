@@ -1,60 +1,80 @@
 <?php
-// Creates a PHP session from API token - used by WebView to establish cookies
-require_once(__DIR__ . '/config.php');
+// Creates a PHP session from API token - used by WebView
+// This file does NOT use config.php JSON headers - it redirects instead
+
+// Suppress errors for clean redirect
+error_reporting(0);
+ini_set('display_errors', '0');
+
+define('API_SECRET', 'tatar_api_2026_secret_key');
+require_once(dirname(__DIR__) . '/core-f/config-f/s1.php');
 
 $token = $_GET['token'] ?? '';
+$redirect = $_GET['redirect'] ?? 'village1';
+
 if (!$token) {
-    http_response_code(401);
-    echo 'Missing token';
+    header('Location: /login?platform=app');
     exit;
 }
 
-$player = verifyToken($token);
+// Verify token
+$decoded = base64_decode($token);
+if (!$decoded || strpos($decoded, ':') === false) {
+    header('Location: /login?platform=app');
+    exit;
+}
+$parts = explode(':', $decoded, 2);
+$playerId = intval($parts[0]);
+$hash = $parts[1];
+
+if ($playerId <= 0) {
+    header('Location: /login?platform=app');
+    exit;
+}
+
+// Connect to DB
+$db_port = isset($AppConfig['db']['port']) ? intval($AppConfig['db']['port']) : 3306;
+$link = mysqli_connect($AppConfig['db']['host'], $AppConfig['db']['user'], $AppConfig['db']['password'], $AppConfig['db']['database'], $db_port);
+if (!$link) {
+    header('Location: /login?platform=app');
+    exit;
+}
+
+// Verify token against DB
+$result = mysqli_query($link, "SELECT id, pwd, pwd1, name FROM p_players WHERE id=$playerId");
+$player = mysqli_fetch_assoc($result);
 if (!$player) {
-    http_response_code(401);
-    echo 'Invalid token';
+    mysqli_close($link);
+    header('Location: /login?platform=app');
     exit;
 }
 
-// Start PHP session and set player data (same as login.php does)
+$expected = hash('sha256', $player['id'] . ':' . $player['pwd'] . ':' . API_SECRET);
+if (!hash_equals($expected, $hash)) {
+    mysqli_close($link);
+    header('Location: /login?platform=app');
+    exit;
+}
+
+// Token valid - create PHP session
 if (session_status() === PHP_SESSION_NONE) { session_start(); }
 
-$playerId = intval($player['id']);
-$playerName = $player['name'];
+$_SESSION['pwd'] = md5($player['pwd1'] ?? '');
+$_SESSION['is_rig'] = $player['name'];
 
-// Load game config
-require_once(dirname(__DIR__) . '/core-f/config-f/s1.php');
-$db_port = isset($GLOBALS['AppConfig']['db']['port']) ? intval($GLOBALS['AppConfig']['db']['port']) : 3306;
-$link = mysqli_connect($GLOBALS['AppConfig']['db']['host'], $GLOBALS['AppConfig']['db']['user'], $GLOBALS['AppConfig']['db']['password'], $GLOBALS['AppConfig']['db']['database'], $db_port);
+// Set Player object in session
+require_once(dirname(__DIR__) . '/core-f/components.php');
+$p = new Player();
+$p->playerId = $playerId;
+$p->isAgent = 0;
+$p->gameStatus = 0;
+$p->save();
 
-if ($link) {
-    $result = mysqli_query($link, "SELECT pwd, pwd1 FROM p_players WHERE id=$playerId");
-    $row = mysqli_fetch_assoc($result);
-    if ($row) {
-        // Set session like normal login
-        $_SESSION['pwd'] = md5($row['pwd1'] ?? '');
-        $_SESSION['is_rig'] = $playerName;
+// Update session ID in DB
+$usersession = session_id();
+mysqli_query($link, "UPDATE p_players SET UserSession='$usersession', last_login_date=NOW() WHERE id=$playerId");
+mysqli_close($link);
 
-        // Set Player object in session
-        require_once(dirname(__DIR__) . '/core-f/components.php');
-        $p = new Player();
-        $p->playerId = $playerId;
-        $p->isAgent = 0;
-        $p->gameStatus = 0;
-        $p->save();
-
-        // Set cookie
-        $key = Player::getKey();
-        require_once(dirname(__DIR__) . '/core-f/sql-f/webhelper.php');
-
-        // Update session
-        $usersession = session_id();
-        mysqli_query($link, "UPDATE p_players SET UserSession='$usersession', last_login_date=NOW() WHERE id=$playerId");
-    }
-    mysqli_close($link);
-}
-
-// Redirect to requested page
-$redirect = $_GET['redirect'] ?? 'village1';
+// Redirect to game page
 header('Location: /' . $redirect . '?platform=app');
 exit;

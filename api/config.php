@@ -66,10 +66,9 @@ function verifyToken($token) {
     if ($playerId <= 0) return null;
 
     $db = getDb();
-    $playerId = mysqli_real_escape_string($db, $playerId);
-    $result = mysqli_query($db, "SELECT id, pwd, name FROM p_players WHERE id='$playerId'");
+    $result = mysqli_query($db, "SELECT id, pwd, name FROM p_players WHERE id=$playerId");
     $player = mysqli_fetch_assoc($result);
-    mysqli_close($db);
+    // Don't close DB here - let closeDb() handle it in jsonSuccess/jsonError
 
     if (!$player) return null;
 

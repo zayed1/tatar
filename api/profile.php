@@ -13,7 +13,7 @@ if ($action === 'view') {
         SELECT p.id, p.name, p.tribe_id, p.alliance_id, p.alliance_name,
                p.total_people_count, p.villages_count, p.gold_num,
                p.attack_points, p.defense_points, p.thief_points,
-               p.week_attack_points, p.week_defense_points, p.week_dev_points,
+               p.week_attack_points, p.week_defense_points,
                p.hero_level, p.hero_points, p.hero_troop_id,
                IFNULL(p.hero_name, p.name) as hero_name,
                p.description1, p.gender, p.birth_date, p.avatar,
@@ -69,7 +69,7 @@ if ($action === 'view') {
             'thief' => intval($player['thief_points']),
             'week_attack' => intval($player['week_attack_points']),
             'week_defense' => intval($player['week_defense_points']),
-            'week_dev' => intval($player['week_dev_points']),
+            'week_dev' => 0,
         ],
         'hero' => intval($player['hero_troop_id']) > 0 ? [
             'name' => $player['hero_name'],
