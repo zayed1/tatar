@@ -26,17 +26,14 @@ if (!$player) {
 }
 
 if (!$player) {
-    mysqli_close($db);
     jsonError('اسم المستخدم غير موجود');
 }
 
 if (strtolower(md5($password)) !== strtolower($player['pwd'])) {
-    mysqli_close($db);
     jsonError('كلمة المرور غير صحيحة');
 }
 
 if ($player['is_blocked']) {
-    mysqli_close($db);
     jsonError('هذا الحساب محظور');
 }
 
@@ -57,8 +54,6 @@ while ($v = mysqli_fetch_assoc($vResult)) {
         'is_capital' => intval($v['is_capital'])
     ];
 }
-
-mysqli_close($db);
 
 $token = generateToken($player['id'], $player['pwd']);
 

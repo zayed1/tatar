@@ -94,8 +94,8 @@ function requireAuth() {
 
 function closeDb() {
     global $_apiDb;
-    if (isset($_apiDb) && $_apiDb) {
-        mysqli_close($_apiDb);
+    if (isset($_apiDb) && $_apiDb instanceof mysqli) {
+        @mysqli_close($_apiDb);
         $_apiDb = null;
     }
 }
