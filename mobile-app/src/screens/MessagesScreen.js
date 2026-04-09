@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import {
   View, Text, FlatList, TouchableOpacity, StyleSheet,
   ActivityIndicator, RefreshControl, TextInput, Alert, KeyboardAvoidingView, Platform,
@@ -42,12 +42,19 @@ export default function MessagesScreen() {
     }
   }, [tab]);
 
+  const isReplying = useRef(false);
+
   useEffect(() => {
     if (tab !== 'compose') {
       setSelectedMsg(null);
       setMessages([]);
       fetchMessages(0);
+    } else if (!isReplying.current) {
+      setToName('');
+      setSubject('');
+      setBody('');
     }
+    isReplying.current = false;
   }, [tab, fetchMessages]);
 
   const handleRefresh = () => {
@@ -87,6 +94,7 @@ export default function MessagesScreen() {
 
   const handleReply = () => {
     if (!selectedMsg) return;
+    isReplying.current = true;
     setToName(selectedMsg.from_name);
     setSubject('رد: ' + selectedMsg.title);
     setBody('');

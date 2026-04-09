@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import {
   View, Text, FlatList, TextInput, TouchableOpacity,
-  StyleSheet, KeyboardAvoidingView, Platform,
+  StyleSheet, KeyboardAvoidingView, Platform, AppState,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { apiChatGet, apiChatSend, apiAllianceChatGet, apiAllianceChatSend } from '../api/client';
@@ -54,7 +54,21 @@ export default function ChatScreen() {
     setMessages([]);
     fetchMessages();
     pollRef.current = setInterval(fetchMessages, 3000);
-    return () => clearInterval(pollRef.current);
+
+    // Pause polling when app goes to background
+    const sub = AppState.addEventListener('change', (state) => {
+      if (state === 'active') {
+        fetchMessages();
+        pollRef.current = setInterval(fetchMessages, 3000);
+      } else {
+        clearInterval(pollRef.current);
+      }
+    });
+
+    return () => {
+      clearInterval(pollRef.current);
+      sub.remove();
+    };
   }, [tab, fetchMessages]);
 
   const handleSend = async () => {
