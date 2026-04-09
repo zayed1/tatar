@@ -22,7 +22,7 @@ const INJECT_JS = `
     html, body {
       margin: 0 !important;
       padding: 0 !important;
-      background: #e8dcc8 !important;
+      background: #f5f0e8 !important;
       overflow-x: hidden !important;
       -webkit-overflow-scrolling: touch;
     }
@@ -31,7 +31,7 @@ const INJECT_JS = `
     div.wrapper {
       min-width: 0 !important;
       width: 100% !important;
-      background: #e8dcc8 !important;
+      background: #f5f0e8 !important;
       background-image: none !important;
       padding: 0 !important;
       margin: 0 !important;
@@ -55,7 +55,7 @@ const INJECT_JS = `
       max-width: 100% !important;
       margin: 0 !important;
       padding: 0 !important;
-      background: #e8dcc8 !important;
+      background: #f5f0e8 !important;
       box-shadow: none !important;
       border-radius: 0 !important;
       min-height: 100vh !important;
@@ -67,7 +67,7 @@ const INJECT_JS = `
       max-width: 100% !important;
       padding: 0 !important;
       margin: 0 !important;
-      background: #e8dcc8 !important;
+      background: #f5f0e8 !important;
       display: flex !important;
       flex-direction: column !important;
       align-items: center !important;
@@ -170,15 +170,15 @@ export default function GameWebView({ path, onNavigate }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#e8dcc8',
+    backgroundColor: '#f5f0e8',
   },
   webview: {
     flex: 1,
-    backgroundColor: '#e8dcc8',
+    backgroundColor: '#f5f0e8',
   },
   loading: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: '#e8dcc8',
+    backgroundColor: '#f5f0e8',
     justifyContent: 'center',
     alignItems: 'center',
   },
