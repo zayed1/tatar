@@ -246,6 +246,7 @@ p.error_box {
 /* --- Content area improvements --- */
 #content {
     min-height: 400px;
+    margin-top: 28px;
 }
 #content h1 {
     font-size: 20px;

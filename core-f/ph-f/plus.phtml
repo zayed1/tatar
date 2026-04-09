@@ -369,7 +369,7 @@ if (!$found) {
               continue;
               }
               }
-if ($this->appConfig['plus']['packages'][$this->packageIndex]['sawacost'] == 0) {
+if (($this->appConfig['plus']['packages'][$this->packageIndex]['sawacost'] ?? 0) == 0) {
 if($payment['image'] == 'sawa' or $payment['image'] == 'mobily') {
               continue;
 }
@@ -383,9 +383,11 @@ if($payment['image'] == 'sawa' or $payment['image'] == 'mobily') {
               echo "\">\r\n                <div>";
               echo text_period_lang;
               echo ": ";
-              echo constant("payments_" . $paymentKey . "_period");
+              $periodConst = "payments_" . $paymentKey . "_period";
+              echo defined($periodConst) ? constant($periodConst) : '';
               echo "</div>\r\n            </td>\r\n            <td class=\"desc\">\r\n                ";
-              echo constant("payments_" . $paymentKey . "_description");
+              $descConst = "payments_" . $paymentKey . "_description";
+              echo defined($descConst) ? constant($descConst) : '';
               echo "<p>\r\n                <a href=\"#\" onclick=\"window. open('payment.php?p=";
               echo $paymentKey;
               echo "&pg=";

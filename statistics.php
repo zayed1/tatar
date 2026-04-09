@@ -211,7 +211,7 @@ if ($this->selectedTabIndex == 13)
                                     }
                                     else
                                     {
-                                        $this->selectedRank = addslashes($m->getPlayersPointsById($this->player->playerId, $this->selectedTabIndex == 6));
+                                        $this->selectedRank = addslashes($m->getPlayersPointsById($this->player->playerId, $this->selectedTabIndex == 6) ?? '');
                                     }
                                     
                                 }
