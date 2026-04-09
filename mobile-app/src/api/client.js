@@ -134,3 +134,14 @@ export async function apiGetAlliance(id) {
   const param = id ? `&id=${id}` : '';
   return authFetch(`${BASE_URL}/api/alliance.php?action=info${param}`);
 }
+
+// Buildings & Troops
+export async function apiGetBuildings(vid) {
+  const param = vid ? `&vid=${vid}` : '';
+  return authFetch(`${BASE_URL}/api/build.php?action=buildings${param}`);
+}
+
+export async function apiGetTroops(vid) {
+  const param = vid ? `&vid=${vid}` : '';
+  return authFetch(`${BASE_URL}/api/build.php?action=troops${param}`);
+}

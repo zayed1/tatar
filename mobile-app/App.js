@@ -19,6 +19,8 @@ import ProfileScreen from './src/screens/ProfileScreen';
 import StatisticsScreen from './src/screens/StatisticsScreen';
 import ChatScreen from './src/screens/ChatScreen';
 import AllianceScreen from './src/screens/AllianceScreen';
+import BuildingsScreen from './src/screens/BuildingsScreen';
+import TroopsScreen from './src/screens/TroopsScreen';
 import WebPageScreen from './src/screens/WebPageScreen';
 
 const Tab = createBottomTabNavigator();
@@ -206,6 +208,16 @@ export default function App() {
             name="Alliance"
             component={AllianceScreen}
             options={{ headerShown: true, headerTitle: 'التحالف', headerBackTitle: 'رجوع' }}
+          />
+          <Stack.Screen
+            name="Buildings"
+            component={BuildingsScreen}
+            options={{ headerShown: true, headerTitle: 'المباني', headerBackTitle: 'رجوع' }}
+          />
+          <Stack.Screen
+            name="Troops"
+            component={TroopsScreen}
+            options={{ headerShown: true, headerTitle: 'القوات', headerBackTitle: 'رجوع' }}
           />
           <Stack.Screen
             name="WebPage"

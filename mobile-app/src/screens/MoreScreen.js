@@ -12,8 +12,10 @@ const MENU_SECTIONS = [
       { label: '📊 الإحصائيات', screen: 'Statistics' },
       { label: '💬 الشات', screen: 'Chat' },
       { label: '🤝 التحالف', screen: 'Alliance' },
-      { label: '⚔️ التحديات', path: 'def.php' },
+      { label: '🏗️ المباني', screen: 'Buildings' },
+      { label: '⚔️ القوات', screen: 'Troops' },
       { label: '🏪 السوق', path: 'build.php?bid=17' },
+      { label: '🗡️ التحديات', path: 'def.php' },
     ],
   },
   {
