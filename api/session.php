@@ -56,8 +56,18 @@ if (!hash_equals($expected, $hash)) {
     exit;
 }
 
-// Token valid - create PHP session
-if (session_status() === PHP_SESSION_NONE) { session_start(); }
+// Token valid - create PHP session with cookie path at root
+if (session_status() === PHP_SESSION_NONE) {
+    session_set_cookie_params([
+        'lifetime' => 86400 * 30,
+        'path' => '/',
+        'domain' => '',
+        'secure' => false,
+        'httponly' => true,
+        'samesite' => 'Lax'
+    ]);
+    session_start();
+}
 
 $_SESSION['pwd'] = md5($player['pwd1'] ?? '');
 $_SESSION['is_rig'] = $player['name'];
