@@ -331,8 +331,8 @@ return null;
                         $_d_     = (((isset($_POST['tag']) && 1 <= intval($_POST['tag'])) && intval($_POST['tag']) <= 31) ? intval($_POST['tag']) : '');
                         $filter = new FilterWordsModel();
                         $newData = array(
-                            'gender' => ((0 <= intval($_POST['mw']) && intval($_POST['mw']) <= 2) ? intval($_POST['mw']) : 0),
-                            'house_name' => ($filter->FilterWords(isset($_POST['ort'])) ? $filter->FilterWords(htmlspecialchars($_POST['ort']))  : ''),
+                            'gender' => ((0 <= intval($_POST['mw'] ?? 0) && intval($_POST['mw'] ?? 0) <= 2) ? intval($_POST['mw'] ?? 0) : 0),
+                            'house_name' => (isset($_POST['ort']) ? $filter->FilterWords(htmlspecialchars($_POST['ort'])) : ''),
 /////////////////////////////////////////
                             'village_name' => $_POST['dnm'] ?? '',
 /////////////////////////////////////////

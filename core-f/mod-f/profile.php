@@ -206,25 +206,31 @@ public function getwarAllianceId( $allianceId )
             $playerId
         ) );
         $villages_data_arr = array( );
-        $villages_id_arr = explode( "\n", $data['villages'] );
+        $villages_id_arr = explode( "\n", $data['villages'] ?? '' );
+        $villageNames = is_array($data['village_name'] ?? null) ? $data['village_name'] : [];
         $i = 0;
         $c = sizeof( $villages_id_arr );
         while ( $i < $c )
         {
-            list( $vid, $x, $y, $vname ) = explode( " ", $villages_id_arr[$i], 4 );
-                $newVname = is_array($data['village_name'] ?? null) ? ($data['village_name'][$i] ?? $vname) : $vname;
-                $vname = htmlspecialchars($newVname);
-                $villages_id_arr[$i] = $vid." ".$x." ".$y." ".$vname;
-        $village_name = htmlspecialchars(trim( $data['village_name'][$i] ));
-        if ( $village_name != "" )
-        {
-            $this->provider->executeQuery( "UPDATE p_villages v SET v.village_name='%s' WHERE v.id=%s", array(
-                $village_name,
-                $vid
-            ) );
-        }
+            $parts = explode( " ", $villages_id_arr[$i], 4 );
+            $vid = $parts[0] ?? 0;
+            $x = $parts[1] ?? 0;
+            $y = $parts[2] ?? 0;
+            $vname = $parts[3] ?? '';
 
-           // }
+            $newVname = $villageNames[$i] ?? $vname;
+            $vname = htmlspecialchars($newVname);
+            $villages_id_arr[$i] = $vid." ".$x." ".$y." ".$vname;
+
+            $village_name = htmlspecialchars(trim($newVname));
+            if ( $village_name != "" && $vid )
+            {
+                $this->provider->executeQuery( "UPDATE p_villages v SET v.village_name='%s' WHERE v.id=%s", array(
+                    $village_name,
+                    $vid
+                ) );
+            }
+
             $villages_data_arr[$vname][] = $villages_id_arr[$i];
             ++$i;
         }
