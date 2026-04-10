@@ -117,12 +117,13 @@ export default function GameWebView({ path, onNavigate }) {
   const webViewRef = useRef(null);
   const [uri, setUri] = useState(null);
 
-  // Use session endpoint to establish PHP cookies, then redirect to game page
+  // Load game page directly with api_token for auto-login
   useEffect(() => {
     (async () => {
       const token = await getToken();
       if (token) {
-        setUri(`${API_BASE}/api/session.php?token=${encodeURIComponent(token)}&redirect=${encodeURIComponent(path)}`);
+        const separator = path.includes('?') ? '&' : '?';
+        setUri(`${API_BASE}/${path}${separator}platform=app&api_token=${encodeURIComponent(token)}`);
       } else {
         setUri(`${API_BASE}/${path}?platform=app`);
       }
