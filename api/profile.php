@@ -46,8 +46,8 @@ if ($action === 'view') {
     $pop = intval($player['total_people_count']);
     $vc = intval($player['villages_count']);
     $score = $pop * 10 + $vc;
-    $rankResult = mysqli_query($db, "SELECT COUNT(*)+1 as rank FROM p_players WHERE (total_people_count*10+villages_count) > $score AND player_type != 4");
-    $rank = intval(mysqli_fetch_assoc($rankResult)['rank']);
+    $rankResult = mysqli_query($db, "SELECT COUNT(*)+1 as player_rank FROM p_players WHERE (total_people_count*10+villages_count) > $score AND player_type != 4");
+    $rank = intval(mysqli_fetch_assoc($rankResult)['player_rank']);
 
     $tribes = [1 => 'العرب', 2 => 'الرومان', 3 => 'اليونان', 4 => 'الجرمان', 5 => 'المغول', 6 => 'الفرس'];
 

@@ -88,8 +88,8 @@ if ($action === 'info') {
 
     // Get rank
     $score = intval($alliance['rating']) * 100 + intval($alliance['player_count']);
-    $rankResult = mysqli_query($db, "SELECT COUNT(*)+1 as rank FROM p_alliances WHERE (rating*100+player_count) > $score");
-    $rank = intval(mysqli_fetch_assoc($rankResult)['rank']);
+    $rankResult = mysqli_query($db, "SELECT COUNT(*)+1 as alliance_rank FROM p_alliances WHERE (rating*100+player_count) > $score");
+    $rank = intval(mysqli_fetch_assoc($rankResult)['alliance_rank']);
 
     // Check if player is member
     $isMember = in_array($playerId, array_map('intval', explode(',', $memberIds)));
