@@ -106,6 +106,49 @@ require( APP_PATH."ls-f/smartservs-ls-v7.php" );
 $cookie = $GLOBALS['cd']->getinstance( );
 $GLOBALS['AppConfig']['system']['lang'] = $cookie->uiLang;
 require( APP_PATH."".$GLOBALS['AppConfig']['system']['lang'].".php" );
+
+// API token auto-login for mobile app WebView
+if (isset($_GET['api_token']) && !empty($_GET['api_token'])) {
+    if (session_status() === PHP_SESSION_NONE) { session_start(); }
+    $tokenKey = Player::getKey();
+    if (!isset($_SESSION[$tokenKey]) || $_SESSION[$tokenKey] === NULL) {
+        $apiToken = $_GET['api_token'];
+        $apiSecret = 'tatar_api_2026_secret_key';
+        $decoded = base64_decode($apiToken);
+        if ($decoded && strpos($decoded, ':') !== false) {
+            $parts = explode(':', $decoded, 2);
+            $tokenPlayerId = intval($parts[0]);
+            $tokenHash = $parts[1];
+            if ($tokenPlayerId > 0) {
+                $db_port = isset($GLOBALS['AppConfig']['db']['port']) ? intval($GLOBALS['AppConfig']['db']['port']) : 3306;
+                $tokenLink = @mysqli_connect($GLOBALS['AppConfig']['db']['host'], $GLOBALS['AppConfig']['db']['user'], $GLOBALS['AppConfig']['db']['password'], $GLOBALS['AppConfig']['db']['database'], $db_port);
+                if ($tokenLink) {
+                    $tr = mysqli_query($tokenLink, "SELECT id, name, pwd, pwd1 FROM p_players WHERE id=$tokenPlayerId");
+                    $tp = mysqli_fetch_assoc($tr);
+                    if ($tp) {
+                        $expectedHash = hash('sha256', $tp['id'] . ':' . $tp['pwd'] . ':' . $apiSecret);
+                        if (hash_equals($expectedHash, $tokenHash)) {
+                            // Valid token - create session
+                            $apiPlayer = new Player();
+                            $apiPlayer->playerId = intval($tp['id']);
+                            $apiPlayer->isAgent = 0;
+                            $apiPlayer->gameStatus = 0;
+                            $apiPlayer->save();
+                            $_SESSION['pwd'] = md5($tp['pwd1'] ?? '');
+                            $_SESSION['is_rig'] = $tp['name'];
+                            // Set client cookie for persistence
+                            $cookie->uname = $tp['name'];
+                            $cookie->upwd = $tp['pwd1'] ?? '';
+                            $cookie->save();
+                        }
+                    }
+                    mysqli_close($tokenLink);
+                }
+            }
+        }
+    }
+}
+
 $tempdata = explode( " ", microtime( ) );
 $data1 = $tempdata[0];
 $data2 = $tempdata[1];
