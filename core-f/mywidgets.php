@@ -19,7 +19,7 @@ $this->gameSpeed= $this->gameMetadata['game_speed'];
 $session_timeout = $this->gameMetadata['session_timeout'];
 @ini_set ('session.gc_maxlifetime', $session_timeout * 60);
 @session_cache_expire ($session_timeout);
-session_start ();
+if (session_status() === PHP_SESSION_NONE) { session_start(); }
 if(isset($_POST) && count($_POST)>1) {
 if(isset($_SESSION['visitload']) && (!isset($_SESSION['boot']) || $_SESSION['boot'] != 1)) {
 $timer = ($_SESSION['visitload']>(time()-2)) ? true : false ;

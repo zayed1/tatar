@@ -14,6 +14,8 @@ define( "VIEW_PATH", APP_PATH."ph-f".DIRECTORY_SEPARATOR );
 $sessionPath = APP_PATH . 'cache-f';
 if (!is_dir($sessionPath)) { mkdir($sessionPath, 0777, true); }
 ini_set('session.save_path', $sessionPath);
+ini_set('session.cookie_path', '/');
+ini_set('session.cookie_lifetime', '0');
 date_default_timezone_set('Asia/Kuwait');
 ignore_user_abort( TRUE );
 set_time_limit( 0 );
@@ -109,7 +111,10 @@ require( APP_PATH."".$GLOBALS['AppConfig']['system']['lang'].".php" );
 
 // API token auto-login for mobile app WebView
 if (isset($_GET['api_token']) && !empty($_GET['api_token'])) {
-    if (session_status() === PHP_SESSION_NONE) { session_start(); }
+    if (session_status() === PHP_SESSION_NONE) {
+        session_set_cookie_params(['path' => '/']);
+        session_start();
+    }
     $tokenKey = Player::getKey();
     if (!isset($_SESSION[$tokenKey]) || $_SESSION[$tokenKey] === NULL) {
         $apiToken = $_GET['api_token'];
