@@ -70,6 +70,13 @@ $p->isAgent = 0;
 $p->gameStatus = 0;
 $p->save();
 
+// Set ClientData cookie (required by game pages)
+$cookie = new ClientData();
+$cookie->uname = $player['name'];
+$cookie->upwd = $player['pwd1'] ?? '';
+$cookieKey = $p->getKey();
+setcookie($cookieKey, base64_encode(serialize($cookie)), time() + 86400 * 30, '/');
+
 // Update session ID in DB
 $usersession = session_id();
 mysqli_query($link, "UPDATE p_players SET UserSession='$usersession', last_login_date=NOW() WHERE id=$playerId");

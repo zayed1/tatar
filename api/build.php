@@ -33,7 +33,7 @@ if ($action === 'buildings') {
 
     $vResult = mysqli_query($db, "SELECT buildings, village_name FROM p_villages WHERE id = $vid AND player_id = $playerId");
     $village = mysqli_fetch_assoc($vResult);
-    if (!$village) { mysqli_close($db); jsonError('Village not found', 404); }
+    if (!$village) { jsonError('Village not found', 404); }
 
     // Parse buildings
     $buildings = [];
@@ -75,7 +75,7 @@ if ($action === 'buildings') {
         ];
     }
 
-    mysqli_close($db);
+    
     jsonSuccess([
         'village_name' => $village['village_name'],
         'buildings' => $buildings,
@@ -97,7 +97,7 @@ if ($action === 'troops') {
 
     $vResult = mysqli_query($db, "SELECT troops_num, troops_training, village_name FROM p_villages WHERE id = $vid AND player_id = $playerId");
     $village = mysqli_fetch_assoc($vResult);
-    if (!$village) { mysqli_close($db); jsonError('Village not found', 404); }
+    if (!$village) { jsonError('Village not found', 404); }
 
     // Parse troops_num
     $troopCounts = [];
@@ -171,7 +171,7 @@ if ($action === 'troops') {
         ];
     }
 
-    mysqli_close($db);
+    
     jsonSuccess([
         'village_name' => $village['village_name'],
         'troops' => $troops,
@@ -179,5 +179,5 @@ if ($action === 'troops') {
     ]);
 }
 
-mysqli_close($db);
+
 jsonError('Invalid action. Use: buildings, troops', 400);

@@ -22,7 +22,7 @@ if ($action === 'view') {
         FROM p_players p WHERE p.id = $uid
     ");
     $player = mysqli_fetch_assoc($result);
-    if (!$player) { mysqli_close($db); jsonError('Player not found', 404); }
+    if (!$player) { jsonError('Player not found', 404); }
 
     // Get villages
     $vResult = mysqli_query($db, "
@@ -51,7 +51,7 @@ if ($action === 'view') {
 
     $tribes = [1 => 'العرب', 2 => 'الرومان', 3 => 'اليونان', 4 => 'الجرمان', 5 => 'المغول', 6 => 'الفرس'];
 
-    mysqli_close($db);
+    
     jsonSuccess([
         'id' => intval($player['id']),
         'name' => $player['name'],
@@ -84,5 +84,5 @@ if ($action === 'view') {
     ]);
 }
 
-mysqli_close($db);
+
 jsonError('Invalid action', 400);

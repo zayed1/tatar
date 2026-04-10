@@ -30,7 +30,7 @@ if ($method === 'GET' && $action === 'get') {
     // Reset chat count for this player
     mysqli_query($db, "UPDATE p_players SET chat_count = 0 WHERE id = $playerId");
 
-    mysqli_close($db);
+    
     jsonSuccess(['messages' => $messages]);
 }
 
@@ -45,7 +45,7 @@ if ($method === 'POST' && $action === 'send') {
     // Get player name
     $pResult = mysqli_query($db, "SELECT name FROM p_players WHERE id = $playerId");
     $player = mysqli_fetch_assoc($pResult);
-    if (!$player) { mysqli_close($db); jsonError('Player not found'); }
+    if (!$player) { jsonError('Player not found'); }
 
     $safeName = mysqli_real_escape_string($db, $player['name']);
     $safeText = mysqli_real_escape_string($db, htmlspecialchars($text));
@@ -64,7 +64,7 @@ if ($method === 'POST' && $action === 'send') {
         mysqli_query($db, "DELETE FROM g_chat ORDER BY ID ASC LIMIT $del");
     }
 
-    mysqli_close($db);
+    
     jsonSuccess(['sent' => true]);
 }
 
@@ -73,7 +73,7 @@ if ($method === 'GET' && $action === 'alliance') {
     $aResult = mysqli_query($db, "SELECT alliance_id FROM p_players WHERE id = $playerId");
     $aRow = mysqli_fetch_assoc($aResult);
     $allianceId = intval($aRow['alliance_id'] ?? 0);
-    if ($allianceId <= 0) { mysqli_close($db); jsonError('أنت لست في تحالف'); }
+    if ($allianceId <= 0) { jsonError('أنت لست في تحالف'); }
 
     $result = mysqli_query($db, "SELECT ID, username, userid, date, text FROM g_chat_alliance WHERE alliance_id = '$allianceId' ORDER BY ID DESC LIMIT 50");
     $messages = [];
@@ -90,7 +90,7 @@ if ($method === 'GET' && $action === 'alliance') {
         ];
     }
     $messages = array_reverse($messages);
-    mysqli_close($db);
+    
     jsonSuccess(['messages' => $messages]);
 }
 
@@ -102,7 +102,7 @@ if ($method === 'POST' && $action === 'alliance_send') {
     $pResult = mysqli_query($db, "SELECT name, alliance_id FROM p_players WHERE id = $playerId");
     $player = mysqli_fetch_assoc($pResult);
     $allianceId = intval($player['alliance_id'] ?? 0);
-    if ($allianceId <= 0) { mysqli_close($db); jsonError('أنت لست في تحالف'); }
+    if ($allianceId <= 0) { jsonError('أنت لست في تحالف'); }
 
     $safeName = mysqli_real_escape_string($db, $player['name']);
     $safeText = mysqli_real_escape_string($db, htmlspecialchars($text));
@@ -118,9 +118,9 @@ if ($method === 'POST' && $action === 'alliance_send') {
         mysqli_query($db, "DELETE FROM g_chat_alliance WHERE alliance_id = '$allianceId' ORDER BY ID ASC LIMIT $del");
     }
 
-    mysqli_close($db);
+    
     jsonSuccess(['sent' => true]);
 }
 
-mysqli_close($db);
+
 jsonError('Invalid action', 400);

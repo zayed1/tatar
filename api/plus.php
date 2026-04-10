@@ -47,7 +47,7 @@ if ($action === 'status') {
         ['id' => 13, 'name' => 'حمولة القوات +20%', 'icon' => '📦', 'cost' => intval($cfg['plus_by_abdullah_6_2']), 'duration' => $cfg['plus_by_abdullah_6_1'] . ' يوم', 'type' => 'duration'],
     ];
 
-    mysqli_close($db);
+    
     jsonSuccess([
         'gold' => intval($player['gold_num']),
         'silver' => intval($player['silver_num']),
@@ -83,12 +83,12 @@ if ($action === 'packages') {
         ];
     }
 
-    mysqli_close($db);
+    
     jsonSuccess([
         'packages' => $result,
         'payment_methods' => $payments,
     ]);
 }
 
-mysqli_close($db);
+
 jsonError('Invalid action. Use: status, packages', 400);

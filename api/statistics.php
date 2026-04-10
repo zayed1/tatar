@@ -36,7 +36,7 @@ if ($tab === 'players') {
             'villages' => intval($row['villages_count']),
         ];
     }
-    mysqli_close($db);
+    
     jsonSuccess(['items' => $items, 'total' => $total, 'page' => $page]);
 }
 
@@ -67,7 +67,7 @@ if ($tab === 'alliances') {
             'average' => intval($row['average']),
         ];
     }
-    mysqli_close($db);
+    
     jsonSuccess(['items' => $items, 'total' => $total, 'page' => $page]);
 }
 
@@ -95,7 +95,7 @@ if ($tab === 'attack' || $tab === 'defense') {
             'points' => intval($row['points']),
         ];
     }
-    mysqli_close($db);
+    
     jsonSuccess(['items' => $items, 'total' => $total, 'page' => $page]);
 }
 
@@ -124,7 +124,7 @@ if ($tab === 'heroes') {
             'points' => intval($row['hero_points']),
         ];
     }
-    mysqli_close($db);
+    
     jsonSuccess(['items' => $items, 'total' => $total, 'page' => $page]);
 }
 
@@ -153,9 +153,9 @@ if ($tab === 'villages') {
             'y' => intval($row['rel_y']),
         ];
     }
-    mysqli_close($db);
+    
     jsonSuccess(['items' => $items, 'total' => $total, 'page' => $page]);
 }
 
-mysqli_close($db);
+
 jsonError('Invalid tab. Use: players, alliances, attack, defense, heroes, villages', 400);

@@ -15,7 +15,7 @@ if ($action === 'info') {
         $pResult = mysqli_query($db, "SELECT alliance_id FROM p_players WHERE id = $playerId");
         $pRow = mysqli_fetch_assoc($pResult);
         $aid = intval($pRow['alliance_id'] ?? 0);
-        if ($aid <= 0) { mysqli_close($db); jsonError('أنت لست في تحالف'); }
+        if ($aid <= 0) { jsonError('أنت لست في تحالف'); }
     }
 
     $result = mysqli_query($db, "
@@ -27,7 +27,7 @@ if ($action === 'info') {
         FROM p_alliances a WHERE a.id = $aid
     ");
     $alliance = mysqli_fetch_assoc($result);
-    if (!$alliance) { mysqli_close($db); jsonError('التحالف غير موجود', 404); }
+    if (!$alliance) { jsonError('التحالف غير موجود', 404); }
 
     // Get members
     $memberIds = $alliance['players_ids'] ?? '';
@@ -94,7 +94,7 @@ if ($action === 'info') {
     // Check if player is member
     $isMember = in_array($playerId, array_map('intval', explode(',', $memberIds)));
 
-    mysqli_close($db);
+    
     jsonSuccess([
         'id' => intval($alliance['id']),
         'name' => $alliance['name'],
@@ -118,5 +118,5 @@ if ($action === 'info') {
     ]);
 }
 
-mysqli_close($db);
+
 jsonError('Invalid action', 400);

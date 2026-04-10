@@ -64,7 +64,7 @@ if ($method === 'GET') {
             ];
         }
 
-        mysqli_close($db);
+        
         jsonSuccess(['reports' => $reports, 'total' => $total, 'page' => $page]);
     }
 
@@ -81,7 +81,7 @@ if ($method === 'GET') {
             WHERE r.id = $rptId AND (r.from_player_id = $playerId OR r.to_player_id = $playerId)
         ");
         $rpt = mysqli_fetch_assoc($result);
-        if (!$rpt) { mysqli_close($db); jsonError('Report not found', 404); }
+        if (!$rpt) { jsonError('Report not found', 404); }
 
         // Mark as read
         $isAttacker = intval($rpt['from_player_id']) === $playerId;
@@ -93,7 +93,7 @@ if ($method === 'GET') {
             mysqli_query($db, "UPDATE p_players SET new_report_count = GREATEST(0, new_report_count - 1) WHERE id = $playerId");
         }
 
-        mysqli_close($db);
+        
         jsonSuccess([
             'id' => intval($rpt['id']),
             'from_name' => $rpt['from_player_name'],
@@ -117,11 +117,11 @@ if ($method === 'POST') {
 
         $result = mysqli_query($db, "SELECT from_player_id, to_player_id, read_status, delete_status FROM p_rpts WHERE id = $rptId");
         $rpt = mysqli_fetch_assoc($result);
-        if (!$rpt) { mysqli_close($db); jsonError('Report not found', 404); }
+        if (!$rpt) { jsonError('Report not found', 404); }
 
         $isAttacker = intval($rpt['from_player_id']) === $playerId;
         $isDefender = intval($rpt['to_player_id']) === $playerId;
-        if (!$isAttacker && !$isDefender) { mysqli_close($db); jsonError('Unauthorized', 403); }
+        if (!$isAttacker && !$isDefender) { jsonError('Unauthorized', 403); }
 
         $currentStatus = intval($rpt['delete_status']);
         if ($currentStatus !== 0 || intval($rpt['from_player_id']) === intval($rpt['to_player_id'])) {
@@ -137,10 +137,10 @@ if ($method === 'POST') {
             mysqli_query($db, "UPDATE p_players SET new_report_count = GREATEST(0, new_report_count - 1) WHERE id = $playerId");
         }
 
-        mysqli_close($db);
+        
         jsonSuccess(['deleted' => true]);
     }
 }
 
-mysqli_close($db);
+
 jsonError('Invalid action', 400);

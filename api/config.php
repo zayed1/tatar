@@ -94,9 +94,13 @@ function requireAuth() {
 function closeDb() {
     global $_apiDb;
     if (isset($_apiDb) && $_apiDb instanceof mysqli) {
-        @mysqli_close($_apiDb);
-        $_apiDb = null;
+        try {
+            @mysqli_close($_apiDb);
+        } catch (\Throwable $e) {
+            // Connection already closed - ignore
+        }
     }
+    $_apiDb = null;
 }
 
 function jsonSuccess($data) {

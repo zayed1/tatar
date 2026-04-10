@@ -48,7 +48,7 @@ if ($method === 'GET') {
             ];
         }
 
-        mysqli_close($db);
+        
         jsonSuccess(['messages' => $messages, 'total' => $total, 'page' => $page]);
     }
 
@@ -64,7 +64,7 @@ if ($method === 'GET') {
             WHERE m.id = $msgId AND (m.from_player_id = $playerId OR m.to_player_id = $playerId)
         ");
         $msg = mysqli_fetch_assoc($result);
-        if (!$msg) { mysqli_close($db); jsonError('Message not found', 404); }
+        if (!$msg) { jsonError('Message not found', 404); }
 
         // Mark as read
         if (intval($msg['to_player_id']) === $playerId && intval($msg['is_readed']) === 0) {
@@ -72,7 +72,7 @@ if ($method === 'GET') {
             mysqli_query($db, "UPDATE p_players SET new_mail_count = GREATEST(0, new_mail_count - 1) WHERE id = $playerId");
         }
 
-        mysqli_close($db);
+        
         jsonSuccess([
             'id' => intval($msg['id']),
             'from_id' => intval($msg['from_player_id']),
@@ -103,8 +103,8 @@ if ($method === 'POST') {
         $safeToName = mysqli_real_escape_string($db, $toName);
         $toResult = mysqli_query($db, "SELECT id, name FROM p_players WHERE name = '$safeToName'");
         $toPlayer = mysqli_fetch_assoc($toResult);
-        if (!$toPlayer) { mysqli_close($db); jsonError('اللاعب غير موجود'); }
-        if (intval($toPlayer['id']) === $playerId) { mysqli_close($db); jsonError('لا يمكنك إرسال رسالة لنفسك'); }
+        if (!$toPlayer) { jsonError('اللاعب غير موجود'); }
+        if (intval($toPlayer['id']) === $playerId) { jsonError('لا يمكنك إرسال رسالة لنفسك'); }
 
         $fromResult = mysqli_query($db, "SELECT name FROM p_players WHERE id = $playerId");
         $fromPlayer = mysqli_fetch_assoc($fromResult);
@@ -123,7 +123,7 @@ if ($method === 'POST') {
 
         mysqli_query($db, "UPDATE p_players SET new_mail_count = new_mail_count + 1 WHERE id = $toId");
 
-        mysqli_close($db);
+        
         jsonSuccess(['id' => $msgId]);
     }
 
@@ -133,11 +133,11 @@ if ($method === 'POST') {
 
         $result = mysqli_query($db, "SELECT from_player_id, to_player_id, is_readed, delete_status FROM p_msgs WHERE id = $msgId");
         $msg = mysqli_fetch_assoc($result);
-        if (!$msg) { mysqli_close($db); jsonError('Message not found', 404); }
+        if (!$msg) { jsonError('Message not found', 404); }
 
         $isReceiver = intval($msg['to_player_id']) === $playerId;
         $isSender = intval($msg['from_player_id']) === $playerId;
-        if (!$isReceiver && !$isSender) { mysqli_close($db); jsonError('Unauthorized', 403); }
+        if (!$isReceiver && !$isSender) { jsonError('Unauthorized', 403); }
 
         $currentStatus = intval($msg['delete_status']);
         if ($currentStatus !== 0) {
@@ -151,10 +151,10 @@ if ($method === 'POST') {
             mysqli_query($db, "UPDATE p_players SET new_mail_count = GREATEST(0, new_mail_count - 1) WHERE id = $playerId");
         }
 
-        mysqli_close($db);
+        
         jsonSuccess(['deleted' => true]);
     }
 }
 
-mysqli_close($db);
+
 jsonError('Invalid action', 400);
