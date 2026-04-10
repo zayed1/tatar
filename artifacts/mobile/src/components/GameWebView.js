@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { StyleSheet, View, ActivityIndicator } from 'react-native';
+import { StyleSheet, View, ActivityIndicator, TouchableOpacity, Text } from 'react-native';
 import { WebView } from 'react-native-webview';
 import { API_BASE, getToken } from '../api/client';
 
@@ -68,9 +68,6 @@ const INJECT_JS = `
       padding: 0 !important;
       margin: 0 !important;
       background: #f5f0e8 !important;
-      display: flex !important;
-      flex-direction: column !important;
-      align-items: center !important;
     }
 
     /* Village map centered and sized */
@@ -116,6 +113,9 @@ true;
 export default function GameWebView({ path, onNavigate }) {
   const webViewRef = useRef(null);
   const [uri, setUri] = useState(null);
+  const [canGoBack, setCanGoBack] = useState(false);
+  const [currentUrl, setCurrentUrl] = useState('');
+  const initialPathRef = useRef(path);
 
   // Load game page directly with api_token for auto-login
   useEffect(() => {
@@ -130,6 +130,12 @@ export default function GameWebView({ path, onNavigate }) {
     })();
   }, [path]);
 
+  const handleBack = () => {
+    if (webViewRef.current && canGoBack) {
+      webViewRef.current.goBack();
+    }
+  };
+
   if (!uri) {
     return (
       <View style={styles.loading}>
@@ -138,8 +144,16 @@ export default function GameWebView({ path, onNavigate }) {
     );
   }
 
+  // Show back button only when user navigated away from initial page
+  const showBackButton = canGoBack && currentUrl && !currentUrl.includes(initialPathRef.current);
+
   return (
     <View style={styles.container}>
+      {showBackButton && (
+        <TouchableOpacity style={styles.backButton} onPress={handleBack}>
+          <Text style={styles.backText}>← رجوع</Text>
+        </TouchableOpacity>
+      )}
       <WebView
         ref={webViewRef}
         source={{ uri }}
@@ -161,6 +175,8 @@ export default function GameWebView({ path, onNavigate }) {
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
         onNavigationStateChange={(navState) => {
+          setCanGoBack(navState.canGoBack);
+          setCurrentUrl(navState.url);
           if (onNavigate) onNavigate(navState);
         }}
       />
@@ -176,6 +192,19 @@ const styles = StyleSheet.create({
   webview: {
     flex: 1,
     backgroundColor: '#f5f0e8',
+  },
+  backButton: {
+    backgroundColor: '#3a2a1c',
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: '#6b5234',
+  },
+  backText: {
+    color: '#ffd700',
+    fontSize: 15,
+    fontWeight: '700',
+    textAlign: 'right',
   },
   loading: {
     ...StyleSheet.absoluteFillObject,
