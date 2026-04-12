@@ -176,7 +176,7 @@ export default function App() {
 
   return (
     <SafeAreaView style={styles.gameContainer}>
-      <StatusBar barStyle="dark-content" backgroundColor="#f5f0e8" />
+      <StatusBar barStyle="dark-content" backgroundColor="#ffffff" />
       <ResourceBar
         resources={gameData?.resources}
         gold={gameData?.gold}
@@ -233,7 +233,7 @@ const styles = StyleSheet.create({
   },
   gameContainer: {
     flex: 1,
-    backgroundColor: '#f5f0e8',
+    backgroundColor: '#ffffff',
   },
   tabBar: {
     backgroundColor: '#3a2a1c',
