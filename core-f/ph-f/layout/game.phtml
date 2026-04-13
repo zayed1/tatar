@@ -42,13 +42,23 @@ body.mobile-app{margin:0!important;padding:0!important;background:#ffffff!import
 body.mobile-app div.wrapper{min-width:0!important;width:100%!important;background:#ffffff!important;background-image:none!important}
 body.mobile-app div#mid{float:none!important;width:100%!important;padding:0!important;margin:0!important;background-image:none!important;background:transparent!important}
 body.mobile-app div#content{float:none!important;width:100%!important;max-width:100%!important;margin:0!important;padding:0!important;background:#ffffff!important;box-shadow:none!important;border-radius:0!important;min-height:100vh!important}
-body.mobile-app div.village1,body.mobile-app div.village2,body.mobile-app div.map{width:100%!important;padding:0!important;margin:0!important;background:#ffffff!important;overflow:hidden!important}
-body.mobile-app div.village1 div#village_map{float:none!important;margin:10px auto!important;clear:both!important;width:300px!important;height:264px!important;position:relative!important}
-body.mobile-app div.village2 div#village_map{float:none!important;margin:0 auto -150px auto!important;clear:both!important;transform:scale(0.65)!important;transform-origin:top center!important}
-body.mobile-app div.map div#map{float:none!important;margin:0 auto -180px auto!important;clear:both!important;transform:scale(0.7)!important;transform-origin:top center!important}
-body.mobile-app div.village1 h1,body.mobile-app div.village2 h1,body.mobile-app div.map h1{text-align:center!important;position:relative!important;right:auto!important;left:auto!important;margin:8px 0!important;width:100%!important;float:none!important}
+body.mobile-app div.village1,body.mobile-app div.village2,body.mobile-app div.map{width:100%!important;padding:0!important;margin:0!important;background:#ffffff!important;overflow:visible!important;display:flex!important;flex-direction:column!important;align-items:center!important}
+
+/* FIELDS (village1): 300x264 → scale to fill ~95% of screen width */
+body.mobile-app div.village1 div#village_map{float:none!important;clear:both!important;position:relative!important;transform-origin:top center!important;transform:scale(1.25)!important;margin:15px auto -20px auto!important}
+
+/* CITY (village2): 540x448 → scale down to fit phone width */
+body.mobile-app div.village2 div#village_map{float:none!important;clear:both!important;position:relative!important;transform-origin:top center!important;transform:scale(0.72)!important;margin:0 auto -120px auto!important}
+
+/* WORLD MAP: 552x375 → scale to fit */
+body.mobile-app div.map div#map{float:none!important;clear:both!important;position:relative!important;transform-origin:top center!important;transform:scale(0.72)!important;margin:0 auto -100px auto!important;top:0!important}
+
+body.mobile-app div.village1 h1,body.mobile-app div.village2 h1,body.mobile-app div.map h1{text-align:center!important;position:relative!important;right:auto!important;left:auto!important;margin:6px 0!important;width:100%!important;float:none!important;font-size:16px!important}
 body.mobile-app div#map_details{float:none!important;width:100%!important;padding:8px!important;margin:0!important;clear:both!important}
-body.mobile-app div.village1 table#building_contract,body.mobile-app div.village1 table#production,body.mobile-app div.village1 table#troops,body.mobile-app div.village1 table#movements{width:96%!important;margin:8px auto!important;clear:both!important;float:none!important}
+body.mobile-app div.village1 table#building_contract,body.mobile-app div.village1 table#production,body.mobile-app div.village1 table#troops,body.mobile-app div.village1 table#movements{width:96%!important;margin:4px auto!important;clear:both!important;float:none!important}
+body.mobile-app div.village1 div#map_details{clear:both!important;float:none!important;width:96%!important;margin:0 auto!important;padding:4px!important}
+body.mobile-app div.village1 div#map_details table{width:100%!important;font-size:13px!important}
+body.mobile-app div.village1 div#map_details table td{padding:3px 4px!important}
 body.mobile-app.v35 #content,body.mobile-app #content,body.mobile-app.v35 div#content{background:#ffffff!important;box-shadow:none!important;border-radius:0!important;padding:0!important}
 body.mobile-app table,body.mobile-app table tbody tr,body.mobile-app table tbody tr:nth-child(even),body.mobile-app table tbody tr:hover,body.mobile-app table thead{background:transparent!important}
 body.mobile-app table.row_table_data,body.mobile-app table#player,body.mobile-app table#alliance,body.mobile-app table.world{background:#fff!important;border-radius:8px!important}
