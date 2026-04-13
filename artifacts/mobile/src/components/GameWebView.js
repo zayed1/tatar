@@ -103,9 +103,6 @@ const INJECT_JS = `
     table { max-width: 100% !important; }
   \`;
   document.head.appendChild(style);
-
-  // Disable bounce/zoom
-  document.addEventListener('gesturestart', function(e) { e.preventDefault(); });
 })();
 true;
 `;
@@ -171,9 +168,9 @@ export default function GameWebView({ path, onNavigate }) {
         sharedCookiesEnabled={true}
         bounces={false}
         scrollEnabled={true}
-        scalesPageToFit={false}
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
+        allowsInlineMediaPlayback={true}
         onNavigationStateChange={(navState) => {
           setCanGoBack(navState.canGoBack);
           setCurrentUrl(navState.url);
